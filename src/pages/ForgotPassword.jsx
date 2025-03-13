@@ -76,7 +76,7 @@ const ForgotPassword = () => {
 
         {/* Back to Login */}
         <div className="mt-4 text-center text-sm font-bold text-[#463E3E]">
-          <a href="#" className="hover:underline cursor-pointer">
+          <a href="/login" className="hover:underline cursor-pointer">
             Back to Login
           </a>
         </div>
