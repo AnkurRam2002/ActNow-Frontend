@@ -1,21 +1,19 @@
-import { useState } from 'react'
-import './App.css'
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Auth from "./pages/Auth";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword"; // Import the Forgot Password page
 
 function App() {
-  document.title="ActNow";
-
   return (
-    //routing for Auth page
     <Router>
       <Routes>
-        {/* <a></a> to be removed later with landing page content */}
-        <Route path="/" element={<a href="/auth">CLICK ME to go to login pg:</a>} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
