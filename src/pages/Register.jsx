@@ -26,7 +26,7 @@ const Register = () => {
     // }
 
     try {
-      await api.post("/auth/register", { username, email, password, phone, city });
+      const response = await api.post("/auth/register", { username, email, password, phone, city });
       alert("User registered successfully");
       console.log("Response:", response.data);
       navigate("/login"); // Redirect to login page after successful registration
