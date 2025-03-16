@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Pic from "../assets/homeBanner.png";
 
-function Home() {
+const Home = () => {
 
   const navigate = useNavigate();
 

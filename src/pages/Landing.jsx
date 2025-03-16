@@ -5,7 +5,7 @@ import Home from "../components/Home";
 import Services from "../components/Services";
 import Contact from "../components/Contact";
 
-function Landing() {
+const Landing = () => {
   return (
     <div>
       <Header />
