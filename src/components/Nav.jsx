@@ -10,7 +10,7 @@ const Nav = () => {
   };
 
   return (
-    <div className='nav-container flex justify-center my-auto h-[60%] w-full font-[Poppins] text-[1.2vw]'>
+    <div className='nav-container fixed flex justify-center mt-[0.5%] h-[3vw] w-[43%] font-[Poppins] text-[1.2vw]'>
 
       <div className='left-section w-[78%] bg-white rounded-bl-full flex items-center px-[8%]'>
         <ul className='nav-list flex justify-between w-full'>

@@ -10,7 +10,7 @@ const Home = () => {
     
     <div id="home" className="home-container relative h-[45.2vw] border-2 border-transparent">
       
-      <div className="left-section relative z-20 h-auto mt-[12%] w-[37%] ml-[4.6%] font-[Poppins]">
+      <div className="left-section relative z-10 h-auto mt-[12%] w-[37%] ml-[4.6%] font-[Poppins]">
 
         <h1 className="text-[3.5vw] font-bold text-[#544B4B]">Take a <br />moment to make a difference.</h1>
         <p className="text-[1.3vw] text-[#2A2525] mt-3">Join hands with us to support causes that matter. Find volunteer opportunities, contribute your skills, and create a lasting impact in your community.</p>

@@ -4,7 +4,7 @@ import Nav from "./Nav";
 
 const Header = () => { //Header contains logo and nav bar
   return (
-    <div className="header fixed flex h-[5vw] w-full z-10 justify-between items-center pr-[5%] pl-[3%] mt-[1%]">
+    <div className="header absolute flex h-[5vw] w-full z-20 justify-between items-center pr-[5%] pl-[3%] mt-[1%]">
 
       <div className="left-section h-full">
         <img src={Logo} alt="ActNow" className="logo h-full" />
