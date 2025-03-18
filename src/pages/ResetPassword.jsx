@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
 const ResetPassword = () => {
+  // State variables for OTP, new password, error message, success message, and loading status
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState('');
@@ -10,8 +11,9 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const email = localStorage.getItem('email');
+  const email = localStorage.getItem('email'); // Retrieve stored email for password reset
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -19,16 +21,19 @@ const ResetPassword = () => {
     setSuccess('');
 
     try {
+      // Send a request to reset password with email, OTP, and new password
       const response = await api.post('/reset-password', { email, otp, newPassword });
-      localStorage.removeItem('email');
+      localStorage.removeItem('email'); // Remove stored email after successful reset
 
+      // If the backend response contains a success message
       if (response.data.message) {
         setSuccess(response.data.message);
         setTimeout(() => {
-          navigate('/login'); 
+          navigate('/login'); // Redirect to login after 2 seconds
         }, 2000);
       }
     } catch (err) {
+      // Handle error responses from the backend
       const errorMsg = err.response?.data?.message || "Something went wrong";
 
       if (errorMsg.includes("Invalid OTP")) {
@@ -39,18 +44,21 @@ const ResetPassword = () => {
         setError(errorMsg);
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading state after request is completed
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-lg">
+        {/* Page Title */}
         <h2 className="text-2xl font-bold text-[#463E3E] text-center mb-4">
           Reset Password
         </h2>
 
+        {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {/* OTP Input */}
           <div>
             <label htmlFor="otp" className="font-bold block text-[#463E3E]">
               OTP
@@ -66,6 +74,7 @@ const ResetPassword = () => {
             />
           </div>
 
+          {/* New Password Input */}
           <div>
             <label htmlFor="password" className="font-bold block text-[#463E3E]">
               New Password
@@ -85,6 +94,7 @@ const ResetPassword = () => {
           {success && <p className="text-green-600 text-sm font-bold">{success}</p>}
           {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -96,6 +106,7 @@ const ResetPassword = () => {
           </button>
         </form>
 
+        {/* Back to Login */}
         <div className="mt-4 text-center text-sm font-bold text-[#463E3E]">
           <a href="/login" className="hover:underline cursor-pointer">
             Back to Login
@@ -107,4 +118,3 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
-
