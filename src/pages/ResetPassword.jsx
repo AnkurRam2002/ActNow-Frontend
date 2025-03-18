@@ -10,7 +10,6 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const email = localStorage.getItem('email');
 
   const handleSubmit = async (e) => {
@@ -30,7 +29,15 @@ const ResetPassword = () => {
         }, 2000);
       }
     } catch (err) {
-      setError(err.response ? err.response.data.error : 'Something went wrong');
+      const errorMsg = err.response?.data?.message || "Something went wrong";
+
+      if (errorMsg.includes("Invalid OTP")) {
+        setError("Invalid OTP. Please enter the correct one.");
+      } else if (errorMsg.includes("OTP has expired")) {
+        setError("OTP has expired. Request a new one.");
+      } else {
+        setError(errorMsg);
+      }
     } finally {
       setLoading(false);
     }
@@ -39,12 +46,10 @@ const ResetPassword = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-lg">
-        {/* Page Title */}
         <h2 className="text-2xl font-bold text-[#463E3E] text-center mb-4">
           Reset Password
         </h2>
 
-        {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="otp" className="font-bold block text-[#463E3E]">
@@ -76,11 +81,10 @@ const ResetPassword = () => {
             />
           </div>
 
-          {/* Error & Success Messages */}
+          {/* Success & Error Messages */}
           {success && <p className="text-green-600 text-sm font-bold">{success}</p>}
           {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -92,7 +96,6 @@ const ResetPassword = () => {
           </button>
         </form>
 
-        {/* Back to Login */}
         <div className="mt-4 text-center text-sm font-bold text-[#463E3E]">
           <a href="/login" className="hover:underline cursor-pointer">
             Back to Login
