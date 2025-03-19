@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../api"; // Adjust based on your API setup
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [inputType, setInputType] = useState("email"); // "email" or "phone"
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -13,21 +15,28 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
 
     try {
-      const response = await api.post('/forgot-password', { email });
-      localStorage.setItem('email', email);
+      const payload =
+        inputType === "email" ? { email } : { phone };
+      const response = await api.post("/forgot-password", payload);
+
+      if (inputType === "email") {
+        localStorage.setItem("email", email);
+      } else {
+        localStorage.setItem("phone", phone);
+      }
 
       if (response.data.message) {
         setMessage(response.data.message);
         setTimeout(() => {
-          navigate('/reset-password');
+          navigate("/reset-password");
         }, 2000);
       }
     } catch (err) {
-      setError(err.response ? err.response.data.error : 'Something went wrong');
+      setError(err.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -41,21 +50,51 @@ const ForgotPassword = () => {
           Forgot Password
         </h2>
 
+        {/* Toggle Between Email & Phone */}
+        <div className="flex justify-center space-x-4 mb-4">
+          <button
+            className={`py-2 px-4 font-bold rounded-md ${
+              inputType === "email" ? "bg-[#463E3E] text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setInputType("email")}
+          >
+            Email
+          </button>
+          <button
+            className={`py-2 px-4 font-bold rounded-md ${
+              inputType === "phone" ? "bg-[#463E3E] text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setInputType("phone")}
+          >
+            Phone
+          </button>
+        </div>
+
         {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="font-bold block text-[#463E3E]">
-              Email
+            <label className="font-bold block text-[#463E3E]">
+              {inputType === "email" ? "Email" : "Phone Number"}
             </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
-            />
+            {inputType === "email" ? (
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
+              />
+            ) : (
+              <input
+                type="tel"
+                placeholder="Enter your phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
+              />
+            )}
           </div>
 
           {/* Error & Success Messages */}
@@ -86,3 +125,4 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
