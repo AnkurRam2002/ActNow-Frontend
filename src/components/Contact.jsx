@@ -21,21 +21,21 @@ const Contact = () => {
               <div className='info-section w-[40%] font-[Poppins] ml-[2%]'>
 
                 <h1 className='text-[2.3vw] font-bold text-[#463E3E] mb-[10%]'>Support</h1>
-                <div className='flex items-center'>
+                <div className='flex items-center text-[1.1vw]'>
                   <img src={phoneIcon} alt="phone" className='w-[6%]' />
                   <p>&nbsp;&nbsp;+91 12345 67890</p>
                 </div>
-                <div className='flex items-center'>
+                <div className='flex items-center text-[1.1vw]'>
                   <img src={emailIcon} alt="email" className='w-[6%]' />
                   <p>&nbsp;&nbsp;xyzabc.21@gmail.com</p>
                 </div>
 
                 <h1 className='text-[2.3vw] font-bold text-[#463E3E] mb-[10%] mt-[15%]'>Collaboration</h1>
-                <div className='flex items-center'>
+                <div className='flex items-center text-[1.1vw]'>
                   <img src={phoneIcon} alt="phone" className='w-[6%]' />
                   <p>&nbsp;&nbsp;+91 12345 67890</p>
                 </div>
-                <div className='flex items-center'>
+                <div className='flex items-center text-[1.1vw]'>
                   <img src={emailIcon} alt="email" className='w-[6%]' />
                   <p>&nbsp;&nbsp;xyzabc.21@gmail.com</p>
                 </div>
