@@ -11,7 +11,9 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const email = localStorage.getItem('email'); // Retrieve stored email for password reset
+
+  const email = localStorage.getItem('email');
+  const phone = localStorage.getItem('phone');
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -22,8 +24,9 @@ const ResetPassword = () => {
 
     try {
       // Send a request to reset password with email, OTP, and new password
-      const response = await api.post('/reset-password', { email, otp, newPassword });
-      localStorage.removeItem('email'); // Remove stored email after successful reset
+      const response = await api.post('/reset-password', { email, phone, otp, newPassword });
+      localStorage.removeItem('email');
+      localStorage.removeItem('phone');      
 
       setSuccess(response.data.message);
       setTimeout(() => navigate('/login'), 2000); // Redirect to login after 2 seconds
