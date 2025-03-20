@@ -7,6 +7,7 @@ import servicesDashboard from '../assets/servicesDashboard.png'
 import servicesShift from '../assets/servicesShift.png'
 
 const Services = () => {
+  
   return (
     <div id="services" className="page-container h-[45.2vw] px-[10%] pt-[8%] pb-[5%]">
     
