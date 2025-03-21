@@ -6,7 +6,6 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const navigate = useNavigate();
@@ -19,11 +18,6 @@ const Register = () => {
         alert("Phone number must be exactly 10 digits.");
         return;
     }
-
-    // if (password !== confirmPassword) {
-    //   alert("Passwords do not match!");
-    //   return;
-    // }
 
     try {
       const response = await api.post("/auth/register", { username, email, password, phone, city });
