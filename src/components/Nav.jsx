@@ -6,7 +6,7 @@ const Nav = () => {
   const navigate = useNavigate();
 
   const handleScroll = (id) => { //scrolls to specific section on clicking from nav
-    document.getElementById(id)?.scrollIntoView();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth'});
   };
 
   return (
