@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import About from "../components/About";
-import Home from "../components/Home";
+import LandingHome from "../components/LandingHome";
 import Services from "../components/Services";
 import Contact from "../components/Contact";
 
@@ -9,7 +9,7 @@ const Landing = () => {
   return (
     <div>
       <Header />
-      <Home />
+      <LandingHome />
       <About />
       <Services />
       <Contact />

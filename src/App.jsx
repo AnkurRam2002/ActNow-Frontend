@@ -7,6 +7,7 @@ import Landing from "./pages/Landing";
 import CreateEvent from "./pages/CreateEvent";
 import EventDetails from "./pages/EventDetails";
 import EditEvent from "./pages/EditEvent";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/events/:id/edit" element={<EditEvent />} />
         <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
     </Router>
   );
