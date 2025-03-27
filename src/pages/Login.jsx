@@ -22,6 +22,7 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("userEmail", response.data.userEmail);
+      localStorage.setItem("userRole", response.data.userRole);
       alert("Logged in successfully");
       navigate("/events"); // Redirect after login
     } catch (error) {
