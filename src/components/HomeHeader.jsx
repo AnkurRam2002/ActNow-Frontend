@@ -7,6 +7,8 @@ import expandIcon from '../assets/expandIcon.png'
 const HomeHeader = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   // Toggle menu visibility
   const toggleMenu = () => {
@@ -14,7 +16,7 @@ const HomeHeader = () => {
   };
 
   return (
-    <div className='home-header px-[2.5%] py-[1.5%] flex gap-[5%] h-[10%] w-full'>
+    <div className='home-header px-[2.7%] py-[1.5%] flex gap-[5%] h-[10%] w-full'>
 
       <div className='left-section w-[20%] flex items-center justify-start gap-[8%]'>
         <img src={profileIcon} alt="profile" className='h-[60%] cursor-pointer' onClick={toggleMenu} />
@@ -40,9 +42,19 @@ const HomeHeader = () => {
         <SearchBar />
       </div>
 
-      <div className='right-section w-[30%] flex gap-[2%] items-center'>
-        <div className='w-[50%] h-[65%] border rounded-l-full'></div>
-        <div className='w-[50%] h-[65%] border rounded-r-full'></div>
+      <div className='right-section w-[30%] flex gap-[2%] items-center text-[1.1vw]'>
+        <input 
+            type="date" 
+            className="start-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-l-full px-[3%] text-[#757575]" 
+            value={startDate} 
+            onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input 
+          type="date" 
+          className="end-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-r-full px-[3%] text-[#757575]" 
+          value={endDate} 
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </div>
     </div>
   )

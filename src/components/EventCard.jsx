@@ -6,7 +6,7 @@ import expandIcon from '../assets/expandIcon.png'
 const EventCard = () => {
   return (
     
-    <div className='event-card bg-white rounded-[5%] w-[22%] p-[2%] shadow-[0px_0px_10px_rgba(0,0,0,0.6)] font-[Poppins] mb-[3%]'>
+    <div className='event-card bg-white rounded-[5%] w-[22%] p-[2%] shadow-[0px_0px_0.5vw_rgba(0,0,0,0.6)] font-[Poppins] mb-[3%]'>
 
       <div className='event-name flex items-center justify-between'>
         <p className='font-semibold text-[1.3vw] text-[#463E3E] line-clamp-2'>Event Name</p>
