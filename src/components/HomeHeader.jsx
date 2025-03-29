@@ -28,7 +28,7 @@ const HomeHeader = () => {
             <p className='text-[1vw] text-[#6A6767] font-light mb-[5%]'>email123@gmail.com</p>
             <hr className='border-[#B6B3B3] mb-[4%]' />
             <div className='flex gap-[4%] items-center'>
-              <p className='text-[#383A42] text-[1.1vw] font-medium'>View profile</p>
+              <p className='text-[#383A42] text-[1.1vw] font-medium cursor-pointer hover:underline'>View profile</p>
               <img src={expandIcon} alt="expand" className='size-[5%]' />
             </div>
             <button className='logout-btn mt-[7%] mx-auto w-full bg-[#FF2C0C] rounded-sm text-white text-[1.2vw] font-medium py-[1.2%] cursor-pointer'>Logout</button>

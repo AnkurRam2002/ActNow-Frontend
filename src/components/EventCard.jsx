@@ -26,7 +26,7 @@ const EventCard = ({ name, ngo, city, date, description }) => {
       <p className='details text-[1vw] font-light line-clamp-3 mb-[10%]'>{description}</p>
 
       <div className='see-details flex items-center gap-[4%]'>
-        <p className='text-[1vw]'>See Details</p>
+        <p className='text-[1vw] cursor-pointer hover:underline'>See Details</p>
         <img src={expandIcon} alt="expand" className='size-[5%]' />
       </div>
       

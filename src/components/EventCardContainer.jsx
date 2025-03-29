@@ -8,7 +8,7 @@ const EventCardContainer = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await api.get('/events'); // Change URL if needed
+        const response = await api.get('/events');
         setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
