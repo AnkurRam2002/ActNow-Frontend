@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import api from '../api'
 import EventCard from './EventCard';
 
 const EventCardContainer = () => {
@@ -7,9 +8,8 @@ const EventCardContainer = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/events'); // Change URL if needed
-        const data = await response.json();
-        setEvents(data);
+        const response = await api.get('/events'); // Change URL if needed
+        setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
       }
