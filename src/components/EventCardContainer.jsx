@@ -3,24 +3,29 @@ import api from '../api'
 import EventCard from './EventCard';
 
 const EventCardContainer = () => {
+
+  // State to store the list of events
   const [events, setEvents] = useState([]);
 
+  // Fetching event details from api
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await api.get('/events');
-        setEvents(response.data);
+        const response = await api.get('/events'); // API call to get events data
+        setEvents(response.data); // Updating state with fetched events
       } catch (error) {
         console.error('Error fetching events:', error);
       }
     };
 
     fetchEvents();
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once on component mount
 
   return (
     <div className='absolute top-[90%] left-[20%] w-[75%] flex flex-wrap gap-[3%] pr-[2%]'>
-      {events.map(event => (
+
+      {/* Mapping event cards in reverse order so the latest event appears first */}
+      {events.slice().reverse().map(event => (
         <EventCard 
           key={event._id} 
           eventId={event._id}
