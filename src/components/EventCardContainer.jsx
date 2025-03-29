@@ -23,10 +23,11 @@ const EventCardContainer = () => {
       {events.map(event => (
         <EventCard 
           key={event._id} 
+          eventId={event._id}
           name={event.name} 
           ngo={event.organizer?.username || 'Anonymous NGO'} 
           city={event.location} 
-          date={new Date(event.date).toLocaleDateString()} 
+          date={new Date(event.date).toLocaleDateString("en-GB")} 
           description={event.description} 
         />
       ))}

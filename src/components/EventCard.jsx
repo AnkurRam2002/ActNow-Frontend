@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import locationIcon from '../assets/locationIcon.png';
 import dateIcon from '../assets/dateIcon.png';
 import expandIcon from '../assets/expandIcon.png';
+import { FaEye } from "react-icons/fa";
 
-const EventCard = ({ name, ngo, city, date, description }) => {
+const EventCard = ({ name, ngo, city, date, description, eventId }) => {
   return (
     <div className='event-card bg-white rounded-[5%] w-[22%] p-[2%] shadow-[0px_0px_0.5vw_rgba(0,0,0,0.6)] font-[Poppins] mb-[3%]'>
 
@@ -26,8 +28,9 @@ const EventCard = ({ name, ngo, city, date, description }) => {
       <p className='details text-[1vw] font-light line-clamp-3 mb-[10%]'>{description}</p>
 
       <div className='see-details flex items-center gap-[4%]'>
-        <p className='text-[1vw] cursor-pointer hover:underline'>See Details</p>
+        <Link to={`/events/${eventId}`} className='text-[1vw] cursor-pointer hover:underline'>See Details</Link>
         <img src={expandIcon} alt="expand" className='size-[5%]' />
+        <FaEye />
       </div>
       
     </div>
