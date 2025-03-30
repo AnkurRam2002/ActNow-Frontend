@@ -24,7 +24,7 @@ const Login = () => {
       localStorage.setItem("userEmail", response.data.userEmail);
       localStorage.setItem("userRole", response.data.userRole);
       alert("Logged in successfully");
-      navigate("/events"); // Redirect after login
+      navigate("/home"); // Redirect after login
     } catch (error) {
       alert(error.response?.data?.error || "Something went wrong");
     }

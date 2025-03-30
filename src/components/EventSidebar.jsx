@@ -7,6 +7,8 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,10 +30,11 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
         const response = await api.delete(`/events/${eventId}`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.ok) {
           alert("Event deleted successfully!");
-          navigate("/events"); 
+          navigate("/home"); 
         } else {
           alert("Failed to delete event.");
         }
