@@ -20,20 +20,18 @@ const HomeHeader = () => {
   // Close the menu when clicking outside or on scroll
   const handleClickOutside = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
-      setIsMenuOpen(false); // Close menu if clicked outside
+      setIsMenuOpen(false); 
     }
   };
 
   const handleScroll = () => {
-    setIsMenuOpen(false); // Close menu if page is scrolled
+    setIsMenuOpen(false); 
   };
     
   useEffect(() => {
-    // Add event listeners for click and scroll
     document.addEventListener('click', handleClickOutside);
     window.addEventListener('scroll', handleScroll);
 
-    // Cleanup event listeners on component unmount
     return () => {
       document.removeEventListener('click', handleClickOutside);
       window.removeEventListener('scroll', handleScroll);
