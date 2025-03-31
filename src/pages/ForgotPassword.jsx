@@ -31,12 +31,14 @@ const ForgotPassword = () => {
 
       if (response.data.message) {
         setMessage(response.data.message);
+        alert("OTP sent successfully. Please check your " + inputType);
         setTimeout(() => {
           navigate("/reset-password");
         }, 2000);
       }
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong");
+      alert(err.response?.data?.error || "Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -125,4 +127,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-
