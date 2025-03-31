@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 const CreateEvent = () => {
+  const navigate = useNavigate();
   const [eventData, setEventData] = useState({
     name: "",
     description: "",
@@ -13,6 +15,21 @@ const CreateEvent = () => {
 
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("userRole");
+    if (!token) {
+      navigate("/login");
+      setTimeout(() => {
+        alert("Please log in.");
+      }, 100); 
+    } else if (userRole !== "ngo") {
+      navigate("/home");
+      setTimeout(() => {
+        alert("You are not authorized to create events.");
+      }, 100);
+    }
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

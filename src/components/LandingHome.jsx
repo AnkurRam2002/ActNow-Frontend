@@ -1,10 +1,14 @@
-import React from 'react'
+import { useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Pic from "../assets/landingBanner.png";
 
 const Home = () => {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     
