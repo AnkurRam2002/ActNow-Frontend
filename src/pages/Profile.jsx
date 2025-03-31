@@ -104,19 +104,39 @@ const Profile = () => {
           {/* Registered Events Section (Only for Volunteers) */}
           {user.role === "volunteer" && (
             <>
-              <p className="text-gray-700 font-semibold mt-4">Registered Events:</p>
+              <p className="text-gray-700 font-semibold my-[4%]">Registered Events:</p>
               {user.eventsRegistered?.length > 0 ? (
-                <ul className="list-disc pl-5 text-gray-700">
+                <div className="list-disc text-gray-700">
                   {user.eventsRegistered.map(event => (
-                    <li key={event._id}>
-                      <Link to={`/events/${event._id}`} className="text-blue-600 hover:underline">
+                    <p key={event._id} className="mb-[3%]">
+                      <Link to={`/events/${event._id}`} className="text-gray-600 bg-gray-200 rounded-sm p-[1%] hover:underline">
                         {event.name}
                       </Link>
-                    </li>
+                    </p>
                   ))}
-                </ul>
+                </div>
               ) : (
                 <p className="text-gray-600">No events registered yet.</p>
+              )}
+            </>
+          )}
+
+          {/* Created Events Section (Only for NGOs) */}
+          {user.role === "ngo" && (
+            <>
+              <p className="text-gray-700 font-semibold my-[4%]">Created Events:</p>
+              {user.eventsCreated?.length > 0 ? (
+                <div className="list-disc text-gray-700">
+                  {user.eventsCreated.map(event => (
+                    <p key={event._id} className="mb-[3%]">
+                      <Link to={`/events/${event._id}`} className="text-gray-600 bg-gray-200 rounded-sm p-[1%] hover:underline">
+                        {event.name}
+                      </Link>
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-600">No events created yet.</p>
               )}
             </>
           )}
