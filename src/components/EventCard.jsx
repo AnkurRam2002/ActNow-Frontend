@@ -6,27 +6,19 @@ import { FaEye, FaClock, FaPlayCircle, FaCheckCircle } from "react-icons/fa";
 
 // EventCard Component: Displays an event's details in a card format
 const EventCard = ({ name, ngo, city, date, description, eventId, status }) => {
-
-  let statusIcon = <FaClock className="text-blue-500 text-[1.2vw]" />;
-  let bgColor = "bg-white";
-
-  if (status === "Ongoing") {
-    statusIcon = <FaPlayCircle className="text-green-500 text-[1.2vw]" />;
-    bgColor = "bg-green-100";
-  } else if (status === "Completed") {
-    statusIcon = <FaCheckCircle className="text-gray-500 text-[1.2vw]" />;
-    bgColor = "bg-gray-100";
-  } 
-
   return (
     <div className='relative event-card bg-white rounded-[5%] w-[22%] p-[2%] shadow-[0px_0px_0.5vw_rgba(0,0,0,0.6)] font-[Poppins] mb-[3%]'>
 
       {/* Bookmark Status Icon */}
-      {statusIcon && (
-        <div className={`absolute shadow-[0px_0px_0.2vw_rgba(0,0,0,0.6)] top-0 right-0 w-[3vw] h-[4vw] ${bgColor} flex flex-col items-center justify-center rounded-bl-[1vw]`}>
-          {statusIcon}
-        </div>
-      )}
+      {(status === 'Completed' || status === 'Ongoing') && (
+      <div
+        className={`absolute shadow-[0px_0px_0.2vw_rgba(0,0,0,0.6)] top-0 right-0 w-[3vw] h-[4vw] 
+          ${status === 'Completed' ? 'bg-green-300' : 'bg-blue-300'} 
+          flex flex-col items-center justify-center rounded-bl-[1vw]`}
+      >
+        {status === 'Completed' ? <FaCheckCircle className="text-green-600 text-[1.2vw]" /> : <FaPlayCircle className="text-blue-600 text-[1.2vw]" />}
+      </div>
+    )}
 
       {/* Event Name */}
       <div className="event-name mr-6">
