@@ -28,13 +28,18 @@ const EventCard = ({ name, ngo, city, date, description, eventId, status }) => {
         </div>
       )}
 
+      {/* Event Name */}
+      <div className="event-name mr-6">
+        <p className="font-semibold text-[1.3vw] text-[#463E3E] line-clamp-2">{name}</p>
+      </div>
+
       {/* NGO Name */}
-      <p className='NGO-name font-semibold text-[#292929] text-[1.1vw] line-clamp-1'>{ngo}</p>
+      <p className='NGO-name font-semibold text-[#7A7C7D] text-[1.1vw] line-clamp-1'>{ngo}</p>
 
       {/* Event Location */}
       <div className='city flex items-center gap-[2%] mt-[1%]'>
         <img src={locationIcon} alt="location" className='size-[6%]' />
-        <p className='text-[1vw] text-[#292929]'>{city}</p>
+        <p className='text-[1vw] text-[#7A7C7D]'>{city}</p>
       </div>
 
       {/* Event Date */}
