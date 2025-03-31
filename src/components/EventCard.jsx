@@ -35,7 +35,7 @@ const EventCard = ({ name, ngo, city, date, description, eventId }) => {
       {/* Event details page link */}
       <div className='see-details flex items-center gap-[4%]'>
         <Link to={`/events/${eventId}`} className='text-[1vw] cursor-pointer hover:underline'>See Details</Link>
-        <FaEye />
+        <FaEye className='size-[8%]' />
       </div>
       
     </div>
