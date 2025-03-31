@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import profileIcon from '../assets/profileIcon.png'
 import Logo from '../assets/Logo.png'
@@ -14,6 +14,7 @@ const HomeHeader = () => {
 
   // State variables
   const [user, setUser] = useState(null);
+  const menuRef = useRef(null); 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [startDate, setStartDate] = useState('');
@@ -38,6 +39,29 @@ const HomeHeader = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+      // Close the menu when clicking outside or on scroll
+      const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+          setIsMenuOpen(false); // Close menu if clicked outside
+        }
+      };
+    
+      const handleScroll = () => {
+        setIsMenuOpen(false); // Close menu if page is scrolled
+      };
+    
+      useEffect(() => {
+        // Add event listeners for click and scroll
+        document.addEventListener('click', handleClickOutside);
+        window.addEventListener('scroll', handleScroll);
+    
+        // Cleanup event listeners on component unmount
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
 
   // Navigate to the user's profile page
   const goToProfile = () => {
