@@ -34,8 +34,6 @@ const EditEvent = () => {
             requiredSkills: data.requiredSkills.join(","),
             volunteersNeeded: data.volunteersNeeded,
           });
-        } else if (response.status === 404) {
-          alert("Event not found.");
         } else {
           alert("Failed to fetch event details.");
         }
@@ -71,7 +69,7 @@ const EditEvent = () => {
         alert("Event updated successfully!");
         navigate(`/events/${id}`);
       } else {
-        alert(response.data.message || "Failed to update event.");
+        alert("Failed to update event.");
       }
     } catch (error) {
       console.error("Error updating event:", error);

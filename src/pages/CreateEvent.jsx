@@ -14,7 +14,7 @@ const CreateEvent = () => {
   });
 
   const token = localStorage.getItem("token");
-  const userId = token ? JSON.parse(atob(token.split("."))[1]).userId : null;
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   useEffect(() => {
     const userRole = localStorage.getItem("userRole");
@@ -55,7 +55,8 @@ const CreateEvent = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (response.status === 201) {
+      const data = await response.json();
+      if (response.ok) {
         alert("Event created successfully!");
         setEventData({
           name: "",
@@ -66,8 +67,7 @@ const CreateEvent = () => {
           volunteersNeeded: "",
         });
       } else {
-        const data = await response.json();
-        alert("Error: " + (data.message || "Failed to create event"));
+        alert("Error: " + data.message);
       }
     } catch (error) {
       console.error("Error creating event:", error);
