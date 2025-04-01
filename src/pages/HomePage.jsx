@@ -9,7 +9,9 @@ const HomePage = () => {
   return (
     <div className='relative'>
       <HomeHeader />
+
       <BackToTop />
+      
       <div className='w-[95%] mx-auto mt-[1%]'>
         <img src={homeBanner} alt="home banner" className='w-full' />
       </div>

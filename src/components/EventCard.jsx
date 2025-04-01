@@ -13,10 +13,10 @@ const EventCard = ({ name, ngo, city, date, description, eventId, status }) => {
       {(status === 'Completed' || status === 'Ongoing') && (
       <div
         className={`absolute shadow-[0px_0px_0.2vw_rgba(0,0,0,0.6)] top-0 right-0 w-[3vw] h-[4vw] 
-          ${status === 'Completed' ? 'bg-green-300' : 'bg-blue-300'} 
+          ${status === 'Completed' ? 'bg-green-500' : 'bg-orange-500'} 
           flex flex-col items-center justify-center rounded-bl-[1vw]`}
       >
-        {status === 'Completed' ? <FaCheckCircle className="text-green-600 text-[1.2vw]" /> : <FaPlayCircle className="text-blue-600 text-[1.2vw]" />}
+        {status === 'Completed' ? <FaCheckCircle className="text-white text-[1.2vw]" /> : <FaPlayCircle className="text-white text-[1.2vw]" />}
       </div>
     )}
 

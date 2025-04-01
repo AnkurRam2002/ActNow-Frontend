@@ -53,7 +53,7 @@ const CreateEvent = () => {
     try {
       // ✅ Make API call
       const response = await api.post("/events/create", eventPayload, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${token}` },
       });
   
       // ✅ Check response directly, no need to call .json()

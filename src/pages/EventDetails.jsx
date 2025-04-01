@@ -80,8 +80,15 @@ const EventDetails = () => {
     <EventTopbar />
     <div className= "flex justify-center gap-5 items-center min-h-[90vh] bg-gray-50 p-6">
       <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
-        {/* Event Name */}
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">{event.name}</h2>
+        {/* Event Name and Status */} 
+        <div className="flex justify-between gap-0.5 items-center mb-4"> 
+          <h2 className="text-3xl font-bold text-gray-900">{event.name}</h2> 
+          <span className={`px-3 py-1 text-sm font-medium rounded-full 
+            ${event.status === 'Completed' ? 'bg-green-500 text-white' : 
+            event.status === 'Ongoing' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-gray-800'}`} > 
+            {event.status} 
+            </span> 
+            </div>
         <p className="text-lg text-gray-600 mb-3">{event.description}</p>
 
         {/* Organizer */}
@@ -128,11 +135,17 @@ const EventDetails = () => {
         <div className="mb-4">
           <p className="text-gray-700 font-semibold mb-2">Requirements:</p>
           <div className="flex flex-wrap gap-2 mt-1">
-            {event.requiredSkills.map((skill, index) => (
+          {event.requiredSkills.length <= 1 ? (
+            <span className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">
+              No specific skills required
+            </span>
+            ) : (
+             event.requiredSkills.map((skill, index) => (
               <span key={index} className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">
                 {skill}
               </span>
-            ))}
+            ))
+          )}
           </div>
         </div>
 
