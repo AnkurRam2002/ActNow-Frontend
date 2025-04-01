@@ -32,12 +32,13 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
         const response = await api.delete(`/events/${eventId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (response.ok) {
+        if (response.status === 200 || response.status === 204) {  
           alert("Event deleted successfully!");
-          navigate("/home"); 
+          navigate("/home");  
         } else {
-          alert("Failed to delete event.");
+          alert("Failed to delete event: " + (response.data?.message || "Unknown error"));
         }
+        
       } catch (error) {
         console.error("Error deleting event:", error);
         alert("Something went wrong.");

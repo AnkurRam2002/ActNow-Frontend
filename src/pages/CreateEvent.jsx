@@ -46,34 +46,37 @@ const CreateEvent = () => {
 
     const eventPayload = {
       ...eventData,
-      requiredSkills: eventData.requiredSkills.split(","), // Convert skills to an array
+      requiredSkills: eventData.requiredSkills.split(",").map(skill => skill.trim()),
       volunteersNeeded: parseInt(eventData.volunteersNeeded, 10),
     };
-
+  
     try {
+      // ✅ Make API call
       const response = await api.post("/events/create", eventPayload, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Event created successfully!");
-        setEventData({
-          name: "",
-          description: "",
-          date: "",
-          location: "",
-          requiredSkills: "",
-          volunteersNeeded: "",
-        });
-      } else {
-        alert("Error: " + data.message);
+  
+      // ✅ Check response directly, no need to call .json()
+      if (response.error) {
+        throw new Error(response.message || "Failed to create event.");
       }
+  
+      alert("Event created successfully!");
+      setEventData({
+        name: "",
+        description: "",
+        date: "",
+        location: "",
+        requiredSkills: "",
+        volunteersNeeded: "",
+      });
+  
     } catch (error) {
       console.error("Error creating event:", error);
-      alert("Failed to create event.");
+      alert(error.message || "Failed to create event.");
     }
   };
+
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 border rounded shadow-md">
