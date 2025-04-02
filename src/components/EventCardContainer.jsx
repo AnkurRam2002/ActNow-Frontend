@@ -34,7 +34,9 @@ const EventCardContainer = () => {
           ngo={event.organizer?.username || 'Anonymous NGO'} 
           city={event.location} 
           date={new Date(event.date).toLocaleDateString("en-GB")} 
-          description={event.description} 
+          description={event.description}
+          needed={event.volunteersNeeded.length} 
+          assigned={event.volunteersAssigned.length}
         />
       ))}
     </div>

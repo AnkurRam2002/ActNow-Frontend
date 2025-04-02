@@ -5,20 +5,31 @@ import dateIcon from '../assets/dateIcon.png';
 import { FaEye, FaClock, FaPlayCircle, FaCheckCircle } from "react-icons/fa";
 
 // EventCard Component: Displays an event's details in a card format
-const EventCard = ({ name, ngo, city, date, description, eventId, status }) => {
+const EventCard = ({ name, ngo, city, date, description, eventId, status, needed, assigned }) => {
+
+  const isFull = Number(needed) === Number(assigned); // Check if the event is full
+
   return (
     <div className='relative event-card bg-white rounded-[5%] w-[22%] p-[2%] shadow-[0px_0px_0.5vw_rgba(0,0,0,0.6)] font-[Poppins] mb-[3%]'>
 
       {/* Bookmark Status Icon */}
       {(status === 'Completed' || status === 'Ongoing') && (
       <div
-        className={`absolute shadow-[0px_0px_0.2vw_rgba(0,0,0,0.6)] top-0 right-0 w-[3vw] h-[4vw] 
+        className={`absolute shadow-[0px_0px_0.2vw_rgba(0,0,0,0.6)] top-0 right-0 w-[2vw] h-[2vw] 
           ${status === 'Completed' ? 'bg-green-500' : 'bg-orange-500'} 
           flex flex-col items-center justify-center rounded-bl-[1vw]`}
       >
         {status === 'Completed' ? <FaCheckCircle className="text-white text-[1.2vw]" /> : <FaPlayCircle className="text-white text-[1.2vw]" />}
       </div>
     )}
+
+     {/* Full Event Tag */}
+     {isFull && (
+        <div
+          className='full-flag absolute bg-red-500 text-white font-semibold text-[0.8vw] rounded-bl-[0.7vw] px-[0.8vw] top-[46%] right-0'>
+            Full
+        </div>
+      )}
 
       {/* Event Name */}
       <div className="event-name mr-6">
