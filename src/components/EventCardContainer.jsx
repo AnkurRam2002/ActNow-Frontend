@@ -43,20 +43,24 @@ const EventCardContainer = ({ query, startDate, endDate }) => { //change: Receiv
     <div className='absolute top-[90%] left-[20%] w-[75%] flex flex-wrap gap-[3%] pr-[2%]'>
 
       {/* Mapping event cards in reverse order so the latest event appears first */}
-      {events.slice().reverse().map(event => (
-        <EventCard 
-          key={event._id} 
-          eventId={event._id}
-          name={event.name}
-          status={event.status} 
-          ngo={event.organizer?.username || 'Anonymous NGO'} 
-          city={event.location} 
-          date={new Date(event.date).toLocaleDateString("en-GB")} 
-          description={event.description}
-          needed={event.volunteersNeeded.length} 
-          assigned={event.volunteersAssigned.length}
-        />
-      ))}
+      {events.length > 0 ? (
+        events.slice().reverse().map(event => (
+          <EventCard 
+            key={event._id} 
+            eventId={event._id}
+            name={event.name}
+            status={event.status} 
+            ngo={event.organizer?.username || 'Anonymous NGO'} 
+            city={event.location} 
+            date={new Date(event.date).toLocaleDateString("en-GB")} 
+            description={event.description}
+            needed={event.volunteersNeeded.length} 
+            assigned={event.volunteersAssigned.length}
+          />
+        ))
+      ) : (
+        <p className="absolute top-[4vw] left-[0.8vw] text-[1.2vw] w-full text-gray-800 mt-4 font-[Poppins]">No events found matching your criteria.</p>
+      )}
     </div>
   );
 };
