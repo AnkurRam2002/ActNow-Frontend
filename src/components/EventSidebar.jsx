@@ -26,6 +26,11 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
     fetchParticipants();
   }, [eventId]);
 
+  // Navigate to the participant's profile page
+  const goToProfile = (participantId) => {
+    navigate(`/users/${participantId}`); // Redirect to the profile page with userId 
+  }
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
@@ -86,7 +91,8 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
             {participants.map((participant) => (
               <li
                 key={participant._id}
-                className="p-2 bg-gray-100 rounded-lg text-gray-800"
+                onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
+                className="p-2 bg-gray-100 rounded-lg text-gray-800 cursor-pointer hover:underline"
               >
                 {participant.username}
               </li>
