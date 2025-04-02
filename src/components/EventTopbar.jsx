@@ -57,7 +57,7 @@ const TopBar = () => {
         <img
             src={homeIcon}
             alt="profile"
-            className='h-[2.5vw] cursor-pointer mx-2 opacity-75' // Ensuring profile icon has same size as home icon
+            className='h-[2.5vw] cursor-pointer mx-2 opacity-75 hover:opacity-55 active:opacity-75 transition-all' // Ensuring profile icon has same size as home icon
             onClick={goHome}
           />
 
@@ -69,7 +69,7 @@ const TopBar = () => {
             ref={menuRef}
             src={profileIcon}
             alt="profile"
-            className='h-[2.5vw] cursor-pointer mx-2' // Ensuring profile icon has same size as home icon
+            className='h-[2.5vw] cursor-pointer mx-2 hover:opacity-80 active:opacity-100 transition-all' // Ensuring profile icon has same size as home icon
             onClick={toggleMenu}
           />
           

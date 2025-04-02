@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaEdit, FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
 import EventSidebar from "../components/EventSidebar";
 import EventTopbar from "../components/EventTopbar";
 
 const EventDetails = () => {
+
+  const navigate = useNavigate()
+
   const { id } = useParams(); // Retrieve eventId from URL params
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,6 +50,11 @@ const EventDetails = () => {
       alert(error.response?.data?.message || "Failed to participate.");
     }
   };
+
+  // Navigate to the user's profile page
+  const goToProfile = () => {
+    navigate(`/users/${event.organizer._id}`); // Redirect to the profile page with userId 
+  }
 
   if (loading) {
     return (
@@ -95,7 +103,7 @@ const EventDetails = () => {
         <div className="text-gray-800 mb-2">
           <div className="flex items-center gap-2">
             <FaUsers className="text-black" />
-            <p className="font-medium">{event.organizer.username || "Unknown Organizer"}</p>
+            <p onClick={goToProfile} className="font-medium cursor-pointer hover:underline">{event.organizer.username || "Unknown Organizer"}</p>
           </div>
         </div>
 
