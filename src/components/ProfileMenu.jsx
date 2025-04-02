@@ -51,7 +51,7 @@ const ProfileMenu = () => {
       </div>
 
       {/* Logout Button */}
-      <button className='logout-btn mt-[7%] mx-auto w-full bg-[#FF2C0C] rounded-sm text-white text-[1.2vw] font-medium py-[1.2%] cursor-pointer' onClick={handleLogout}>Logout</button>
+      <button className='logout-btn mt-[7%] mx-auto w-full bg-[#FF2C0C] rounded-sm text-white text-[1.2vw] font-medium py-[1.2%] cursor-pointer hover:bg-[#e62b0e] active:bg-[#FF2C0C] transition-all' onClick={handleLogout}>Logout</button>
     </div>
     
   )

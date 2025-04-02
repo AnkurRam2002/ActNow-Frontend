@@ -27,7 +27,7 @@ const BackToTop = () => {
     return (
         <div className="fixed bottom-5 right-5 z-1000">
             {isVisible && 
-                <button onClick={scrollToTop} className="text-white text-2xl py-3.5 px-3.5 flex items-center justify-center bg-[#463E3E] rounded-full">
+                <button onClick={scrollToTop} className="text-white text-2xl py-3.5 px-3.5 flex items-center justify-center bg-[#463E3E] rounded-full cursor-pointer hover:bg-[#352f2f] active:bg-[#463E3E]">
                     <TiArrowUpThick />
                 </button>
             }
