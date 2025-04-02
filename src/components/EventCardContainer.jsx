@@ -2,24 +2,42 @@ import React, { useEffect, useState } from 'react';
 import api from '../api'
 import EventCard from './EventCard';
 
-const EventCardContainer = () => {
+const EventCardContainer = ({ query, startDate, endDate }) => { //change: Receiving search and date filter props
 
   // State to store the list of events
   const [events, setEvents] = useState([]);
 
-  // Fetching event details from api
+  // Fetch event details from the API whenever query, startDate, or endDate changes
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await api.get('/events'); // API call to get events data
-        setEvents(response.data); // Updating state with fetched events
+        // Construct query parameters dynamically
+        const params = {
+          ...(query && { q: query }),
+          ...(startDate && { startDate }),
+          ...(endDate && { endDate }),
+        };
+
+        console.log("Sending request with params received from homepage:", params); // Check request parameters 4th log
+
+        // Sending GET request to fetch events based on filters
+        const response = await api.get('/events', { params });
+
+        console.log("Response received:", response.data); // Check filtered results 5th log
+
+        setEvents([...response.data]); // Update state with new event data
       } catch (error) {
         console.error('Error fetching events:', error);
       }
     };
 
     fetchEvents();
-  }, []); // Empty dependency array ensures this runs only once on component mount
+  }, [query, startDate, endDate]); // change: Re-run effect when query or date filters change
+
+  // Log whenever events state updates
+  useEffect(() => {
+    console.log("Events updated:", events); //6th
+  }, [events]);
 
   return (
     <div className='absolute top-[90%] left-[20%] w-[75%] flex flex-wrap gap-[3%] pr-[2%]'>

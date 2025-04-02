@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState } from 'react'
 import HomeHeader from '../components/HomeHeader'
 import EventCardContainer from '../components/EventCardContainer'
 import BackToTop from '../components/BackToTop'
@@ -6,9 +6,28 @@ import homeBanner from '../assets/homeBanner.png'
 import eventsHeading from '../assets/eventsHeading.png'
 
 const HomePage = () => {
+
+  // change: State variables for search query and date filters
+  const [query, setQuery] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  // Handles search query received from HomeHeader component
+  const handleSearch = ({ query }) => {
+    setQuery(query); // Updates the state with the received search query
+    console.log('Query set in HomePage:', query); //3rd log
+  };
+
+  // Handles date filter values received from HomeHeader component
+  const handleDateChange = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+    console.log('Date filters set in Homepage:', { start, end });
+  };
+
   return (
     <div className='relative'>
-      <HomeHeader />
+      <HomeHeader onSearch={handleSearch} onDateChange={handleDateChange} />
 
       <BackToTop />
       
@@ -25,7 +44,8 @@ const HomePage = () => {
         <p>MY EVENTS</p>
       </div>
 
-      <EventCardContainer />
+      {/* EventCardContainer receives search and date filter values as props */}
+      <EventCardContainer query={query} startDate={startDate} endDate={endDate} />
       
     </div>
   )
