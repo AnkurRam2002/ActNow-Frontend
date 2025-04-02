@@ -81,9 +81,9 @@ const EventDetails = () => {
     <div className= "flex justify-center gap-5 items-center min-h-[90vh] bg-gray-50 p-6">
       <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
         {/* Event Name and Status */} 
-        <div className="flex justify-between gap-0.5 items-center mb-4"> 
+        <div className="flex justify-between gap-0.5 items-start mb-4"> 
           <h2 className="text-3xl font-bold text-gray-900">{event.name}</h2> 
-          <span className={`px-3 py-1 text-sm font-medium rounded-full 
+          <span className={`px-3 py-1 mt-2 text-sm font-medium rounded-full 
             ${event.status === 'Completed' ? 'bg-green-500 text-white' : 
             event.status === 'Ongoing' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-gray-800'}`} > 
             {event.status} 
