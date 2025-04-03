@@ -31,6 +31,7 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search..."
         value={query}
         onChange={(e) => setQuery(e.target.value)} // Updates the state on input change
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         className="ml-[3%] w-[70%] focus:outline-none"
       />
       
