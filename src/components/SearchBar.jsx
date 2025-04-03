@@ -23,7 +23,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-full w-[95%] h-[65%] font-[Poppins] border-1 border-[#b3b3b3]">
+    <div className="flex items-center justify-between rounded-full w-[95%] h-[65%] font-[Poppins] ring-1 ring-inset ring-[#b3b3b3]">
 
        {/* Input field for entering the search query */}
       <input
@@ -32,7 +32,7 @@ const SearchBar = ({ onSearch }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)} // Updates the state on input change
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        className="ml-[3%] w-[70%] focus:outline-none"
+        className="pl-[3%] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#b3b3b3a8] w-[80%] h-full rounded-l-full"
       />
       
       {/* Clear button - only visible when query is not empty */}

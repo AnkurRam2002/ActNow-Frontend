@@ -93,7 +93,7 @@ const HomeHeader = ({ onSearch, onDateChange }) => {
         {/* Start Date Input */}
         <input
           type="date"
-          className="start-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-l-full px-[3%] text-[#757575]"
+          className="start-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-l-full px-[3%] text-[#757575] focus:outline-none focus:ring-2 ring-inset ring-gray-300"
           value={startDate}
           onChange={(e) => {
             setStartDate(e.target.value);
@@ -104,7 +104,7 @@ const HomeHeader = ({ onSearch, onDateChange }) => {
         {/* End Date Input */}
         <input
           type="date"
-          className="end-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-r-full px-[3%] text-[#757575]"
+          className="end-date w-[50%] h-[65%] border border-[#b3b3b3] rounded-r-full px-[3%] text-[#757575] focus:outline-none focus:ring-2 ring-inset ring-gray-300"
           value={endDate}
           onChange={(e) => {
             setEndDate(e.target.value);
