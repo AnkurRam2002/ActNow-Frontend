@@ -31,10 +31,9 @@ const EventCard = ({ name, ngo, city, date, description, eventId, status, needed
         </div>
       )}
 
-      {/* Event Name */}
-      <div className="event-name mr-6">
-        <p className="font-semibold text-[1.3vw] text-[#463E3E] line-clamp-2">{name}</p>
-      </div>
+      {/* Event Name */} 
+      <p className="event-name font-semibold text-[1.3vw] text-[#463E3E] line-clamp-2">{name}</p>
+      
 
       {/* NGO Name */}
       <p className='NGO-name font-semibold text-[#7A7C7D] text-[1.1vw] line-clamp-1'>{ngo}</p>
