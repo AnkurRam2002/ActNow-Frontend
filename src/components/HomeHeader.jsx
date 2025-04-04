@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import ProfileMenu from "./ProfileMenu";
 
 const HomeHeader = ({ onSearch, onDateChange }) => {
-  // Change: Reference to the menu container to detect clicks outside
+  // Reference to the menu container to detect clicks outside
   const menuRef = useRef(null);
 
   // State variables
@@ -40,18 +40,18 @@ const HomeHeader = ({ onSearch, onDateChange }) => {
     };
   }, []);
 
-  // Change: Function to handle search queries from SearchBar
+  // Function to handle search queries from SearchBar
   const handleSearch = ({ query }) => {
     if (onSearch) {
       console.log(
         "homeheader -> passing query from searchbar to homepage:",
         query
-      ); //2nd log
+      ); // 2nd log
       onSearch({ query }); // Pass search data to HomePage
     }
   };
 
-  // Change: Function to handle date changes and pass to parent component
+  // Function to handle date changes and pass to parent component
   const handleDateChange = (start, end) => {
     if (onDateChange) {
       onDateChange(start, end); // Pass selected dates to HomePage

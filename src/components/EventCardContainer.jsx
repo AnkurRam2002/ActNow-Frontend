@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import api from '../api'
 import EventCard from './EventCard';
 
-const EventCardContainer = ({ query, startDate, endDate }) => { //change: Receiving search and date filter props
+const EventCardContainer = ({ query, startDate, endDate, filterType }) => { // Receiving search, date filter and all|my filtertype props
 
   // State to store the list of events
   const [events, setEvents] = useState([]);
+
+  // Extract user ID from JWT token stored in localStorage
+  const token = localStorage.getItem("token");
+  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   // Fetch event details from the API whenever query, startDate, or endDate changes
   useEffect(() => {
@@ -18,12 +22,17 @@ const EventCardContainer = ({ query, startDate, endDate }) => { //change: Receiv
           ...(endDate && { endDate }),
         };
 
-        console.log("Sending request with params received from homepage:", params); // Check request parameters 4th log
+        // Dynamically deciding the endpoint based on filterType        
+        let endpoint = '/events';
+        if (filterType === 'my' && userId) {
+          endpoint = `/users/${userId}/myEvents`; // Using /myEvents when "MY EVENTS" is selected
+        }
 
-        // Sending GET request to fetch events based on filters
-        const response = await api.get('/events', { params });
+        console.log("Requesting:", endpoint, "with params:", params); // Check request 5th log
 
-        console.log("Response received:", response.data); // Check filtered results 5th log
+        const response = await api.get(endpoint, { params });
+
+        console.log("Response received:", response.data); // Check filtered results 6th log
 
         setEvents([...response.data]); // Update state with new event data
       } catch (error) {
@@ -32,11 +41,11 @@ const EventCardContainer = ({ query, startDate, endDate }) => { //change: Receiv
     };
 
     fetchEvents();
-  }, [query, startDate, endDate]); // change: Re-run effect when query or date filters change
+  }, [query, startDate, endDate, filterType]); // Re-run effect when query, date filters or filtertype change
 
   // Log whenever events state updates
   useEffect(() => {
-    console.log("Events updated:", events); //6th
+    console.log("Events updated:", events); // 7th log
   }, [events]);
 
   return (
