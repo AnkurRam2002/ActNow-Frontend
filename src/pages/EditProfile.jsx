@@ -7,6 +7,10 @@ const EditProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true); // for blocking render
+
+  // Extracted userId from token for authorization check
+  const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   const [profileData, setProfileData] = useState({
     username: "",
@@ -17,12 +21,22 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
+
+    // Redirected to home page if the profile does not belong to the logged in user
+    if (loggedInUserId !== id) {
+      alert("You are not authorized to edit this profile.");
+      navigate("/home");
+      return;
+    }
+
     const fetchUser = async () => {
       try {
         const response = await api.get(`/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         const data = response.data;
+
         setProfileData({
           username: data.username || "",
           phoneNumber: data.phoneNumber || "",
@@ -30,6 +44,9 @@ const EditProfile = () => {
           skills: data.skills || [],
           newSkill: "",
         });
+
+        setLoading(false);
+
       } catch (error) {
         console.error("Error fetching user data:", error);
         alert("Failed to load user data.");
@@ -38,6 +55,8 @@ const EditProfile = () => {
 
     fetchUser();
   }, [id]);
+
+  if (loading) return null; // Don't show anything until auth check is done
 
   const handleChange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });

@@ -6,6 +6,7 @@ import EventTopbar from "../components/EventTopbar";
 const EditEvent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // for blocking render
   const [eventData, setEventData] = useState({
     name: "",
     description: "",
@@ -26,6 +27,15 @@ const EditEvent = () => {
         
         if (response.status === 200) {
           const data = await response.data;
+          const loggedInUserId = localStorage.getItem("userId");
+
+          // Check if current user is the organizer
+          if (data.organizer._id !== loggedInUserId) {
+            alert("You are not authorized to edit this event.");
+            navigate(`/events/${id}`);
+            return;
+          }
+
           setEventData({
             name: data.name,
             description: data.description,
@@ -34,6 +44,9 @@ const EditEvent = () => {
             requiredSkills: data.requiredSkills.join(","),
             volunteersNeeded: data.volunteersNeeded,
           });
+
+          setLoading(false);
+
         } else {
           alert("Failed to fetch event details.");
         }
@@ -45,6 +58,8 @@ const EditEvent = () => {
     
     fetchEvent();
   }, [id, token]);
+
+  if (loading) return null; // Don't show anything until auth check is done
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -92,7 +92,7 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
               <li
                 key={participant._id}
                 onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
-                className="p-2 bg-gray-100 rounded-lg text-gray-800 cursor-pointer hover:underline"
+                className="p-2 bg-gray-200 rounded-lg text-gray-800 cursor-pointer px-3 py-1 hover:bg-gray-300"
               >
                 {participant.username}
               </li>
