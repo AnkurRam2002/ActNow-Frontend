@@ -9,6 +9,7 @@ import EventDetails from "./pages/EventDetails";
 import EditEvent from "./pages/EditEvent";
 import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="*" element={<Navigate to="/login" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/users/:id" element={<Profile />} />
+        <Route path="/users/:id/edit" element={<EditProfile />} />
       </Routes>
     </Router>
   );

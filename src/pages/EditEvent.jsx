@@ -61,7 +61,7 @@ const EditEvent = () => {
     };
 
     try {
-      const response = await api.put(`/events/${id}`, eventPayload, {
+      const response = await api.put(`/events/${id}/edit`, eventPayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -80,7 +80,7 @@ const EditEvent = () => {
   return (
     <>
     <EventTopbar />
-    <div className="max-w-lg mx-auto mt-20 p-6 border rounded shadow-md">
+    <div className="max-w-lg mx-auto my-10 p-6 border rounded shadow-md">
       <h2 className="text-xl font-bold mb-4">Edit Event</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
