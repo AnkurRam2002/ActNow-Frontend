@@ -17,6 +17,7 @@ const EditEvent = () => {
   });
 
   const token = localStorage.getItem("token");
+  const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -27,7 +28,6 @@ const EditEvent = () => {
         
         if (response.status === 200) {
           const data = await response.data;
-          const loggedInUserId = localStorage.getItem("userId");
 
           // Check if current user is the organizer
           if (data.organizer._id !== loggedInUserId) {
