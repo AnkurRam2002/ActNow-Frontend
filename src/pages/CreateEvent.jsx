@@ -60,8 +60,10 @@ const CreateEvent = () => {
       if (response.error) {
         throw new Error(response.message || "Failed to create event.");
       }
-  
+      
+      const newEventId = response.data.eventId; // extract event ID
       alert("Event created successfully!");
+      navigate(`/events/${newEventId}`); // redirect to event details
       setEventData({
         name: "",
         description: "",
