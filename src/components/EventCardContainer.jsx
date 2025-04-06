@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../api'
 import EventCard from './EventCard';
 
-const EventCardContainer = ({ query, startDate, endDate, filterType }) => { // Receiving search, date filter and all|my filtertype props
+const EventCardContainer = ({ query, startDate, endDate, filterType, userRole }) => { // Receiving search, date filter and all|my filtertype props
 
   // State to store the list of events
   const [events, setEvents] = useState([]);
@@ -24,7 +24,7 @@ const EventCardContainer = ({ query, startDate, endDate, filterType }) => { // R
 
         // Dynamically deciding the endpoint based on filterType        
         let endpoint = '/events';
-        if (filterType === 'my' && userId) {
+        if ((userRole === 'volunteer' && filterType === 'my') || userRole === 'ngo') {
           endpoint = `/users/${userId}/myEvents`; // Using /myEvents when "MY EVENTS" is selected
         }
 
