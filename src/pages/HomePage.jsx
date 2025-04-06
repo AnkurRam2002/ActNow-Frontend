@@ -4,8 +4,11 @@ import EventCardContainer from "../components/EventCardContainer";
 import BackToTop from "../components/BackToTop";
 import homeBanner from "../assets/homeBanner.png";
 import eventsHeading from "../assets/eventsHeading.png";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+
+  const navigate = useNavigate();
 
   // State variables for all | my events
   const [filterType, setFilterType] = useState("all");
@@ -14,6 +17,11 @@ const HomePage = () => {
   const [query, setQuery] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  // Get role directly from localStorage (non-reactive)
+  const userRole = localStorage.getItem("userRole");
+  // const userRole = loggedInUser?.role;
+  console.log(userRole);
 
   // Handles search query received from HomeHeader component
   const handleSearch = ({ query }) => {
@@ -46,24 +54,37 @@ const HomePage = () => {
         />
       </div>
 
-      <div className="absolute top-[70%] left-[20%] flex gap-[10%] items-center w-[30%] text-[1.9vw] font-bold text-white ">
-        <p
-          className={`hover:bg-[#2727276e] rounded-sm px-[0.4vw] transition-all cursor-pointer border-b-[0.4vw] ${
-            filterType === "all" ? "border-[#54F0E3]" : "border-transparent"
-          }`}
-          onClick={() => setFilterType("all")}
+      {/* Filter toggle (only show if volunteer) */}
+      {userRole === "volunteer" && (
+        <div className="absolute top-[70%] left-[20%] flex gap-[10%] items-center w-[30%] text-[1.9vw] font-bold text-white ">
+          <p
+            className={`hover:bg-[#2727276e] rounded-sm px-[0.4vw] transition-all cursor-pointer border-b-[0.4vw] ${
+              filterType === "all" ? "border-[#54F0E3]" : "border-transparent"
+            }`}
+            onClick={() => setFilterType("all")}
+          >
+            ALL
+          </p>
+          <p
+            className={`hover:bg-[#2727276e] rounded-sm px-[0.4vw] transition-all cursor-pointer border-b-[0.4vw] ${
+              filterType === "my" ? "border-[#54F0E3]" : "border-transparent"
+            }`}
+            onClick={() => setFilterType("my")}
+          >
+            MY EVENTS
+          </p>
+        </div>
+      )}
+
+      {/* CREATE NEW button (only show if NGO) */}
+      {userRole === "ngo" && (
+        <button
+          className="create-event-btn absolute top-[150%] left-[5%] bg-blue-800 text-white px-8 py-3 text-[1.1vw] rounded-sm font-semibold font-[Poppins] hover:bg-blue-700 cursor-pointer"
+          onClick={() => navigate("/create-event")}
         >
-          ALL
-        </p>
-        <p
-          className={`hover:bg-[#2727276e] rounded-sm px-[0.4vw] transition-all cursor-pointer border-b-[0.4vw] ${
-            filterType === "my" ? "border-[#54F0E3]" : "border-transparent"
-          }`}
-          onClick={() => setFilterType("my")}
-        >
-          MY EVENTS
-        </p>
-      </div>
+          CREATE NEW +
+        </button>
+      )}
 
       {/* EventCardContainer receives search and date filter values as props */}
       <EventCardContainer
