@@ -23,7 +23,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-full w-[95%] h-[65%] font-[Poppins] ring-1 ring-inset ring-[#b3b3b3]">
+    <div className="relative flex items-center justify-between rounded-full w-[95%] h-[65%] font-[Poppins] ring-1 ring-inset ring-[#b3b3b3]">
 
        {/* Input field for entering the search query */}
       <input
@@ -39,7 +39,7 @@ const SearchBar = ({ onSearch }) => {
       {query && (
         <button 
           onClick={handleClear}
-          className="text-gray-500 hover:text-black transition-all mx-2 cursor-pointer"
+          className="text-gray-500 hover:text-black transition-all mx-2 cursor-pointer absolute right-[20%]"
         >
           ✖
         </button>
