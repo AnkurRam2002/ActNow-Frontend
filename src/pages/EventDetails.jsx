@@ -16,6 +16,9 @@ const EventDetails = () => {
   const token = localStorage.getItem("token");
   const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
+  const userRole = localStorage.getItem("userRole");
+  const isVolunteer = userRole === "volunteer";
+
   // Fetch event data from the API
   useEffect(() => {
     const fetchEvent = async () => {
@@ -90,7 +93,7 @@ const EventDetails = () => {
       <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
         {/* Event Name and Status */} 
         <div className="flex justify-between gap-0.5 items-start mb-4"> 
-          <h2 className="text-3xl font-bold text-gray-900">{event.name}</h2> 
+          <h2 className="text-3xl font-bold pr-1 text-gray-900">{event.name}</h2> 
           <span className={`px-3 py-1 mt-2 text-sm font-medium rounded-full 
             ${event.status === 'Completed' ? 'bg-green-500 text-white' : 
             event.status === 'Ongoing' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-gray-800'}`} > 
@@ -165,9 +168,21 @@ const EventDetails = () => {
         {/* Buttons */}
         <div className="flex gap-4">
           {/* Participate Button */}
-          <button onClick={handleParticipate} className="w-full bg-gray-900 text-white font-bold py-2 rounded-lg">
+          {isVolunteer && (
+          <button
+          onClick={handleParticipate}
+          className={`w-full font-bold py-2 rounded-lg ${
+            event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gray-900 text-white'
+          }`}
+          disabled={
+            event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
+          }
+        >
             Participate
           </button>
+          )}
 
           {/* Add to Calendar Button */}
           <a 
