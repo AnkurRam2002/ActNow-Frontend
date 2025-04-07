@@ -9,7 +9,7 @@ import {
   FaMapMarkerAlt,
   FaTrash
 } from "react-icons/fa";
-import EventTopbar from "../components/EventTopbar";
+import ProfileTopbar from "../components/ProfileTopbar";
 
 const Profile = () => {
 
@@ -80,6 +80,8 @@ const Profile = () => {
 
   return (
     <>
+      {/* Topbar Component */}
+      <ProfileTopbar />
       {/* Profile Page Container */}
       <div className="flex justify-center items-center min-h-[90vh] bg-gray-50 p-6">
         <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
