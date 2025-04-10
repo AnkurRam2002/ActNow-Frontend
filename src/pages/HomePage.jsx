@@ -5,6 +5,7 @@ import BackToTop from "../components/BackToTop";
 import homeBanner from "../assets/homeBanner.png";
 import eventsHeading from "../assets/eventsHeading.png";
 import { useNavigate } from "react-router-dom";
+import Chatbot from "../components/Chatbot";
 
 const HomePage = () => {
 
@@ -41,6 +42,7 @@ const HomePage = () => {
       <HomeHeader onSearch={handleSearch} onDateChange={handleDateChange} />
 
       <BackToTop />
+      <Chatbot />
 
       <div className="w-[95%] mx-auto mt-[1%]">
         <img src={homeBanner} alt="home banner" className="w-full" />
