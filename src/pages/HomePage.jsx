@@ -27,15 +27,17 @@ const HomePage = () => {
             console.log('Service Worker Registered:', registration);
   
             const permission = await Notification.requestPermission();
-            alert(`Logged in as ${username}`);
   
-            if (permission === 'denied') {
-              console.warn("User denied notification permission.");
+            if (permission === 'granted') {
+              alert(`Logged in as ${username}`);
+            } else {
+              console.warn("User denied or dismissed notification permission.");
             }
           } catch (error) {
             console.error('Service Worker Error:', error);
           }
         } else {
+          // If service workers or push aren't supported, show the alert anyway
           alert(`Logged in as ${username}`);
         }
       }
@@ -43,6 +45,8 @@ const HomePage = () => {
   
     askNotificationPermission();
   }, []);
+  
+  
   
 
   // State variables for all | my events
