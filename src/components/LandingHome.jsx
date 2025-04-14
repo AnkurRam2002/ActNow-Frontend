@@ -19,7 +19,7 @@ const Home = () => {
         <h1 className="text-[3.5vw] font-bold text-[#544B4B]">Take a <br />moment to make a difference.</h1>
         <p className="text-[1.3vw] text-[#2A2525] mt-3">Join hands with us to support causes that matter. Find volunteer opportunities, contribute your skills, and create a lasting impact in your community.</p>
 
-        <button className="register-btn bg-[#463E3E] hover:bg-[#322e2e] transition-all text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer" onClick={() => navigate('/register')}>Register Now</button>
+        <button className="register-btn bg-[#463E3E] hover:bg-[#322e2e] active:bg-[#463E3E] transition-all text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer" onClick={() => navigate('/register')}>Register Now</button>
 
       </div>
       

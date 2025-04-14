@@ -81,7 +81,7 @@ const ResetPassword = () => {
             type="submit"
             disabled={loading}
             className={`w-full font-bold py-2 rounded-xl cursor-pointer ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#463E3E] hover:bg-[#463e3eda] transition-all text-white"
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#463E3E] hover:bg-[#463e3eda] active:bg-[#463E3E] transition-all text-white"
             }`}
           >
             {loading ? "Resetting..." : "Reset Password"}

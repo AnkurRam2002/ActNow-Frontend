@@ -73,7 +73,7 @@ const Login = () => {
             <a href="/forgot-password" className="hover:underline cursor-pointer">Forgot password?</a>
           </div>
 
-          <button className="w-full bg-[#463E3E] hover:bg-[#2e2929] transition-all text-white font-bold py-2 rounded-xl cursor-pointer">
+          <button className="w-full bg-[#463E3E] hover:bg-[#2e2929] active:bg-[#463E3E] transition-all text-white font-bold py-2 rounded-xl cursor-pointer">
             Login
           </button>
 

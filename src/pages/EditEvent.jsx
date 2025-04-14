@@ -151,7 +151,7 @@ const EditEvent = () => {
         />
         <button
           type="submit"
-          className="w-full bg-gray-900 hover:bg-gray-800 transition-all cursor-pointer text-white py-2 rounded"
+          className="w-full bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white py-2 rounded"
         >
           Update Event
         </button>

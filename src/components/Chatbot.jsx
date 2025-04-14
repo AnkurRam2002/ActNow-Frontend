@@ -51,7 +51,7 @@ const Chatbot = () => {
     {/* Floating Chat Button */}
     <button
       onClick={toggleChatWindow}
-      className={`fixed bottom-6 left-6 w-16 h-16 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 ${isOpen ? 'hidden' : 'block'}`}
+      className={`fixed bottom-6 left-6 w-16 h-16 bg-blue-500 hover:bg-blue-600 active:bg-blue-500 cursor-pointer text-white rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 ${isOpen ? 'hidden' : 'block'}`}
       style={{ zIndex: 999 }}
     >
       💬
@@ -63,7 +63,7 @@ const Chatbot = () => {
         {/* Close Button */}
         <button
           onClick={closeChatWindow}
-          className="absolute top-2 right-2 text-2xl text-red-500 hover:text-red-700"
+          className="absolute top-2 right-2 text-2xl text-red-500 hover:text-red-700 cursor-pointer"
           style={{ zIndex: 999 }}
         >
           &times;
@@ -99,7 +99,7 @@ const Chatbot = () => {
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
           />
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 transition-all cursor-pointer text-white p-2 rounded-lg">
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white p-2 rounded-lg">
             Send
           </button>
         </form>

@@ -81,7 +81,7 @@ const HomePage = () => {
       {/* CREATE NEW button (only show if NGO) */}
       {userRole === "ngo" && (
         <button
-          className="create-event-btn absolute mt-[12vw] left-[5%] bg-blue-800 text-white px-[2vw] py-[1vw] text-[1.1vw] rounded-sm sm:rounded-lg font-semibold font-[Poppins] hover:bg-blue-700 transition-all cursor-pointer"
+          className="create-event-btn absolute mt-[12vw] left-[5%] bg-blue-800 text-white px-[2vw] py-[1vw] text-[1.1vw] rounded-sm sm:rounded-lg font-semibold font-[Poppins] hover:bg-blue-700 active:bg-blue-800 transition-all cursor-pointer"
           onClick={() => navigate("/create-event")}
         >
           CREATE NEW +

@@ -174,7 +174,7 @@ const EventDetails = () => {
           className={`w-full font-bold py-2 rounded-lg ${
             event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-gray-900 hover:bg-gray-800 transition-all cursor-pointer text-white'
+              : 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
           }`}
           disabled={
             event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
@@ -189,7 +189,7 @@ const EventDetails = () => {
             href={getGoogleCalendarLink()} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="w-full bg-gray-600 hover:bg-gray-700 transition cursor-pointer text-white font-bold py-2 rounded-lg text-center flex items-center justify-center">
+            className="w-full bg-gray-600 hover:bg-gray-700 active:bg-gray-600 transition cursor-pointer text-white font-bold py-2 rounded-lg text-center flex items-center justify-center">
             Add to Calendar
           </a>
         </div>

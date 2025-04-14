@@ -14,14 +14,14 @@ const Nav = () => {
 
       <div className='left-section w-[78%] bg-white rounded-bl-full flex items-center px-[8%]'>
         <ul className='nav-list flex justify-between w-full'>
-          <li className='cursor-pointer hover:bg-[#a0929239] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('home')}>Home</li>
-          <li className='cursor-pointer hover:bg-[#a0929239] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('about')}>About</li>
-          <li className='cursor-pointer hover:bg-[#a0929239] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('services')}>Services</li>
-          <li className='cursor-pointer hover:bg-[#a0929239] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('contact')}>Contact</li>
+          <li className='cursor-pointer hover:bg-[#a0929239] active:bg-[#a0929227] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('home')}>Home</li>
+          <li className='cursor-pointer hover:bg-[#a0929239] active:bg-[#a0929227] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('about')}>About</li>
+          <li className='cursor-pointer hover:bg-[#a0929239] active:bg-[#a0929227] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('services')}>Services</li>
+          <li className='cursor-pointer hover:bg-[#a0929239] active:bg-[#a0929227] transition-all rounded-md px-[1vw] py-[0.2vw]' onClick={() => handleScroll('contact')}>Contact</li>
         </ul>
       </div>
 
-      <div className='right-section w-[22%] bg-[#463E3E] hover:bg-[#665e5e] transition-all rounded-tr-full text-white flex justify-center items-center cursor-pointer' onClick={() => navigate('/login')}>
+      <div className='right-section w-[22%] bg-[#463E3E] hover:bg-[#665e5e] active:bg-[#463E3E] transition-all rounded-tr-full text-white flex justify-center items-center cursor-pointer' onClick={() => navigate('/login')}>
         Login
       </div>
     </div>

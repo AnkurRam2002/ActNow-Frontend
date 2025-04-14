@@ -38,18 +38,18 @@ const Footer = () => {
         <div>
           <p className='font-semibold mb-[10%] text-[1.1vw]'>Quick Links</p>
           <div className='text-[1vw] font-light flex flex-col gap-[0.7vw]'>
-            <p className='cursor-pointer' onClick={() => handleScroll('home')}>Home</p>
-            <p className='cursor-pointer' onClick={() => handleScroll('about')}>About</p>
-            <p className='cursor-pointer' onClick={() => handleScroll('services')}>Services</p>
-            <p className='cursor-pointer' onClick={() => handleScroll('contact')}>Contact</p>
+            <p className='cursor-pointer hover:underline' onClick={() => handleScroll('home')}>Home</p>
+            <p className='cursor-pointer hover:underline' onClick={() => handleScroll('about')}>About</p>
+            <p className='cursor-pointer hover:underline' onClick={() => handleScroll('services')}>Services</p>
+            <p className='cursor-pointer hover:underline' onClick={() => handleScroll('contact')}>Contact</p>
           </div>
         </div>
         <div>
           <p className='font-semibold mb-[10%] text-[1.1vw]'>Legal</p>
           <div className='text-[1vw] font-light flex flex-col gap-[0.7vw]'>
-            <p className='cursor-pointer'>Privacy Policy</p>
-            <p className='cursor-pointer'>Terms & Services</p>
-            <p className='cursor-pointer'>Terms of Use</p>
+            <p className='cursor-pointer hover:underline'>Privacy Policy</p>
+            <p className='cursor-pointer hover:underline'>Terms & Services</p>
+            <p className='cursor-pointer hover:underline'>Terms of Use</p>
           </div>
         </div>
         <div className=' bg-[#635858] rounded-lg px-[0.9vw] pr-[0.5vw] py-[0.5vw] flex items-center gap-[0.7vw]'>

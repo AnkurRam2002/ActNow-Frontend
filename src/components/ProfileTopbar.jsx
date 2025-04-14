@@ -44,7 +44,7 @@ const ProfileTopBar = () => {
          
         {/* Logout Button */}
         <button
-        className='logout-btn h-[2.5vw] rounded text-red-700 text-[2.7vw] cursor-pointer hover:text-red-500 transition-all'
+        className='logout-btn h-[2.5vw] rounded text-red-700 text-[2.7vw] cursor-pointer hover:text-red-500 active:text-red-700 transition-all'
         onClick={handleLogout}>
           <PiSignOutBold />
         </button>
