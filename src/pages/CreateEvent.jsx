@@ -137,7 +137,7 @@ const CreateEvent = () => {
         />
         <button
           type="submit"
-          className="w-full bg-gray-900 text-white py-2 rounded"
+          className="w-full bg-gray-900 hover:bg-gray-800 transition-all cursor-pointer text-white py-2 rounded"
         >
           Create Event
         </button>

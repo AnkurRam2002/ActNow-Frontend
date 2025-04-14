@@ -59,7 +59,7 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
         {/* Edit Event Button */}
         <Link
           to={`/events/${eventId}/edit`}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center gap-2"
+          className="bg-blue-500 hover:bg-blue-600 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
         >
           <FaEdit /> Edit Event
         </Link>
@@ -67,7 +67,7 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
         {/* Delete Event Button */}
         <button
           onClick={handleDelete}
-          className="bg-red-500 text-white py-2 px-4 rounded-lg flex items-center gap-2"
+          className="bg-red-500 hover:bg-red-600 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
         >
           <FaTrashAlt /> Delete Event
         </button>
@@ -92,7 +92,7 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
               <li
                 key={participant._id}
                 onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
-                className="p-2 bg-gray-200 rounded-lg text-gray-800 cursor-pointer px-3 py-1 hover:bg-gray-300"
+                className="p-2 bg-gray-200 rounded-lg text-gray-800 cursor-pointer px-3 py-1 hover:bg-gray-300 transition-all"
               >
                 {participant.username}
               </li>

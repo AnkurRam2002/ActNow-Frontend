@@ -177,7 +177,7 @@ const Profile = () => {
                     <p key={event._id} className="mb-[3%]">
                       <Link
                         to={`/events/${event._id}`}
-                        className="text-gray-800 bg-gray-200 rounded-sm px-3 py-1 text-sm hover:bg-gray-300"
+                        className="text-gray-800 bg-gray-200 rounded-sm px-3 py-1 text-sm hover:bg-gray-300 transition-all cursor-pointer"
                       >
                         {event.name}
                       </Link>
@@ -195,11 +195,11 @@ const Profile = () => {
             <div className="mt-6 flex items-center gap-2">
               <Link
                 to={`/users/${user._id}/edit`}
-                className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 hover:bg-gray-800"
+                className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 hover:bg-gray-800 transition-all"
               >
                 <FaEdit /> Edit Profile
               </Link>
-              <button className="bg-red-800 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 cursor-pointer hover:bg-red-600" onClick={handleDelete}>
+              <button className="bg-red-800 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 cursor-pointer hover:bg-red-600 transition-all" onClick={handleDelete}>
                 <FaTrash /> Delete Profile
               </button>
             </div>

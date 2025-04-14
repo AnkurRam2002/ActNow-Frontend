@@ -153,7 +153,7 @@ const EditProfile = () => {
             <button
               type="button"
               onClick={handleAddSkill}
-              className="bg-[#6a7c91] text-white px-3 rounded hover:bg-[#4f5d6c] cursor-pointer"
+              className="bg-[#6a7c91] text-white px-3 rounded hover:bg-[#4f5d6c] transition-all cursor-pointer"
               title="Add Skill"
             >
               <FaPlus />
@@ -166,7 +166,7 @@ const EditProfile = () => {
                 <button
                   type="button"
                   onClick={() => handleRemoveSkill(skill)}
-                  className="ml-2 text-gray-800 hover:text-red-600"
+                  className="ml-2 text-gray-800 hover:text-red-600 transition-all cursor-pointer"
                   title="Remove Skill"
                 >
                   <FaTrash className="size-[0.8vw] cursor-pointer" />
@@ -178,7 +178,7 @@ const EditProfile = () => {
 
         <button
           type="submit"
-          className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 cursor-pointer"
+          className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 transition-all cursor-pointer"
         >
           Update Profile
         </button>

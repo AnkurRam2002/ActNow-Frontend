@@ -54,7 +54,7 @@ const ForgotPassword = () => {
         <div className="flex justify-center space-x-4 mb-4">
           <button
             className={`py-2 px-4 font-bold rounded-md ${
-              inputType === "email" ? "bg-[#463E3E] text-white" : "bg-gray-200"
+              inputType === "email" ? "bg-[#463E3E] text-white" : "bg-gray-200 hover:bg-gray-300 transition-colors cursor-pointer"
             }`}
             onClick={() => setInputType("email")}
           >
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
           </button>
           <button
             className={`py-2 px-4 font-bold rounded-md ${
-              inputType === "phone" ? "bg-[#463E3E] text-white" : "bg-gray-200"
+              inputType === "phone" ? "bg-[#463E3E] text-white" : "bg-gray-200 hover:bg-gray-300 transition-colors cursor-pointer"
             }`}
             onClick={() => setInputType("phone")}
           >
@@ -106,7 +106,7 @@ const ForgotPassword = () => {
             type="submit"
             disabled={loading}
             className={`w-full font-bold py-2 rounded-xl cursor-pointer ${
-              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#463E3E] text-white"
+              loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#463E3E] hover:bg-[#463e3eda] transition-all text-white"
             }`}
           >
             {loading ? "Sending OTP..." : "Send OTP"}

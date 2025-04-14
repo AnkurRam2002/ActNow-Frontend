@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import homeIcon from '../assets/homeIcon.png';
 import Logo from '../assets/Logo.png';
+import { PiSignOutBold } from 'react-icons/pi';
 
 const ProfileTopBar = () => {
 
@@ -34,18 +35,19 @@ const ProfileTopBar = () => {
         <img
             src={homeIcon}
             alt="profile"
-            className='h-[2.5vw] cursor-pointer mx-2 opacity-75 hover:opacity-55 active:opacity-75 transition-all' // Ensuring profile icon has same size as home icon
+            className='h-[2.5vw] cursor-pointer opacity-75 hover:opacity-55 active:opacity-75 transition-all' // Ensuring profile icon has same size as home icon
             onClick={goHome}
           />
 
         {/* Vertical Line between Home and Profile */}
-        <div className='h-15 w-9 bg-[#5f5e5a]'></div>
+        <div className='h-15 w-[1.7vw] mx-[0.5vw] bg-[#5f5e5a]'></div>
          
         {/* Logout Button */}
         <button
-        className='logout-btn px-4 py-2 bg-[#FF2C0C] rounded text-white text-[1vw] font-medium cursor-pointer hover:bg-[#e62b0e] active:bg-[#FF2C0C] transition-all'
+        className='logout-btn h-[2.5vw] rounded text-red-700 text-[2.7vw] cursor-pointer hover:text-red-500 transition-all'
         onClick={handleLogout}>
-        Logout</button>
+          <PiSignOutBold />
+        </button>
         </div>
       </div>
   );
