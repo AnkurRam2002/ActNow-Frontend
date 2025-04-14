@@ -23,6 +23,11 @@ const Login = () => {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("userEmail", response.data.userEmail);
       localStorage.setItem("userRole", response.data.userRole);
+
+      // ✅ Set a flag to indicate this is a fresh login
+      localStorage.setItem("justLoggedIn", "true");
+
+      
       alert("Logged in successfully");
       navigate("/home"); // Redirect after login
     } catch (error) {
