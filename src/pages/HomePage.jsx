@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import EventCardContainer from "../components/EventCardContainer";
 import BackToTop from "../components/BackToTop";
@@ -10,44 +10,6 @@ import Chatbot from "../components/Chatbot";
 const HomePage = () => {
 
   const navigate = useNavigate();
-
-  //Request permission after logging in
-  useEffect(() => {
-    const askNotificationPermission = async () => {
-      const justLoggedIn = localStorage.getItem("justLoggedIn");
-      const username = localStorage.getItem("username");
-  
-      // Only run this after a fresh login
-      if (justLoggedIn === "true") {
-        localStorage.removeItem("justLoggedIn"); // clear the flag after showing once
-  
-        if ('serviceWorker' in navigator && 'PushManager' in window) {
-          try {
-            const registration = await navigator.serviceWorker.register('/sw.js');
-            console.log('Service Worker Registered:', registration);
-  
-            const permission = await Notification.requestPermission();
-  
-            if (permission === 'granted') {
-              alert(`Logged in as ${username}`);
-            } else {
-              console.warn("User denied or dismissed notification permission.");
-            }
-          } catch (error) {
-            console.error('Service Worker Error:', error);
-          }
-        } else {
-          // If service workers or push aren't supported, show the alert anyway
-          alert(`Logged in as ${username}`);
-        }
-      }
-    };
-  
-    askNotificationPermission();
-  }, []);
-  
-  
-  
 
   // State variables for all | my events
   const [filterType, setFilterType] = useState("all");
