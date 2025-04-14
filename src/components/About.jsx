@@ -15,7 +15,7 @@ function About() {
         <div className='right-section w-[50%]'>
           <h1 className="text-[3.5vw] font-bold text-[#544B4B]">Making Volunteering Simple & Impactful</h1>
           <p className="text-[1.3vw] text-[#2A2525] mt-3">We bridge the gap between volunteers and nonprofits, helping you find opportunities that match your skills and passion.</p>
-          <button className="read-more-btn bg-[#463E3E] text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer">Read more</button>
+          <button className="read-more-btn bg-[#463E3E] hover:bg-[#322e2e] transition-all text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer">Read more</button>
         </div>
 
       </div>

@@ -4,6 +4,7 @@ import About from "../components/About";
 import LandingHome from "../components/LandingHome";
 import Services from "../components/Services";
 import Contact from "../components/Contact";
+import Footer from "../components/Footer"
 
 const Landing = () => {
   return (
@@ -13,6 +14,7 @@ const Landing = () => {
       <About />
       <Services />
       <Contact />
+      <Footer />
 
     </div>
     

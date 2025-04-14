@@ -8,7 +8,7 @@ import emailIcon from '../assets/emailIcon.png'
 
 const Contact = () => {
   return (
-    <div id="contact" className='page-container h-[50vw] px-[8%] pt-[7%]'>
+    <div id="contact" className='page-container h-[48vw] px-[8%] pt-[7%]'>
     
           <div className="contact-flex-container relative flex items-start justify-between">
           

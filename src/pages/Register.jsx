@@ -38,7 +38,7 @@ const Register = () => {
     <div className="flex justify-between mb-6">
       <Link
         to="/login"
-        className="w-1/2 text-center py-2 text-lg font-semibold bg-gray-100 text-[#463E3E] rounded-l-2xl"
+        className="w-1/2 text-center py-2 text-lg font-semibold bg-gray-100 hover:bg-gray-200 transition-all text-[#463E3E] rounded-l-2xl"
       >
         Login
       </Link>
@@ -138,7 +138,7 @@ const Register = () => {
         />
       </div>
 
-      <button className="w-full bg-[#463E3E] text-white font-bold py-2 rounded-xl cursor-pointer">
+      <button className="w-full bg-[#463E3E] hover:bg-[#2e2929] transition-all text-white font-bold py-2 rounded-xl cursor-pointer">
         Register
       </button>
 
