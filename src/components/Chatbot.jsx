@@ -59,7 +59,7 @@ const Chatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 left-6 w-96 h-[500px] bg-white rounded-lg shadow-lg p-4 flex flex-col z-50">
+        <div className="fixed bottom-12 left-6 w-96 h-[550px] bg-white rounded-lg shadow-[0.1vw_0.1vw_0.5vw_rgba(0,0,0,0.4)] p-4 flex flex-col z-50">
           {/* Close Button */}
           <button
             onClick={closeChatWindow}
@@ -74,6 +74,23 @@ const Chatbot = () => {
             ActNow Chat Assistant
           </div>
 
+          <hr className='text-gray-200' />
+
+          {/* Predefined Message Buttons */}
+          <div className="flex flex-wrap justify-center gap-2 mt-4 pb-3">
+            {predefinedMessages.map((message, index) => (
+              <button
+                key={index}
+                onClick={() => handleSendMessage(message)}
+                className="bg-blue-100 text-stone-600 hover:bg-blue-600 active:bg-blue-500 cursor-pointer transition-all hover:text-white px-4 py-2 rounded-lg text-sm"
+              >
+                {message}
+              </button>
+            ))}
+          </div>
+
+          <hr className=' text-gray-200' />
+
           {/* Chat Messages */}
           <div className="flex-grow overflow-y-auto mt-8 mb-4">
             {messages.map((msg, index) => (
@@ -82,7 +99,7 @@ const Chatbot = () => {
                 className={`mb-2 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}
               >
                 <div
-                  className={`inline-block px-4 py-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
+                  className={`inline-block px-4 py-2 text-sm rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
                 >
                   {msg.text.split('\n').map((line, lineIndex) => (
                     <p key={lineIndex}>{line}</p>
@@ -93,18 +110,7 @@ const Chatbot = () => {
             {loading && <div className="text-center text-gray-500">...</div>}
           </div>
 
-          {/* Predefined Message Buttons */}
-          <div className="flex flex-wrap justify-start gap-2 mt-4">
-            {predefinedMessages.map((message, index) => (
-              <button
-                key={index}
-                onClick={() => handleSendMessage(message)}
-                className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-lg"
-              >
-                {message}
-              </button>
-            ))}
-          </div>
+          
         </div>
       )}
     </>
