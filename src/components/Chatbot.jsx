@@ -59,7 +59,8 @@ const Chatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-12 left-6 w-96 h-[550px] bg-white rounded-lg shadow-[0.1vw_0.1vw_0.5vw_rgba(0,0,0,0.4)] p-4 flex flex-col z-50">
+        <div className="fixed bottom-12 left-6 w-96 h-[550px] bg-white rounded-lg shadow-[0.1vw_0.1vw_0.5vw_rgba(0,0,0,0.4)] p-4 flex flex-col z-50" 
+             style={{ height: messages.length === 0 ? '350px' : '550px' }}>
           {/* Close Button */}
           <button
             onClick={closeChatWindow}
@@ -93,24 +94,28 @@ const Chatbot = () => {
 
           {/* Chat Messages */}
           <div className="flex-grow overflow-y-auto mt-8 mb-4">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`mb-2 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}
-              >
-                <div
-                  className={`inline-block px-4 py-2 text-sm rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                >
-                  {msg.text.split('\n').map((line, lineIndex) => (
-                    <p key={lineIndex}>{line}</p>
-                  ))}
-                </div>
+            {messages.length === 0 ? (
+              <div className="text-center text-gray-500">
+                You can start by asking one of the above questions.
               </div>
-            ))}
+            ) : (
+              messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`mb-2 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}
+                >
+                  <div
+                    className={`inline-block px-4 py-2 text-sm rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
+                  >
+                    {msg.text.split('\n').map((line, lineIndex) => (
+                      <p key={lineIndex}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
             {loading && <div className="text-center text-gray-500">...</div>}
           </div>
-
-          
         </div>
       )}
     </>
