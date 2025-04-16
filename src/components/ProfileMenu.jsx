@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import expandIcon from '../assets/expandIcon.png'
+import { toast } from 'react-toastify';
 
 const ProfileMenu = () => {
 
@@ -28,6 +29,7 @@ const ProfileMenu = () => {
     localStorage.removeItem('userEmail');
     
     navigate('/login'); // Redirect to login page after logout
+    toast.success("Logged out.");
   }
 
   return (

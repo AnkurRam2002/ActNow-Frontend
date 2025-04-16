@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -95,7 +96,7 @@ const EditProfile = () => {
       });
 
       if (response.status === 200) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         navigate(`/users/${id}`);
       } else {
         alert("Failed to update profile.");

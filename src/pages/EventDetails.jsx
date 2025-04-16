@@ -4,6 +4,7 @@ import api from "../api";
 import { FaEdit, FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
 import EventSidebar from "../components/EventSidebar";
 import EventTopbar from "../components/EventTopbar";
+import { toast } from "react-toastify";
 
 const EventDetails = () => {
 
@@ -46,7 +47,7 @@ const EventDetails = () => {
       });
 
       if (response.status === 200) {
-        alert("Successfully registered for the event!");
+        toast.success("Successfully registered for the event!");
       }
     } catch (error) {
       console.error("Error participating:", error);

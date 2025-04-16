@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import EventTopbar from "../components/EventTopbar";
+import { toast } from "react-toastify";
 
 const EditEvent = () => {
   const { id } = useParams();
@@ -81,7 +82,7 @@ const EditEvent = () => {
       });
 
       if (response.status === 200) {
-        alert("Event updated successfully!");
+        toast.success("Event updated successfully!");
         navigate(`/events/${id}`);
       } else {
         alert("Failed to update event.");

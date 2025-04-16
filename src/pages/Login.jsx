@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ const Login = () => {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("userEmail", response.data.userEmail);
       localStorage.setItem("userRole", response.data.userRole);
-      alert("Logged in successfully");
+      toast.success("Logged in successfully");
       navigate("/home"); // Redirect after login
     } catch (error) {
       alert(error.response?.data?.error || "Something went wrong");

@@ -10,6 +10,7 @@ import {
   FaTrash
 } from "react-icons/fa";
 import ProfileTopbar from "../components/ProfileTopbar";
+import { toast } from "react-toastify";
 
 const Profile = () => {
 
@@ -36,7 +37,7 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 200 || response.status === 204) {  
-          alert("Your profile deleted successfully!");
+          toast.success("Your profile deleted successfully!");
           navigate("/");  
         } else {
           alert("Failed to delete your profile: " + (response.data?.message || "Unknown error"));

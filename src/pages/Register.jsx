@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -31,7 +32,7 @@ const Register = () => {
         role,
         skills: skills ? skills.split(',').map(s => s.trim()) : undefined
       });
-      alert("User registered successfully");
+      toast.success("User registered successfully");
       console.log("Response:", response.data);
       navigate("/login"); // Redirect to login page after successful registration
     } catch (error) {

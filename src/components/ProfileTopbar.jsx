@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import homeIcon from '../assets/homeIcon.png';
 import Logo from '../assets/Logo.png';
 import { PiSignOutBold } from 'react-icons/pi';
+import { toast } from 'react-toastify';
 
 const ProfileTopBar = () => {
 
@@ -19,6 +20,7 @@ const ProfileTopBar = () => {
     localStorage.removeItem('userEmail');
     
     navigate('/login'); // Redirect to login page after logout
+    toast.success("Logged out.");
   }
 
   return (

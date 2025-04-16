@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+import { toast } from "react-toastify";
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const CreateEvent = () => {
       }
       
       const newEventId = response.data.eventId; // extract event ID
-      alert("Event created successfully!");
+      toast.success("Event created successfully!");
       navigate(`/events/${newEventId}`); // redirect to event details
       setEventData({
         name: "",

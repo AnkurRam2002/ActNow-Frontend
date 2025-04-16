@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaEdit, FaUsers, FaTrashAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const EventSidebar = ({ eventId, organizerId, userId }) => {
   const [participants, setParticipants] = useState([]);
@@ -38,7 +39,7 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 200 || response.status === 204) {  
-          alert("Event deleted successfully!");
+          toast.success("Event deleted successfully!");
           navigate("/home");  
         } else {
           alert("Failed to delete event: " + (response.data?.message || "Unknown error"));
