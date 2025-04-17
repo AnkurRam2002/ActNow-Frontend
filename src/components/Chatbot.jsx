@@ -12,6 +12,7 @@ const Chatbot = () => {
     "Tell me about my upcoming events.",
     "Tell me about my registered events.",
     "Tell me about my completed events.",
+    "Recommend some events.",
   ];
 
   const handleSendMessage = async (message) => {
