@@ -186,13 +186,14 @@ const EventDetails = () => {
           )}
 
           {/* Add to Calendar Button */}
+          { event.status !== 'Completed' && (
           <a 
             href={getGoogleCalendarLink()} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="w-full bg-gray-600 hover:bg-gray-700 active:bg-gray-600 transition cursor-pointer text-white font-bold py-2 rounded-lg text-center flex items-center justify-center">
             Add to Calendar
-          </a>
+          </a>)}
         </div>
       </div>
       
