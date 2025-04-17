@@ -4,7 +4,7 @@ import api from "../api";
 import { FaEdit, FaUsers, FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const EventSidebar = ({ eventId, organizerId, userId }) => {
+const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,12 +58,13 @@ const EventSidebar = ({ eventId, organizerId, userId }) => {
       {userId === organizerId && (
       <div className="flex justify-center gap-4 mb-4">
         {/* Edit Event Button */}
+        { status !== 'Completed' &&(
         <Link
           to={`/events/${eventId}/edit`}
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
         >
           <FaEdit /> Edit Event
-        </Link>
+        </Link>)}
 
         {/* Delete Event Button */}
         <button

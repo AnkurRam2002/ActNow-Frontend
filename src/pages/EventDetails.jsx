@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
-import { FaEdit, FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
+import { FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
 import EventSidebar from "../components/EventSidebar";
 import EventTopbar from "../components/EventTopbar";
 import { toast } from "react-toastify";
@@ -207,7 +207,7 @@ const EventDetails = () => {
       </div>
       
       {/* Event Sidebar */}
-      {userId === event.organizer._id && <EventSidebar eventId={id} organizerId={event.organizer._id} userId={userId} />}
+      {userId === event.organizer._id && <EventSidebar eventId={id} organizerId={event.organizer._id} userId={userId} status={event.status} />}
     </div>
     </>
   );
