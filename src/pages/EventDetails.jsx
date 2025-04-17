@@ -186,14 +186,23 @@ const EventDetails = () => {
           )}
 
           {/* Add to Calendar Button */}
-          { event.status !== 'Completed' && (
-          <a 
-            href={getGoogleCalendarLink()} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="w-full bg-gray-600 hover:bg-gray-700 active:bg-gray-600 transition cursor-pointer text-white font-bold py-2 rounded-lg text-center flex items-center justify-center">
+          <a
+            href={event.status !== 'Completed' ? getGoogleCalendarLink() : undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              if (event.status === 'Completed') {
+                e.preventDefault(); 
+              }
+            }}
+            className={`w-full font-bold py-2 rounded-lg text-center ${
+              event.status !== 'Completed'
+                ? 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
+                : 'bg-gray-400 cursor-not-allowed pointer-events-none'
+            }`}
+          >
             Add to Calendar
-          </a>)}
+          </a>
         </div>
       </div>
       
