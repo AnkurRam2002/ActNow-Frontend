@@ -51,7 +51,7 @@ const EventDetails = () => {
       }
     } catch (error) {
       console.error("Error participating:", error);
-      alert(error.response?.data?.message || "Failed to participate.");
+      alert(error.response?.data.error || "Failed to participate.");
     }
   };
 
