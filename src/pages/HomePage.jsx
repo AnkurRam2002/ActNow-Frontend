@@ -42,7 +42,8 @@ const HomePage = () => {
       <HomeHeader onSearch={handleSearch} onDateChange={handleDateChange} />
 
       <BackToTop />
-      <Chatbot />
+      { userRole === 'volunteer' && (
+      <Chatbot />)}
 
       <div className="w-[95%] mx-auto mt-[1%]">
         <img src={homeBanner} alt="home banner" className="w-full" />

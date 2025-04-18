@@ -5,13 +5,13 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false); 
+  const [showInput, setShowInput] = useState(false); // New state to control when to show the custom question input field
 
   const token = localStorage.getItem('token'); 
 
   const predefinedMessages = [
     "Tell me about my upcoming events.",
     "Tell me about my registered events.",
-    "Tell me about my completed events.",
     "Recommend some events.",
   ];
 
@@ -19,6 +19,11 @@ const Chatbot = () => {
     const newMessages = [...messages, { sender: 'user', text: message }];
     setMessages(newMessages);
     setLoading(true);
+
+    // If the first predefined message is sent, show the input for custom messages
+    if (messages.length === 0) {
+      setShowInput(true);
+    }
 
     try {
       const response = await api.post('/chat', {
@@ -29,11 +34,12 @@ const Chatbot = () => {
       const botReply = response.data.reply;
       setMessages([...newMessages, { sender: 'bot', text: botReply }]);
     } catch (error) {
-      console.error('Error while fetching chatbot response:', error);
-      setMessages([
-        ...newMessages,
-        { sender: 'bot', text: 'Sorry, I encountered an error. Please try again later.' },
-      ]);
+      if (error.response && error.response.data && error.response.data.error) {
+        const errorMessage = error.response.data.error;
+        setMessages([...newMessages, { sender: 'bot', text: errorMessage }]);
+      } else {
+        setMessages([...newMessages, { sender: 'bot', text: 'Sorry, I encountered an error. Please try again later.' }]);
+      }
     } finally {
       setLoading(false);
     }
@@ -65,7 +71,7 @@ const Chatbot = () => {
           {/* Close Button */}
           <button
             onClick={closeChatWindow}
-            className="absolute top-2 right-2 text-2xl text-red-500 hover:text-red-700 cursor-pointer"
+            className="absolute top-0 right-2 text-2xl text-red-500 hover:text-red-700 cursor-pointer"
             style={{ zIndex: 999 }}
           >
             &times;
@@ -117,6 +123,23 @@ const Chatbot = () => {
             )}
             {loading && <div className="text-center text-gray-500">...</div>}
           </div>
+
+          {/* Custom Input field */}
+          {showInput && (
+            <div className="flex items-center mt-4">
+              <input
+                type="text"
+                placeholder="Ask me anything..."
+                className="w-full px-4 py-2 rounded-lg border border-gray-300"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && e.target.value) {
+                    handleSendMessage(e.target.value);
+                    e.target.value = ''; 
+                  }
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </>
@@ -124,4 +147,5 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+
 
