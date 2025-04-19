@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaEdit, FaUsers, FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { UserContext } from "../context/UserContext";
 
 const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
+  const { token } = useContext(UserContext);
 
   const navigate = useNavigate();
 

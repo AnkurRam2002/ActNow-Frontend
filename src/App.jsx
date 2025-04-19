@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer, Bounce } from "react-toastify";
+import { UserProvider } from "./context/UserContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -14,35 +15,37 @@ import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
-    <Router>
-      <ToastContainer
-          position="bottom-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/create-event" element={<CreateEvent />} />
-        <Route path="/events/:id" element={<EventDetails />} />
-        <Route path="/events/:id/edit" element={<EditEvent />} />
-        <Route path="*" element={<Navigate to="/login" />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/users/:id" element={<Profile />} />
-        <Route path="/users/:id/edit" element={<EditProfile />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <ToastContainer
+            position="bottom-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/events/:id" element={<EventDetails />} />
+          <Route path="/events/:id/edit" element={<EditEvent />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/users/:id" element={<Profile />} />
+          <Route path="/users/:id/edit" element={<EditProfile />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 

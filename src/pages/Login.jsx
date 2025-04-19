@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api";
 import { toast } from "react-toastify";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setToken, setUsername, setUserEmail, setUserRole } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,10 +26,17 @@ const Login = () => {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("userEmail", response.data.userEmail);
       localStorage.setItem("userRole", response.data.userRole);
+
+      // Update context too (IMPORTANT)
+      setToken(response.data.token);
+      setUsername(response.data.username);
+      setUserEmail(response.data.userEmail);
+      setUserRole(response.data.userRole)
+
       toast.success("Logged in successfully");
       navigate("/home"); // Redirect after login
     } catch (error) {
-      alert(error.response?.data?.error || "Something went wrong");
+      alert(error.response?.data.message || "Something went wrong");
     }
   };
 

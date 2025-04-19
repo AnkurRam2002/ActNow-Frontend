@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import EventCardContainer from "../components/EventCardContainer";
 import BackToTop from "../components/BackToTop";
@@ -6,6 +6,7 @@ import homeBanner from "../assets/homeBanner.png";
 import eventsHeading from "../assets/eventsHeading.png";
 import { useNavigate } from "react-router-dom";
 import Chatbot from "../components/Chatbot";
+import { UserContext } from "../context/UserContext";
 
 const HomePage = () => {
 
@@ -20,7 +21,7 @@ const HomePage = () => {
   const [endDate, setEndDate] = useState("");
 
   // Get role directly from localStorage (non-reactive)
-  const userRole = localStorage.getItem("userRole");
+  const { userRole } = useContext(UserContext);
   // const userRole = loggedInUser?.role;
   console.log(userRole);
 

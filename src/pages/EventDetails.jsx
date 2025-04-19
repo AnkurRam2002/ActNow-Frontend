@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
 import EventSidebar from "../components/EventSidebar";
 import EventTopbar from "../components/EventTopbar";
 import { toast } from "react-toastify";
+import { UserContext } from "../context/UserContext";
 
 const EventDetails = () => {
 
@@ -14,10 +15,12 @@ const EventDetails = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  // const token = localStorage.getItem("token");
+  // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
-  const userRole = localStorage.getItem("userRole");
+  // const userRole = localStorage.getItem("userRole");
+
+  const { token, userId, userRole } = useContext(UserContext); // Get values from context
   const isVolunteer = userRole === "volunteer";
 
   // Fetch event data from the API

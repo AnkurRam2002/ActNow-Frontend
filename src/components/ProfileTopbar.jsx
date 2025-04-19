@@ -3,10 +3,13 @@ import homeIcon from '../assets/homeIcon.png';
 import Logo from '../assets/Logo.png';
 import { PiSignOutBold } from 'react-icons/pi';
 import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const ProfileTopBar = () => {
 
   const navigate = useNavigate();
+  const { logout } = useContext(UserContext);
 
   const goHome = () => {
       navigate('/home'); 
@@ -14,13 +17,13 @@ const ProfileTopBar = () => {
   // Handle logout
   const handleLogout = () => {
     // Remove authentication-related data from localStorage
-    localStorage.removeItem('token'); 
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userEmail');
-    
-    navigate('/login'); // Redirect to login page after logout
+    // localStorage.removeItem('token'); 
+    // localStorage.removeItem('userId');
+    // localStorage.removeItem('userRole');
+    // localStorage.removeItem('userEmail');
+    logout();
     toast.success("Logged out.");
+    navigate('/login'); // Redirect to login page after logout
   }
 
   return (

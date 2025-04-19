@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import {
@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import ProfileTopbar from "../components/ProfileTopbar";
 import { toast } from "react-toastify";
+import { UserContext } from "../context/UserContext";
 
 const Profile = () => {
 
@@ -19,15 +20,17 @@ const Profile = () => {
   // Extract user ID from URL parameters
   const { id } = useParams();
 
+  const { token, userId: loggedInUserId } = useContext(UserContext); // 🆕 use context instead of localStorage
+
   // State for storing user data and loading status
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Extract logged-in user ID from token stored in localStorage
-  const token = localStorage.getItem("token");
-  const loggedInUserId = token
-    ? JSON.parse(atob(token.split(".")[1])).userId
-    : null;
+  // const token = localStorage.getItem("token");
+  // const loggedInUserId = token
+  //   ? JSON.parse(atob(token.split(".")[1])).userId
+  //   : null;
   
   // Delete profile function
   const handleDelete = async () => {

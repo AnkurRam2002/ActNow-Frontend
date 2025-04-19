@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import api from '../api'
 import EventCard from './EventCard';
+import { UserContext } from '../context/UserContext';
 
 const EventCardContainer = ({ query, startDate, endDate, filterType, userRole }) => { // Receiving search, date filter and all|my filtertype props
 
   // State to store the list of events
   const [events, setEvents] = useState([]);
+  const { userId } = useContext(UserContext); // Get token and userId from context
 
   // Extract user ID from JWT token stored in localStorage
-  const token = localStorage.getItem("token");
-  const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  // const token = localStorage.getItem("token");
+  // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   // Fetch event details from the API whenever query, startDate, or endDate changes
   useEffect(() => {

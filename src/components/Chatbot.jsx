@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import api from '../api'; 
+import { UserContext } from '../context/UserContext';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -7,7 +8,8 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const [showInput, setShowInput] = useState(false); // New state to control when to show the custom question input field
 
-  const token = localStorage.getItem('token'); 
+  // const token = localStorage.getItem('token'); 
+  const { token } = useContext(UserContext); // Get token from context
 
   const predefinedMessages = [
     "Tell me about my upcoming events.",

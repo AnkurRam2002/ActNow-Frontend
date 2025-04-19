@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import EventTopbar from "../components/EventTopbar";
 import { toast } from "react-toastify";
+import { UserContext } from "../context/UserContext";
 
 const EditEvent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { userId: loggedInUserId, token } = useContext(UserContext); // extract from context
   const [loading, setLoading] = useState(true); // for blocking render
   const [eventData, setEventData] = useState({
     name: "",
@@ -17,8 +19,8 @@ const EditEvent = () => {
     volunteersNeeded: "",
   });
 
-  const token = localStorage.getItem("token");
-  const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  // const token = localStorage.getItem("token");
+  // const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
 
   useEffect(() => {
     const fetchEvent = async () => {
