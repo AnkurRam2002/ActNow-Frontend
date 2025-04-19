@@ -14,6 +14,7 @@ const EventDetails = () => {
   const { id } = useParams(); // Retrieve eventId from URL params
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isParticipating, setIsParticipating] = useState(false); //change
 
   // const token = localStorage.getItem("token");
   // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
@@ -29,6 +30,7 @@ const EventDetails = () => {
       try {
         const response = await api.get(`/events/${id}`);
         setEvent(response.data);
+        setIsParticipating(response.data.volunteersAssigned.includes(userId)); //change
         setLoading(false);
       } catch (error) {
         console.error("Error fetching event data:", error);
@@ -36,7 +38,7 @@ const EventDetails = () => {
       }
     };
     fetchEvent();
-  }, [id]);
+  }, [id, userId]);
 
   const handleParticipate = async () => {
     if (!token) {
@@ -51,10 +53,45 @@ const EventDetails = () => {
 
       if (response.status === 200) {
         toast.success("Successfully registered for the event!");
+        setIsParticipating(true);
+        setEvent((prev) => ({
+          ...prev,
+          volunteersAssigned: [...prev.volunteersAssigned, userId],
+        }));
       }
     } catch (error) {
       console.error("Error participating:", error);
       toast.error(error.response?.data.error || "Failed to participate.");
+    }
+  };
+
+  // change
+  const handleWithdraw = async () => {
+    if (!token) {
+      alert("Please log in to withdraw.");
+      return;
+    }
+
+    try {
+      const response = await api.post(
+        `/events/${id}/unparticipate`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("You have withdrawn from the event.");
+        setIsParticipating(false);
+        setEvent((prev) => ({
+          ...prev,
+          volunteersAssigned: prev.volunteersAssigned.filter((v) => v !== userId),
+        }));
+      }
+    } catch (error) {
+      console.error("Error withdrawing:", error);
+      toast.error(error.response?.data.error || "Failed to withdraw.");
     }
   };
 
@@ -171,21 +208,18 @@ const EventDetails = () => {
 
         {/* Buttons */}
         <div className="flex gap-4">
-          {/* Participate Button */}
           {isVolunteer && (
-          <button
-          onClick={handleParticipate}
-          className={`w-full font-bold py-2 rounded-lg ${
-            event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
-          }`}
-          disabled={
-            event.status === 'Completed' || event.volunteersAssigned.length >= event.volunteersNeeded
-          }
-        >
-            Participate
-          </button>
+            <button
+              onClick={isParticipating ? handleWithdraw : handleParticipate}
+              className={`w-full font-bold py-2 rounded-lg ${
+                event.status === 'Completed'
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : isParticipating ? 'bg-red-800 hover:bg-red-600 active:bg-red-800 transition-all cursor-pointer text-white'  : 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
+              }`}
+              disabled={event.status === 'Completed'}
+            >
+              {isParticipating ? "Withdraw" : "Participate"}
+            </button>
           )}
 
           {/* Add to Calendar Button */}
