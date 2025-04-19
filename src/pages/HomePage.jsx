@@ -7,6 +7,9 @@ import eventsHeading from "../assets/eventsHeading.png";
 import { useNavigate } from "react-router-dom";
 import Chatbot from "../components/Chatbot";
 import { UserContext } from "../context/UserContext";
+import { useEffect } from "react";
+import { registerServiceWorker, subscribeUserToPush } from "../utils/pushHelper";
+import axios from "axios";
 
 const HomePage = () => {
 
@@ -37,6 +40,37 @@ const HomePage = () => {
     setEndDate(end);
     console.log("Date filters set in Homepage:", { start, end });
   };
+
+  //setting up push notification
+  useEffect(() => {
+    const setupPush = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+  
+        const registration = await registerServiceWorker();
+        const subscription = await subscribeUserToPush(registration);
+  
+        if (!subscription) return;
+  
+        // Optionally send subscription only if it's newly created
+        await axios.post(
+          "http://localhost:5000/api/push/subscribe",
+          { subscription },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  
+        console.log("🔔 Push subscription successful:", subscription);
+      } catch (error) {
+        console.error("❌ Error setting up push notifications:", error.message);
+      }
+    };
+  
+    setupPush();
+  }, []);
+  
+
+
 
   return (
     <div className="relative">
