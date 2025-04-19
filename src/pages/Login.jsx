@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setToken, setUsername, setUserEmail, setUserRole } = useContext(UserContext);
+  const { setToken, setUsername, setUserEmail, setUserRole, setUserId } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +22,14 @@ const Login = () => {
 
     try {
       const response = await api.post("/auth/login", { email, password });
+      const token = response.data.token;
+      let userIdFromToken = null;
+      try {
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        userIdFromToken = decoded.userId;
+      } catch (err) {
+        console.error("Token decode error", err);
+      }
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("userEmail", response.data.userEmail);
@@ -31,7 +39,8 @@ const Login = () => {
       setToken(response.data.token);
       setUsername(response.data.username);
       setUserEmail(response.data.userEmail);
-      setUserRole(response.data.userRole)
+      setUserRole(response.data.userRole);
+      setUserId(userIdFromToken);
 
       toast.success("Logged in successfully");
       navigate("/home"); // Redirect after login

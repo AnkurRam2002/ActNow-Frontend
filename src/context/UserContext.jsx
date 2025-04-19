@@ -4,7 +4,19 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      try {
+        const decoded = JSON.parse(atob(storedToken.split(".")[1]));
+        return decoded.userId;
+      } catch (e) {
+        console.error("Token decoding error", e);
+        return null;
+      }
+    }
+    return null;
+  });
   const [username, setUsername] = useState(
     localStorage.getItem("username") || "User"
   );
@@ -15,12 +27,12 @@ export const UserProvider = ({ children }) => {
     localStorage.getItem("userRole") || "role"
   );
 
-  useEffect(() => {
-    if (token) {
-      const decoded = JSON.parse(atob(token.split(".")[1]));
-      setUserId(decoded.userId);
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     const decoded = JSON.parse(atob(token.split(".")[1]));
+  //     setUserId(decoded.userId);
+  //   }
+  // }, [token]);
 
   const logout = () => {
     localStorage.clear();
@@ -43,7 +55,8 @@ export const UserProvider = ({ children }) => {
         setUsername,
         setUserEmail,
         setToken,
-        setUserRole
+        setUserRole,
+        setUserId
       }}
     >
       {children}
