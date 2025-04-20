@@ -19,4 +19,12 @@ self.addEventListener('push', function (event) {
     self.registration.showNotification(title, options)
   );
 });
-  
+
+self.addEventListener('install', function (event) {
+  console.log('Service Worker installed.');
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function (event)  {
+  console.log('Service Worker activated.'); 
+});
