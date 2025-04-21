@@ -24,8 +24,9 @@ const ActivityTimeline = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Activity Timeline</h1>
+    <div className="min-h-screen bg-gray-300 flex justify-center p-6">
+        <div className="w-full max-w-4xl">
+         <h1 className="text-2xl font-bold mb-6 text-center">Activity Timeline</h1>
       <VerticalTimeline>
         {activities.map((activity, index) => {
           const user = activity.user?.username || 'Unknown';
@@ -39,7 +40,12 @@ const ActivityTimeline = () => {
               date={new Date(activity.createdAt).toLocaleString()}
               iconStyle={{ background: '#4f46e5', color: '#fff' }}
               icon={activityIcon}
-            >
+              contentArrowStyle={{ borderRight: '7px solid #4f46e5' }}
+              contentStyle={{ background: '#fff',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                border: '1px solid #4f46e5', 
+                borderRadius: '0.5rem',       
+              }}>
               <h3 className="font-semibold">{message}</h3>
               {activity.metadata?.email && (
                 <p className="text-sm text-gray-500">Email: {activity.metadata.email}</p>
@@ -48,6 +54,7 @@ const ActivityTimeline = () => {
           );
         })}
       </VerticalTimeline>
+    </div>
     </div>
   );
 };
