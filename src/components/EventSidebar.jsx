@@ -8,11 +8,14 @@ import { UserContext } from "../context/UserContext";
 const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [volunteersPresent, setVolunteersPresent] = useState([]);
 
-  const { token } = useContext(UserContext);
+  const { token } = useContext(UserContext); // Auth token from context
+  const isNgoOwner = userId === organizerId; // Check if current user is the event owner
 
   const navigate = useNavigate();
 
+  // Fetch participants and their attendance status when component mounts or eventId changes
   useEffect(() => {
     const fetchParticipants = async () => {
       try {
@@ -25,14 +28,49 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
       }
     };
 
+    const fetchAttendance = async () => {
+      try {
+        const res = await api.get(`/events/${eventId}`);
+        setVolunteersPresent(res.data.volunteersPresent || []);
+      } catch (err) {
+        console.error("Error fetching attendance:", err);
+      }
+    };
+
     fetchParticipants();
+    fetchAttendance();
   }, [eventId]);
+
+  // Toggle individual attendance for a participant
+  const handleToggleAttendance = async (volunteerId) => {
+    try {
+      const res = await api.post(
+        `/events/${eventId}/toggle-attendance`,
+        {
+          volunteerId, // Payload: volunteer to be marked present/absent
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = res.data;
+
+      setVolunteersPresent(data.volunteersPresent);
+    } catch (err) {
+      console.error("Toggle attendance error:", err.message);
+      toast.error("Failed to toggle attendance.");
+    }
+  };
 
   // Navigate to the participant's profile page
   const goToProfile = (participantId) => {
     navigate(`/users/${participantId}`); // Redirect to the profile page with userId 
   }
 
+  // Delete event (with confirmation)
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
@@ -91,15 +129,35 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
           <p>No participants yet.</p>
         ) : (
           <ul className="space-y-2">
-            {participants.map((participant) => (
-              <li
-                key={participant._id}
-                onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
-                className="p-2 bg-gray-200 rounded-lg text-gray-800 cursor-pointer px-3 py-1 hover:bg-gray-300 active:bg-gray-200 transition-all"
-              >
-                {participant.username}
-              </li>
-            ))}
+            {participants.map((participant) => {
+              const isPresent = volunteersPresent.includes(participant._id);
+
+              return (
+                <li
+                  key={participant._id}
+                  onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
+                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 transition-all cursor-pointer
+                    ${
+                      status === "Completed" && isPresent
+                        ? "bg-green-200 hover:bg-green-300"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }`}
+                >
+                  {participant.username}
+
+                  {/* Attendance checkbox (editable only if event is not completed and user is owner) */}
+                  {isNgoOwner && status === "Ongoing" && (
+                    <input
+                      type="checkbox"
+                      checked={isPresent}
+                      onClick={(e) => e.stopPropagation()} // Stop click from bubbling to <li>
+                      onChange={() => handleToggleAttendance(participant._id)} // Toggle attendance
+                      className="form-checkbox h-5 w-5 accent-green-600 cursor-pointer"
+                    />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
