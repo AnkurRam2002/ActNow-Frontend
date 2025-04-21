@@ -41,7 +41,7 @@ const Footer = () => {
 
         {/* Quick Links column */}
         <div>
-          <p className='section-headingfont-semibold mb-[10%] text-[1.1vw]'>Quick Links</p>
+          <p className='section-heading font-semibold mb-[10%] text-[1.1vw]'>Quick Links</p>
           <div className='links-container text-[1vw] font-light flex flex-col gap-[0.7vw]'>
             <p className='cursor-pointer hover:underline' onClick={() => handleScroll('home')}>Home</p>
             <p className='cursor-pointer hover:underline' onClick={() => handleScroll('about')}>About</p>
