@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const UserContext = createContext();
 
@@ -34,13 +35,20 @@ export const UserProvider = ({ children }) => {
   //   }
   // }, [token]);
 
-  const logout = () => {
-    localStorage.clear();
-    setToken(null);
-    setUserId(null);
-    setUsername("");
-    setUserEmail("");
-    setUserRole("");
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout"); // Link to backend logout
+  
+      localStorage.clear();
+      setToken(null);
+      setUserId(null);
+      setUsername("");
+      setUserEmail("");
+      setUserRole("");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to logout");
+    }
   };
 
   return (
