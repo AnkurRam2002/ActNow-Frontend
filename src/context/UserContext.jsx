@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import api from "../api";
 
 export const UserContext = createContext();
 
@@ -37,7 +38,10 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await api.post("/auth/logout"); // Link to backend logout
+      const response = await api.post("/auth/logout", {}, {headers: { Authorization: `Bearer ${token}` }});
+      if (response.error) {
+        throw new Error(response.message || "Failed to logout.");
+      }
   
       localStorage.clear();
       setToken(null);
