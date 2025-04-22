@@ -50,6 +50,18 @@ const ActivityTimeline = () => {
               {activity.metadata?.email && (
                 <p className="text-sm text-gray-500">Email: {activity.metadata.email}</p>
               )}
+              {activity.metadata?.changes && (
+                <div className="text-sm text-gray-500">
+                  <p>Changes:</p>
+                  <ul className="list-disc pl-5">
+                    {Object.entries(activity.metadata.changes).map(([key, value]) => (
+                      <li key={key}>
+                        {key}: {value}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </VerticalTimelineElement>
           );
         })}
