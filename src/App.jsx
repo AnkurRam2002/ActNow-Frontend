@@ -49,6 +49,7 @@ function App() {
           <Route path="/activity" element={<ActivityTimeline />} />
           <Route path="/events" element={<EventsList />} />
           <Route path="/users" element={<UsersList />} />
+          <Route path="/activity/:id" element={<ActivityTimeline />} />
         </Routes>
       </Router>
     </UserProvider>

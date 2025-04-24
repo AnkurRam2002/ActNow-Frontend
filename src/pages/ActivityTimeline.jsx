@@ -7,14 +7,16 @@ import {
 import 'react-vertical-timeline-component/style.min.css';
 import activityMap from '../utils/activityMessages';
 import { FaClipboardList } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
 
-const ActivityTimeline = ({ userId }) => {
+const ActivityTimeline = () => {
   const [activities, setActivities] = useState([]);
+  const { id } = useParams(); 
 
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const endpoint = userId ? `/admin/activities?userId=${userId}` : '/admin/activities';
+        const endpoint = id ? `/admin/activities?userId=${id}` : '/admin/activities';
         const response = await api.get(endpoint);
         setActivities(response.data);
       } catch (error) {
@@ -22,13 +24,13 @@ const ActivityTimeline = ({ userId }) => {
       }
     };
     fetchActivities();
-  }, [userId]); 
+  }, [id]); 
 
   return (
     <div className="min-h-screen bg-gray-300 flex justify-center p-6">
       <div className="w-full max-w-4xl">
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Activity Timeline{userId ? ` for User: ${userId}` : ''}
+          Activity Timeline{id ? ` for User: ${id}` : ''}
         </h1>
         <VerticalTimeline>
           {activities.map((activity, index) => {
