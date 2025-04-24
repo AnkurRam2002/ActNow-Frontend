@@ -10,7 +10,7 @@ const EventsListPage = () => {
   const fetchEvents = async () => {
     try {
       const response = await api.get('/events'); 
-      setEvents(response.data); 
+      setEvents(response.data.reverse()); 
       setLoading(false);
     } catch (error) {
       console.error('Error fetching events:', error);
