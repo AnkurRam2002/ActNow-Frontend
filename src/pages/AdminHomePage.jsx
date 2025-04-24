@@ -8,8 +8,8 @@ const AdminHomePage = () => {
     <>
     <TopBar />
     <div className="flex items-center justify-center h-screen bg-gray-300">
-      <div className="flex flex-col items-center gap-6">
-        <div className="flex gap-6">
+      <div className="flex flex-col items-center gap-3">
+        <div className="flex gap-3">
           <button
             onClick={() => navigate('/events')}
             className="cursor-pointer w-24 h-24 bg-white border border-black rounded-lg shadow-md hover:shadow-lg transition flex items-center justify-center text-base font-medium"
