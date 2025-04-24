@@ -15,6 +15,7 @@ import EditProfile from "./pages/EditProfile";
 import ActivityTimeline from "./pages/ActivityTimeline";
 import EventsList from "./pages/EventsList";
 import UsersList from "./pages/UsersList";
+import AdminHomePage from "./pages/AdminHomePage";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/events" element={<EventsList />} />
           <Route path="/users" element={<UsersList />} />
           <Route path="/activity/:id" element={<ActivityTimeline />} />
+          <Route path="/admin" element={<AdminHomePage />} />
         </Routes>
       </Router>
     </UserProvider>
