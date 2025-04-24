@@ -22,7 +22,7 @@ const ActivityTimeline = ({ userId }) => {
       }
     };
     fetchActivities();
-  }, [userId]); // Refetch activities when userId changes
+  }, [userId]); 
 
   return (
     <div className="min-h-screen bg-gray-300 flex justify-center p-6">
