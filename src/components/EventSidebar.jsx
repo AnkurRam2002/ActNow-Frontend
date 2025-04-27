@@ -9,6 +9,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [volunteersPresent, setVolunteersPresent] = useState([]);
+  const [loadingParticipants, setLoadingParticipants] = useState({});
 
   const { token } = useContext(UserContext); // Auth token from context
   const isNgoOwner = userId === organizerId; // Check if current user is the event owner
@@ -44,6 +45,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   // Toggle individual attendance for a participant
   const handleToggleAttendance = async (volunteerId) => {
     try {
+      setLoadingParticipants((prev) => ({ ...prev, [volunteerId]: true }));
       const res = await api.post(
         `/events/${eventId}/toggle-attendance`,
         {
@@ -62,6 +64,8 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
     } catch (err) {
       console.error("Toggle attendance error:", err.message);
       toast.error("Failed to toggle attendance.");
+    } finally {
+      setLoadingParticipants((prev) => ({ ...prev, [volunteerId]: false }));
     }
   };
 
@@ -146,15 +150,20 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
                   {participant.username}
 
                   {/* Attendance checkbox (editable only if event is not completed and user is owner) */}
-                  {isNgoOwner && status === "Ongoing" && (
-                    <input
-                      type="checkbox"
-                      checked={isPresent}
-                      onClick={(e) => e.stopPropagation()} // Stop click from bubbling to <li>
-                      onChange={() => handleToggleAttendance(participant._id)} // Toggle attendance
-                      className="form-checkbox h-5 w-5 accent-green-600 cursor-pointer"
-                    />
-                  )}
+                  {isNgoOwner && status === "Ongoing" &&
+                    (loadingParticipants[participant._id] ? (
+                      <div className="h-5 w-5 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-green-600"></div>
+                      </div>
+                    ) : (
+                      <input
+                        type="checkbox"
+                        checked={isPresent}
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={() => handleToggleAttendance(participant._id)}
+                        className="form-checkbox h-5 w-5 accent-green-600 cursor-pointer"
+                      />
+                    ))}
                 </li>
               );
             })}

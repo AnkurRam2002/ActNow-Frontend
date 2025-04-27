@@ -11,10 +11,12 @@ const Register = () => {
   const [city, setCity] = useState("");
   const [role, setRole] = useState("volunteer");
   const [skills, setSkills] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
 
     //phone no. format validation
     if (!/^\d{10}$/.test(phone)) {
@@ -38,6 +40,8 @@ const Register = () => {
     } catch (error) {
       console.error("Error response:", error.response);
       alert(error.response?.data?.error || "Something went wrong");
+    } finally {
+      setLoading(false); // Stop loading after process
     }
   };
 
@@ -168,8 +172,23 @@ const Register = () => {
             />
           </div>
 
-          <button className="w-full bg-[#463E3E] hover:bg-[#2e2929] active:bg-[#463E3E] transition-all text-white font-bold py-2 rounded-xl cursor-pointer">
-            Register
+          <button
+            className={`flex items-center justify-center gap-2 w-full font-bold py-2 rounded-xl transition-all text-white ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#463E3E] hover:bg-[#2e2929] active:bg-[#463E3E] cursor-pointer"
+            }`}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Registering...
+              </>
+            ) : (
+              "Register"
+            )}
           </button>
 
           <div className="text-center text-sm font-bold text-[#463E3E] mt-2">

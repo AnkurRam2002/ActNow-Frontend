@@ -8,18 +8,13 @@ import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 
 const EventDetails = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { id } = useParams(); // Retrieve eventId from URL params
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isParticipating, setIsParticipating] = useState(false); //change
-
-  // const token = localStorage.getItem("token");
-  // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
-
-  // const userRole = localStorage.getItem("userRole");
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const { token, userId, userRole } = useContext(UserContext); // Get values from context
   const isVolunteer = userRole === "volunteer";
@@ -45,11 +40,16 @@ const EventDetails = () => {
       alert("Please log in to participate.");
       return;
     }
+    setButtonLoading(true); // show spinner
 
     try {
-      const response = await api.post(`/events/${id}/participate`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.post(
+        `/events/${id}/participate`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Successfully registered for the event!");
@@ -62,6 +62,8 @@ const EventDetails = () => {
     } catch (error) {
       console.error("Error participating:", error);
       toast.error(error.response?.data.error || "Failed to participate.");
+    } finally {
+      setButtonLoading(false); // hide spinner
     }
   };
 
@@ -71,6 +73,7 @@ const EventDetails = () => {
       alert("Please log in to withdraw.");
       return;
     }
+    setButtonLoading(true); // show spinner
 
     try {
       const response = await api.post(
@@ -86,19 +89,23 @@ const EventDetails = () => {
         setIsParticipating(false);
         setEvent((prev) => ({
           ...prev,
-          volunteersAssigned: prev.volunteersAssigned.filter((v) => v !== userId),
+          volunteersAssigned: prev.volunteersAssigned.filter(
+            (v) => v !== userId
+          ),
         }));
       }
     } catch (error) {
       console.error("Error withdrawing:", error);
       toast.error(error.response?.data.error || "Failed to withdraw.");
+    } finally {
+      setButtonLoading(false); // hide spinner
     }
   };
 
   // Navigate to the user's profile page
   const goToProfile = () => {
-    navigate(`/users/${event.organizer._id}`); // Redirect to the profile page with userId 
-  }
+    navigate(`/users/${event.organizer._id}`); // Redirect to the profile page with userId
+  };
 
   if (loading) {
     return (
@@ -112,140 +119,203 @@ const EventDetails = () => {
     return <div>Event not found.</div>;
   }
 
-    // Function to generate Google Maps link
-    const getGoogleMapsLink = () => {
-      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`;
-      return mapUrl;
-    };
-  
-    // Function to generate Google Calendar event link
-    const getGoogleCalendarLink = () => {
-      const startDateTime = new Date(event.date).toISOString().replace(/-|:|\.\d+/g, ""); // Format to ISO string
-      const endDateTime = new Date(new Date(event.date).getTime() + 24 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, ""); // Adding 24 hours
-  
-      const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.name)}&dates=${startDateTime}/${endDateTime}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}&sf=true&output=xml`;
-      return calendarUrl;
-    };
+  // Function to generate Google Maps link
+  const getGoogleMapsLink = () => {
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      event.location
+    )}`;
+    return mapUrl;
+  };
+
+  // Function to generate Google Calendar event link
+  const getGoogleCalendarLink = () => {
+    const startDateTime = new Date(event.date)
+      .toISOString()
+      .replace(/-|:|\.\d+/g, ""); // Format to ISO string
+    const endDateTime = new Date(
+      new Date(event.date).getTime() + 24 * 60 * 60 * 1000
+    )
+      .toISOString()
+      .replace(/-|:|\.\d+/g, ""); // Adding 24 hours
+
+    const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      event.name
+    )}&dates=${startDateTime}/${endDateTime}&details=${encodeURIComponent(
+      event.description
+    )}&location=${encodeURIComponent(event.location)}&sf=true&output=xml`;
+    return calendarUrl;
+  };
 
   return (
     <>
-    <EventTopbar />
-    <div className= "flex justify-center gap-5 items-center min-h-[90vh] bg-gray-50 p-6">
-      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
-        {/* Event Name and Status */} 
-        <div className="flex justify-between gap-0.5 items-start mb-4"> 
-          <h2 className="text-3xl font-bold pr-1 text-gray-900">{event.name}</h2> 
-          <span className={`px-3 py-1 mt-2 text-sm font-medium rounded-full 
-            ${event.status === 'Completed' ? 'bg-green-500 text-white' : 
-            event.status === 'Ongoing' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-gray-800'}`} > 
-            {event.status} 
-            </span> 
-            </div>
-        <p className="text-lg text-gray-600 mb-3">{event.description}</p>
-
-        {/* Organizer */}
-        <div className="text-gray-800 mb-2">
-          <div className="flex items-center gap-2">
-            <FaUsers className="text-black" />
-            <p onClick={goToProfile} className="font-medium cursor-pointer hover:underline">{event.organizer.username || "Unknown Organizer"}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-6 my-4">
-          {/* Date Box */}
-          <div className="flex flex-col items-center border-2 border-gray-700 px-7 py-2 rounded-lg shadow-md">
-            <span className="text-5xl font-bold">{new Date(event.date).getDate()}</span>
-            <span className="text-lg">{new Date(event.date).toLocaleString('en-US', { month: 'short' })}</span>
-          </div>
-
-          {/* Vertical Line */}
-          <div className="h-30 w-0.5 bg-gray-600"></div>
-
-          {/* Location and Time */}
-          <div className="flex flex-col gap-2">
-            {/* Location */}
-            <div className="flex items-center gap-2">
-              <FaMapMarkerAlt className="text-black" />
-              <p className="font-medium">{event.location}</p>
-              <a 
-                href={getGoogleMapsLink()} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-blue-600 text-sm">
-                Show in Map
-              </a>
-            </div>
-            {/* Time */}
-            <div className="flex items-center gap-2">
-              <FaClock className="text-black" />
-              <p className="font-medium">{new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Required Skills */}
-        <div className="mb-4">
-          <p className="text-gray-700 font-semibold mb-2">Requirements:</p>
-          <div className="flex flex-wrap gap-2 mt-1">
-          {event.requiredSkills.length <= 1 ? (
-            <span className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">
-              No specific skills required
-            </span>
-            ) : (
-             event.requiredSkills.map((skill, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">
-                {skill}
-              </span>
-            ))
-          )}
-          </div>
-        </div>
-
-        {/* Needed & Assigned Count */}
-        <p className="text-gray-700 mb-4">
-          {event.volunteersNeeded} Needed • {event.volunteersAssigned.length} Participants
-        </p>
-
-        {/* Buttons */}
-        <div className="flex gap-4">
-          {isVolunteer && (
-            <button
-              onClick={isParticipating ? handleWithdraw : handleParticipate}
-              className={`w-full font-bold py-2 rounded-lg ${
-                event.status === 'Completed'
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : isParticipating ? 'bg-red-800 hover:bg-red-600 active:bg-red-800 transition-all cursor-pointer text-white'  : 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
-              }`}
-              disabled={event.status === 'Completed'}
-            >
-              {isParticipating ? "Withdraw" : "Participate"}
-            </button>
-          )}
-
-          {/* Add to Calendar Button */}
-          <a
-            href={event.status !== 'Completed' ? getGoogleCalendarLink() : undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => {
-              if (event.status === 'Completed') {
-                e.preventDefault(); 
-              }
-            }}
-            className={`w-full font-bold py-2 rounded-lg text-center ${
-              event.status !== 'Completed'
-                ? 'bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white'
-                : 'bg-gray-400 cursor-not-allowed pointer-events-none'
+      <EventTopbar />
+      <div className="flex justify-center gap-5 items-center min-h-[90vh] bg-gray-50 p-6">
+        <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
+          {/* Event Name and Status */}
+          <div className="flex justify-between gap-0.5 items-start mb-4">
+            <h2 className="text-3xl font-bold pr-1 text-gray-900">
+              {event.name}
+            </h2>
+            <span
+              className={`px-3 py-1 mt-2 text-sm font-medium rounded-full 
+            ${
+              event.status === "Completed"
+                ? "bg-green-500 text-white"
+                : event.status === "Ongoing"
+                ? "bg-orange-500 text-white"
+                : "bg-gray-300 text-gray-800"
             }`}
-          >
-            Add to Calendar
-          </a>
+            >
+              {event.status}
+            </span>
+          </div>
+          <p className="text-lg text-gray-600 mb-3">{event.description}</p>
+
+          {/* Organizer */}
+          <div className="text-gray-800 mb-2">
+            <div className="flex items-center gap-2">
+              <FaUsers className="text-black" />
+              <p
+                onClick={goToProfile}
+                className="font-medium cursor-pointer hover:underline"
+              >
+                {event.organizer.username || "Unknown Organizer"}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 my-4">
+            {/* Date Box */}
+            <div className="flex flex-col items-center border-2 border-gray-700 px-7 py-2 rounded-lg shadow-md">
+              <span className="text-5xl font-bold">
+                {new Date(event.date).getDate()}
+              </span>
+              <span className="text-lg">
+                {new Date(event.date).toLocaleString("en-US", {
+                  month: "short",
+                })}
+              </span>
+            </div>
+
+            {/* Vertical Line */}
+            <div className="h-30 w-0.5 bg-gray-600"></div>
+
+            {/* Location and Time */}
+            <div className="flex flex-col gap-2">
+              {/* Location */}
+              <div className="flex items-center gap-2">
+                <FaMapMarkerAlt className="text-black" />
+                <p className="font-medium">{event.location}</p>
+                <a
+                  href={getGoogleMapsLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 text-sm"
+                >
+                  Show in Map
+                </a>
+              </div>
+              {/* Time */}
+              <div className="flex items-center gap-2">
+                <FaClock className="text-black" />
+                <p className="font-medium">
+                  {new Date(event.date).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Required Skills */}
+          <div className="mb-4">
+            <p className="text-gray-700 font-semibold mb-2">Requirements:</p>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {event.requiredSkills.length <= 1 ? (
+                <span className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">
+                  No specific skills required
+                </span>
+              ) : (
+                event.requiredSkills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-md"
+                  >
+                    {skill}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Needed & Assigned Count */}
+          <p className="text-gray-700 mb-4">
+            {event.volunteersNeeded} Needed • {event.volunteersAssigned.length}{" "}
+            Participants
+          </p>
+
+          {/* Buttons */}
+          <div className="flex gap-4">
+            {isVolunteer && (
+              <button
+                onClick={isParticipating ? handleWithdraw : handleParticipate}
+                className={`flex items-center justify-center gap-2 w-full font-bold py-2 rounded-lg ${
+                  event.status === "Completed"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : isParticipating
+                    ? "bg-red-800 hover:bg-red-600 active:bg-red-800 transition-all cursor-pointer text-white"
+                    : "bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white"
+                }`}
+                disabled={event.status === "Completed" || buttonLoading}
+              >
+                {buttonLoading ? (
+                  <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white"></div>
+                  </div>
+                ) : isParticipating ? (
+                  "Withdraw"
+                ) : (
+                  "Participate"
+                )}
+              </button>
+            )}
+
+            {/* Add to Calendar Button */}
+            <a
+              href={
+                event.status !== "Completed"
+                  ? getGoogleCalendarLink()
+                  : undefined
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                if (event.status === "Completed") {
+                  e.preventDefault();
+                }
+              }}
+              className={`w-full font-bold py-2 rounded-lg text-center ${
+                event.status !== "Completed"
+                  ? "bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white"
+                  : "bg-gray-400 cursor-not-allowed pointer-events-none"
+              }`}
+            >
+              Add to Calendar
+            </a>
+          </div>
         </div>
+
+        {/* Event Sidebar */}
+        {userId === event.organizer._id && (
+          <EventSidebar
+            eventId={id}
+            organizerId={event.organizer._id}
+            userId={userId}
+            status={event.status}
+          />
+        )}
       </div>
-      
-      {/* Event Sidebar */}
-      {userId === event.organizer._id && <EventSidebar eventId={id} organizerId={event.organizer._id} userId={userId} status={event.status} />}
-    </div>
     </>
   );
 };
