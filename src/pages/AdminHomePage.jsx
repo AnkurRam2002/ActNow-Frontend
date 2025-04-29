@@ -1,8 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/EventTopbar';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const AdminHomePage = () => {
   const navigate = useNavigate();
+  const {userRole} = useContext(UserContext);
+
+// If not admin, show nothing and redirect
+if (userRole !== 'admin') {
+  setTimeout(() => {
+    alert('You are not authorized to access this page.');
+    navigate(-1);
+  }, 100);
+  return null; // Don't render anything
+}
 
   return (
     <>

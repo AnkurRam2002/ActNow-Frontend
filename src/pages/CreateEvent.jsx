@@ -16,11 +16,7 @@ const CreateEvent = () => {
     volunteersNeeded: "",
   });
 
-  // const token = localStorage.getItem("token");
-  // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
-
   useEffect(() => {
-    // const userRole = localStorage.getItem("userRole");
     if (!token) {
       navigate("/login");
       setTimeout(() => {

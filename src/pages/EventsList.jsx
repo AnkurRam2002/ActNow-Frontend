@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import TopBar from '../components/EventTopbar' 
+import { UserContext } from '../context/UserContext';
 
 const EventsListPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {userRole} = useContext(UserContext);
   const navigate = useNavigate();
 
   const fetchEvents = async () => {
@@ -20,8 +22,19 @@ const EventsListPage = () => {
   };
 
   useEffect(() => {
-    fetchEvents();
+    if (userRole === 'admin') {
+      fetchEvents();
+    }
   }, []);
+
+  // If not admin, show nothing and redirect
+  if (userRole !== 'admin') {
+    setTimeout(() => {
+      alert('You are not authorized to access this page.');
+      navigate(-1);
+    }, 100);
+    return null; // Don't render anything
+  }
 
   const handleEventClick = (id) => {
     navigate(`/events/${id}`);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import api from '../api';
 import {
   VerticalTimeline,
@@ -7,12 +7,15 @@ import {
 import 'react-vertical-timeline-component/style.min.css';
 import activityMap from '../utils/activityMessages';
 import { FaClipboardList } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TopBar from '../components/EventTopbar'
+import { UserContext } from '../context/UserContext';
 
 const ActivityTimeline = () => {
   const [activities, setActivities] = useState([]);
-  const { id } = useParams(); 
+  const { id } = useParams();
+  const {userRole} = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -25,7 +28,16 @@ const ActivityTimeline = () => {
       }
     };
     fetchActivities();
-  }, [id]); 
+  }, [id]);
+
+  // If not admin, show nothing and redirect
+  if (userRole !== 'admin') {
+    setTimeout(() => {
+      alert('You are not authorized to access this page.');
+      navigate(-1);
+    }, 100);
+    return null; // Don't render anything
+  }
 
   return (
     <div>

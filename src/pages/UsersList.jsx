@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/EventTopbar'
+import { UserContext } from '../context/UserContext';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {userRole} = useContext(UserContext);
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
@@ -18,6 +20,15 @@ const UsersList = () => {
       setLoading(false);
     }
   };
+
+  // If not admin, show nothing and redirect
+  if (userRole !== 'admin') {
+    setTimeout(() => {
+      alert('You are not authorized to access this page.');
+      navigate(-1);
+    }, 100);
+    return null; // Don't render anything
+  }
 
   useEffect(() => {
     fetchUsers();
