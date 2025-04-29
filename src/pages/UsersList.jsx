@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
+import EventTopbar from '../components/EventTopbar'
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -27,8 +28,9 @@ const UsersList = () => {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Users List</h1>
+    <div className="p-8 pt-0">
+    <EventTopbar />
+      <h1 className="text-4xl font-bold text-center my-8">Users List</h1>
 
       {loading ? (
         <p className="text-gray-600 text-center">Loading users...</p>

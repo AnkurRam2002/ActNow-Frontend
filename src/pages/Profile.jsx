@@ -25,12 +25,6 @@ const Profile = () => {
   // State for storing user data and loading status
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Extract logged-in user ID from token stored in localStorage
-  // const token = localStorage.getItem("token");
-  // const loggedInUserId = token
-  //   ? JSON.parse(atob(token.split(".")[1])).userId
-  //   : null;
   
   // Delete profile function
   const handleDelete = async () => {
@@ -97,7 +91,7 @@ const Profile = () => {
                 {user.username}
               </h2>
               <p className="text-gray-600">
-                {user.role === "ngo" ? "NGO" : "Volunteer"}
+                {user.role === "ngo" ? "NGO" : user.role}
               </p>
             </div>
           </div>

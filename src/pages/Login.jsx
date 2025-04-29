@@ -43,7 +43,7 @@ const Login = () => {
       setUserId(userIdFromToken);
 
       toast.success("Logged in successfully");
-      navigate("/home"); // Redirect after login
+      navigate(response.data.userRole === "admin" ? "/admin" : "/home"); // Redirect after login
     } catch (error) {
       alert(error.response?.data.message || "Something went wrong");
     }
