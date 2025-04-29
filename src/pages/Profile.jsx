@@ -7,25 +7,25 @@ import {
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
-  FaTrash
+  FaTrash,
 } from "react-icons/fa";
+import { LuSquareActivity } from "react-icons/lu";
 import ProfileTopbar from "../components/ProfileTopbar";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 
 const Profile = () => {
-
   const navigate = useNavigate();
 
   // Extract user ID from URL parameters
   const { id } = useParams();
 
-  const { token, userId: loggedInUserId } = useContext(UserContext); // 🆕 use context instead of localStorage
+  const { token, userId: loggedInUserId, userRole } = useContext(UserContext); // 🆕 use context instead of localStorage
 
   // State for storing user data and loading status
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Delete profile function
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete your profile?")) {
@@ -33,13 +33,15 @@ const Profile = () => {
         const response = await api.delete(`/users/${loggedInUserId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (response.status === 200 || response.status === 204) {  
+        if (response.status === 200 || response.status === 204) {
           toast.success("Your profile deleted successfully!");
-          navigate("/");  
+          navigate("/");
         } else {
-          alert("Failed to delete your profile: " + (response.data?.message || "Unknown error"));
+          alert(
+            "Failed to delete your profile: " +
+              (response.data?.message || "Unknown error")
+          );
         }
-        
       } catch (error) {
         console.error("Error deleting your profile:", error);
         alert("Something went wrong.");
@@ -84,16 +86,21 @@ const Profile = () => {
       <div className="flex justify-center items-center min-h-[90vh] bg-gray-50 p-6">
         <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
           {/* Profile Header - Display username and role */}
-          <div className="flex items-center gap-4 mb-4">
-            <FaUser className="text-5xl text-gray-800" />
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                {user.username}
-              </h2>
-              <p className="text-gray-600">
-                {user.role === "ngo" ? "NGO" : user.role}
-              </p>
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex items-center gap-4">
+              <FaUser className="text-5xl text-gray-800" />
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {user.username}
+                </h2>
+                <p className="text-gray-600">
+                  {user.role === "ngo" ? "NGO" : user.role}
+                </p>
+              </div>
             </div>
+            <button className="" onClick={() => navigate(`/activity/${id}`)}>
+              <LuSquareActivity className="w-10 h-10 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-2 mt-1" />
+            </button>
           </div>
 
           {/* Contact Information */}
@@ -189,15 +196,20 @@ const Profile = () => {
           )}
 
           {/* Edit Profile Button (Only visible for the logged-in user) */}
-          {loggedInUserId === user._id && (
+          {(loggedInUserId === user._id || userRole === "admin") && (
             <div className="mt-6 flex items-center gap-2">
-              <Link
-                to={`/users/${user._id}/edit`}
-                className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 hover:bg-gray-800 active:bg-gray-900 transition-all"
+              {loggedInUserId === user._id && (
+                <Link
+                  to={`/users/${user._id}/edit`}
+                  className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-full hover:bg-gray-800 active:bg-gray-900 transition-all"
+                >
+                  <FaEdit /> Edit Profile
+                </Link>
+              )}
+              <button
+                className="bg-red-800 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-full cursor-pointer hover:bg-red-600 active:bg-red-800 transition-all"
+                onClick={handleDelete}
               >
-                <FaEdit /> Edit Profile
-              </Link>
-              <button className="bg-red-800 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-60 cursor-pointer hover:bg-red-600 active:bg-red-800 transition-all" onClick={handleDelete}>
                 <FaTrash /> Delete Profile
               </button>
             </div>

@@ -11,7 +11,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [volunteersPresent, setVolunteersPresent] = useState([]);
   const [loadingParticipants, setLoadingParticipants] = useState({});
 
-  const { token } = useContext(UserContext); // Auth token from context
+  const { token, userRole } = useContext(UserContext); // Auth token from context
   const isNgoOwner = userId === organizerId; // Check if current user is the event owner
 
   const navigate = useNavigate();
@@ -98,10 +98,10 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   return (
     <div className="w-1/3 bg-white p-4 rounded-xl shadow-lg">
       {/* Edit Event Button (Only for Organizer) */}
-      {userId === organizerId && (
+      {(userId === organizerId || userRole === "admin") && (
       <div className="flex justify-center gap-4 mb-4">
         {/* Edit Event Button */}
-        { status !== 'Completed' &&(
+        { status !== 'Completed' && userId === organizerId  && (
         <Link
           to={`/events/${eventId}/edit`}
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"

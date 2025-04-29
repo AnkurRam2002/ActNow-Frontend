@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import { FaMapMarkerAlt, FaUsers, FaClock } from "react-icons/fa";
 import EventSidebar from "../components/EventSidebar";
@@ -282,32 +282,34 @@ const EventDetails = () => {
             )}
 
             {/* Add to Calendar Button */}
-            <a
-              href={
-                event.status !== "Completed"
-                  ? getGoogleCalendarLink()
-                  : undefined
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                if (event.status === "Completed") {
-                  e.preventDefault();
+            { userRole !== "admin" && (
+              <a
+                href={
+                  event.status !== "Completed"
+                    ? getGoogleCalendarLink()
+                    : undefined
                 }
-              }}
-              className={`w-full font-bold py-2 rounded-lg text-center ${
-                event.status !== "Completed"
-                  ? "bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white"
-                  : "bg-gray-400 cursor-not-allowed pointer-events-none"
-              }`}
-            >
-              Add to Calendar
-            </a>
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (event.status === "Completed") {
+                    e.preventDefault();
+                  }
+                }}
+                className={`w-full font-bold py-2 rounded-lg text-center ${
+                  event.status !== "Completed"
+                    ? "bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white"
+                    : "bg-gray-400 cursor-not-allowed pointer-events-none"
+                }`}
+              >
+                Add to Calendar
+              </a>
+            )}
           </div>
         </div>
 
         {/* Event Sidebar */}
-        {userId === event.organizer._id && (
+        {(userId === event.organizer._id || userRole === "admin") && (
           <EventSidebar
             eventId={id}
             organizerId={event.organizer._id}
