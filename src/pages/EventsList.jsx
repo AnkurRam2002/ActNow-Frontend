@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
-import EventTopbar from '../components/EventTopbar' 
+import TopBar from '../components/EventTopbar' 
 
 const EventsListPage = () => {
   const [events, setEvents] = useState([]);
@@ -29,7 +29,7 @@ const EventsListPage = () => {
 
   return (
     <div className="p-8 pt-0">
-      <EventTopbar />
+      <TopBar />
       <h1 className="text-4xl font-bold text-center my-8">Events List</h1>
 
       {loading ? (

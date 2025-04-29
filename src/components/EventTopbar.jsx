@@ -1,15 +1,17 @@
-import { useState,useEffect, useRef } from 'react';
+import { useState,useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import profileIcon from '../assets/profileIcon.png';
 import homeIcon from '../assets/homeIcon.png';
 import Logo from '../assets/Logo.png';
 import ProfileMenu from './ProfileMenu'
+import { UserContext } from '../context/UserContext';
 
 const TopBar = () => {
 
   const menuRef = useRef(null); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const {userRole} = useContext(UserContext);
 
   // Toggle menu visibility
   const toggleMenu = () => {
@@ -40,7 +42,7 @@ const TopBar = () => {
   }, []);
 
     const goHome = () => {
-      navigate('/home'); 
+      navigate(userRole === "admin" ? '/admin' : '/home'); 
     }
 
   return (

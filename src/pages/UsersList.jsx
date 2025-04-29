@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api'; 
 import { useNavigate } from 'react-router-dom';
-import EventTopbar from '../components/EventTopbar'
+import TopBar from '../components/EventTopbar'
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -29,7 +29,7 @@ const UsersList = () => {
 
   return (
     <div className="p-8 pt-0">
-    <EventTopbar />
+    <TopBar />
       <h1 className="text-4xl font-bold text-center my-8">Users List</h1>
 
       {loading ? (
