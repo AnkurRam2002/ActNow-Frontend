@@ -9,18 +9,13 @@ import { UserContext } from '../context/UserContext';
 const ProfileTopBar = () => {
 
   const navigate = useNavigate();
-  const { logout } = useContext(UserContext);
+  const { logout, userRole } = useContext(UserContext);
 
   const goHome = () => {
-      navigate('/home'); 
+      navigate(userRole === "admin" ? '/admin' : '/home'); 
     }
   // Handle logout
   const handleLogout = () => {
-    // Remove authentication-related data from localStorage
-    // localStorage.removeItem('token'); 
-    // localStorage.removeItem('userId');
-    // localStorage.removeItem('userRole');
-    // localStorage.removeItem('userEmail');
     logout();
     toast.success("Logged out.");
     navigate('/login'); // Redirect to login page after logout
