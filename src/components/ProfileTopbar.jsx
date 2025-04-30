@@ -18,7 +18,7 @@ const ProfileTopBar = () => {
   const handleLogout = () => {
     logout();
     toast.success("Logged out.");
-    navigate('/root'); // Redirect to login page after logout
+    navigate('/'); // Redirect to login page after logout
   }
 
   return (
