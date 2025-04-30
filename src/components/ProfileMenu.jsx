@@ -7,15 +7,7 @@ import { UserContext } from '../context/UserContext';
 const ProfileMenu = () => {
 
   const navigate = useNavigate();
-  const { username, userEmail, userId, logout } = useContext(UserContext); // 👈 Grab values from context
-
-  // Retrieve username and email from localStorage (fallback to defaults if not found)
-  // const username = localStorage.getItem('username') || 'User';
-  // const useremail = localStorage.getItem('userEmail') || 'Email'
-
-  // Extract user ID from JWT token stored in localStorage
-  // const token = localStorage.getItem("token");
-  // const userId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
+  const { username, userEmail, userId, logout } = useContext(UserContext); // Grab values from context
 
   // Navigate to the user's profile page
   const goToProfile = () => {
@@ -24,14 +16,9 @@ const ProfileMenu = () => {
 
   // Handle logout
   const handleLogout = () => {
-    // Remove authentication-related data from localStorage
-    // localStorage.removeItem('token'); 
-    // localStorage.removeItem('userId');
-    // localStorage.removeItem('userRole');
-    // localStorage.removeItem('userEmail');
     logout();
     toast.success("Logged out.");
-    navigate('/login'); // Redirect to login page after logout    
+    navigate('/'); // Redirect to login page after logout    
   }
 
   return (
