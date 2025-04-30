@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
+import TopBar from "../components/EventTopbar";
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -50,12 +51,12 @@ const CreateEvent = () => {
     };
   
     try {
-      // ✅ Make API call
+      // Make API call
       const response = await api.post("/events/create", eventPayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
   
-      // ✅ Check response directly, no need to call .json()
+      // Check response directly, no need to call .json()
       if (response.error) {
         throw new Error(response.message || "Failed to create event.");
       }
@@ -80,68 +81,71 @@ const CreateEvent = () => {
 
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 border rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">Create an Event</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          value={eventData.name}
-          onChange={handleChange}
-          placeholder="Event Name"
-          required
-          className="w-full p-2 border rounded"
-        />
-        <textarea
-          name="description"
-          value={eventData.description}
-          onChange={handleChange}
-          placeholder="Description"
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="datetime-local"
-          name="date"
-          value={eventData.date}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="location"
-          value={eventData.location}
-          onChange={handleChange}
-          placeholder="Location"
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="requiredSkills"
-          value={eventData.requiredSkills}
-          onChange={handleChange}
-          placeholder="Required Skills (comma-separated)"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="number"
-          name="volunteersNeeded"
-          value={eventData.volunteersNeeded}
-          onChange={handleChange}
-          placeholder="Volunteers Needed"
-          required
-          className="w-full p-2 border rounded"
-        />
-        <button
-          type="submit"
-          className="w-full bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white py-2 rounded"
-        >
-          Create Event
-        </button>
-      </form>
-    </div>
+    <>
+      <TopBar />
+      <div className="max-w-lg mx-auto mt-10 p-6 border rounded shadow-md">
+        <h2 className="text-xl font-bold mb-4">Create an Event</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            value={eventData.name}
+            onChange={handleChange}
+            placeholder="Event Name"
+            required
+            className="w-full p-2 border rounded"
+          />
+          <textarea
+            name="description"
+            value={eventData.description}
+            onChange={handleChange}
+            placeholder="Description"
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="datetime-local"
+            name="date"
+            value={eventData.date}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="location"
+            value={eventData.location}
+            onChange={handleChange}
+            placeholder="Location"
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="requiredSkills"
+            value={eventData.requiredSkills}
+            onChange={handleChange}
+            placeholder="Required Skills (comma-separated)"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="number"
+            name="volunteersNeeded"
+            value={eventData.volunteersNeeded}
+            onChange={handleChange}
+            placeholder="Volunteers Needed"
+            required
+            className="w-full p-2 border rounded"
+          />
+          <button
+            type="submit"
+            className="w-full bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white py-2 rounded"
+          >
+            Create Event
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

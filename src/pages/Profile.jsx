@@ -9,7 +9,7 @@ import {
   FaMapMarkerAlt,
   FaTrash,
 } from "react-icons/fa";
-import { LuSquareActivity } from "react-icons/lu";
+import { TbActivity } from "react-icons/tb";
 import ProfileTopbar from "../components/ProfileTopbar";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
@@ -79,11 +79,11 @@ const Profile = () => {
   }
 
   return (
-    <>
+    <div className="bg-gray-100">
       {/* Topbar Component */}
       <ProfileTopbar />
       {/* Profile Page Container */}
-      <div className="flex justify-center items-center min-h-[90vh] bg-gray-50 p-6">
+      <div className="flex justify-center items-center min-h-[84vh] mt-3 p-6">
         <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg">
           {/* Profile Header - Display username and role */}
           <div className="flex justify-between items-start mb-4">
@@ -99,7 +99,7 @@ const Profile = () => {
               </div>
             </div>
             <button className="" onClick={() => navigate(`/activity/${id}`)}>
-              <LuSquareActivity className="w-10 h-10 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-2 mt-1" />
+              <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
             </button>
           </div>
 
@@ -152,9 +152,9 @@ const Profile = () => {
                 Registered Events:
               </p>
               {user.eventsRegistered?.length > 0 ? (
-                <div className="list-disc text-gray-700">
+                <div className="flex flex-wrap gap-2 text-gray-700">
                   {user.eventsRegistered.map((event) => (
-                    <p key={event._id} className="mb-[3%]">
+                    <p key={event._id} className="mb-1">
                       <Link
                         to={`/events/${event._id}`}
                         className="text-gray-800 bg-gray-200 rounded-sm px-3 py-1 text-sm hover:bg-gray-300 active:bg-gray-200"
@@ -177,9 +177,9 @@ const Profile = () => {
                 Created Events:
               </p>
               {user.eventsCreated?.length > 0 ? (
-                <div className="list-disc text-gray-700">
+                <div className="flex flex-wrap gap-2 text-gray-700">
                   {user.eventsCreated.map((event) => (
-                    <p key={event._id} className="mb-[3%]">
+                    <p key={event._id} className="mb-1">
                       <Link
                         to={`/events/${event._id}`}
                         className="text-gray-800 bg-gray-200 rounded-sm px-3 py-1 text-sm hover:bg-gray-300 active:bg-gray-200 transition-all cursor-pointer"
@@ -216,7 +216,7 @@ const Profile = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

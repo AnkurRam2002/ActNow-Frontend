@@ -40,9 +40,9 @@ const ActivityTimeline = () => {
   }
 
   return (
-    <div>
+    <div className='bg-gray-300'>
       <TopBar />
-      <div className="min-h-screen bg-gray-300 flex justify-center p-6">
+      <div className="min-h-screen mt-3 flex justify-center p-6">
         <div className="w-full max-w-4xl">
           <h1 className="text-2xl font-bold mb-6 text-center">
             Activity Timeline{id ? ` for User: ${id}` : ''}

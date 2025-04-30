@@ -39,26 +39,28 @@ const UsersList = () => {
   };
 
   return (
-    <div className="p-8 pt-0">
+    <div className="bg-gray-100">
     <TopBar />
       <h1 className="text-4xl font-bold text-center my-8">Users List</h1>
 
-      {loading ? (
-        <p className="text-gray-600 text-center">Loading users...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {users.map((user) => (
-            <div
-              key={user._id}
-              onClick={() => handleUserClick(user._id)}
-              className="p-6 bg-white rounded-lg shadow-lg border hover:shadow-xl transition cursor-pointer"
-            >
-              <h2 className="text-xl font-semibold mb-2">{user.username}</h2>
-              <p className="text-sm text-gray-500">Role: {user.role}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className='px-8 mb-8'>
+        {loading ? (
+          <p className="text-gray-600 text-center">Loading users...</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {users.map((user) => (
+              <div
+                key={user._id}
+                onClick={() => handleUserClick(user._id)}
+                className="p-6 bg-white rounded-lg shadow-lg border-3 border-gray-200 hover:shadow-xl transition cursor-pointer"
+              >
+                <h2 className="text-xl font-semibold mb-2">{user.username}</h2>
+                <p className="text-sm text-gray-500">Role: {user.role}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

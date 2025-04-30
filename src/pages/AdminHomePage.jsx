@@ -84,9 +84,9 @@ const AdminHomePage = () => {
   };
 
   return (
-    <>
+    <div className="bg-gray-100">
       <TopBar />
-      <div className="flex flex-col lg:flex-row justify-center gap-10 items-center p-6 bg-gray-100 min-h-[84vh]">
+      <div className="flex flex-col lg:flex-row justify-center gap-10 items-center p-6 min-h-[84vh]">
         {/* Stats Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <StatCard
@@ -149,7 +149,7 @@ const AdminHomePage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

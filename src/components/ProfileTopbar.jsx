@@ -22,7 +22,7 @@ const ProfileTopBar = () => {
   }
 
   return (
-    <div className='border-b border-b-gray-900 px-[2.7%] py-[1.5%] flex justify-between items-center h-[10%] w-full'>
+    <div className='bg-white shadow-[0px_4px_12px_rgba(0,0,0,0.2)] px-[2.7%] py-[1.5%] flex justify-between items-center h-[10%] w-full'>
       
       {/* Left section for Logo */}
       <div className='flex items-center'>

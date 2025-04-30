@@ -4,6 +4,7 @@ import api from "../api";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
+import TopBar from "../components/EventTopbar";
 
 const EditProfile = () => {
   const { id } = useParams();
@@ -13,12 +14,8 @@ const EditProfile = () => {
     userId: loggedInUserId,
     setUsername: updateGlobalUsername,
   } = useContext(UserContext);
-  // const token = localStorage.getItem("token");
+
   const [loading, setLoading] = useState(true); // for blocking render
-
-  // Extracted userId from token for authorization check
-  // const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
-
   const [profileData, setProfileData] = useState({
     username: "",
     phoneNumber: "",
@@ -115,83 +112,82 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-10 p-6 border rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="username"
-          value={profileData.username}
-          onChange={handleChange}
-          placeholder="Username"
-          required
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          type="text"
-          name="phoneNumber"
-          value={profileData.phoneNumber}
-          onChange={handleChange}
-          placeholder="Phone Number"
-          className="w-full p-2 border rounded"
-        />
-
-        <input
-          type="text"
-          name="city"
-          value={profileData.city}
-          onChange={handleChange}
-          placeholder="City"
-          className="w-full p-2 border rounded"
-        />
-
-        {/* Skills section */}
-        <div>
-          <label className="block font-semibold mb-1">Skills</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              name="newSkill"
-              value={profileData.newSkill}
-              onChange={handleChange}
-              placeholder="Add skill"
-              className="flex-grow p-2 border rounded"
-            />
-            <button
-              type="button"
-              onClick={handleAddSkill}
-              className="bg-[#6a7c91] text-white px-3 rounded hover:bg-[#4f5d6c] active:bg-[#6a7c91] transition-all cursor-pointer"
-              title="Add Skill"
-            >
-              <FaPlus />
-            </button>
+    <>
+      <TopBar />
+      <div className="max-w-lg mx-auto my-10 p-6 border rounded shadow-md">
+        <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="username"
+            value={profileData.username}
+            onChange={handleChange}
+            placeholder="Username"
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="phoneNumber"
+            value={profileData.phoneNumber}
+            onChange={handleChange}
+            placeholder="Phone Number"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="city"
+            value={profileData.city}
+            onChange={handleChange}
+            placeholder="City"
+            className="w-full p-2 border rounded"
+          />
+          {/* Skills section */}
+          <div>
+            <label className="block font-semibold mb-1">Skills</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                name="newSkill"
+                value={profileData.newSkill}
+                onChange={handleChange}
+                placeholder="Add skill"
+                className="flex-grow p-2 border rounded"
+              />
+              <button
+                type="button"
+                onClick={handleAddSkill}
+                className="bg-[#6a7c91] text-white px-3 rounded hover:bg-[#4f5d6c] active:bg-[#6a7c91] transition-all cursor-pointer"
+                title="Add Skill"
+              >
+                <FaPlus />
+              </button>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {profileData.skills.map((skill, idx) => (
+                <div key={idx} className="flex items-center bg-gray-200 px-2 py-1 rounded">
+                  <span>{skill}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSkill(skill)}
+                    className="ml-2 text-gray-800 hover:text-red-600 transition-all cursor-pointer"
+                    title="Remove Skill"
+                  >
+                    <FaTrash className="size-[0.8vw] cursor-pointer" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {profileData.skills.map((skill, idx) => (
-              <div key={idx} className="flex items-center bg-gray-200 px-2 py-1 rounded">
-                <span>{skill}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveSkill(skill)}
-                  className="ml-2 text-gray-800 hover:text-red-600 transition-all cursor-pointer"
-                  title="Remove Skill"
-                >
-                  <FaTrash className="size-[0.8vw] cursor-pointer" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer"
-        >
-          Update Profile
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer"
+          >
+            Update Profile
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
