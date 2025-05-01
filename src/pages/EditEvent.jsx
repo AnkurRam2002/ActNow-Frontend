@@ -19,9 +19,6 @@ const EditEvent = () => {
     volunteersNeeded: "",
   });
 
-  // const token = localStorage.getItem("token");
-  // const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
-
   useEffect(() => {
     const fetchEvent = async () => {
       try {
