@@ -56,8 +56,8 @@ const Services = () => {
 
         {/* Right section -> Shift Scheduling */}
         <div className='right-section h-full w-[25%] rounded-lg flex flex-col items-center px-[5%] py-[10%] bg-cover bg-center' style={{ backgroundImage: `url(${servicesShift})`}}>
-          <h1 className='text-[2vw] font-semibold tracking-wide mb-[10%]'>Shift Scheduling</h1>
-          <p className='text-[0.9vw]'>Manage and organize volunteer shifts with automated scheduling and reminders.</p>
+          <h1 className='text-[2vw] font-semibold tracking-wide mb-[10%]'>AI Chat Assistant</h1>
+          <p className='text-[0.9vw]'>Engage with users through a smart AI-powered chat assistant, providing instant support, guidance, and answers around the clock.</p>
         </div>
         
       </div>

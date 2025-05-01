@@ -16,6 +16,7 @@ const ActivityTimeline = () => {
   const { id } = useParams();
   const {userRole} = useContext(UserContext);
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -23,12 +24,15 @@ const ActivityTimeline = () => {
         const endpoint = id ? `/admin/activities?userId=${id}` : '/admin/activities';
         const response = await api.get(endpoint);
         setActivities(response.data);
+        if (id) {
+          setUsername(activities[0].user.username);
+        }
       } catch (error) {
         console.error('Error fetching activities:', error);
       }
     };
     fetchActivities();
-  }, [id]);
+  }, [id, activities]);
 
   // If not admin, show nothing and redirect
   if (userRole !== 'admin') {
@@ -45,7 +49,7 @@ const ActivityTimeline = () => {
       <div className="min-h-screen mt-3 flex justify-center p-6">
         <div className="w-full max-w-4xl">
           <h1 className="text-2xl font-bold mb-6 text-center">
-            Activity Timeline{id ? ` for User: ${id}` : ''}
+            Activity Timeline{id ? ` for User: ${username}` : ''}
           </h1>
           <VerticalTimeline>
             {activities.map((activity, index) => {
