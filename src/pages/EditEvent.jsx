@@ -42,7 +42,7 @@ const EditEvent = () => {
           setEventData({
             name: data.name,
             description: data.description,
-            date: new Date(data.date).toISOString().slice(0, 16),
+            date: new Date(data.date).toLocaleString('sv-SE'),
             location: data.location,
             requiredSkills: data.requiredSkills.join(","),
             volunteersNeeded: data.volunteersNeeded,
