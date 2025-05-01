@@ -46,6 +46,7 @@ const CreateEvent = () => {
 
     const eventPayload = {
       ...eventData,
+      date: new Date(eventData.date).toISOString(), // store date in UTC
       requiredSkills: eventData.requiredSkills.split(",").map(skill => skill.trim()),
       volunteersNeeded: parseInt(eventData.volunteersNeeded, 10),
     };
