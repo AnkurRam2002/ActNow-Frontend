@@ -9,7 +9,7 @@ import Chatbot from "../components/Chatbot";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
 import { registerServiceWorker, subscribeUserToPush } from "../utils/pushHelper";
-import axios from "axios";
+import api from "../api";
 
 const HomePage = () => {
 
@@ -54,8 +54,8 @@ const HomePage = () => {
         if (!subscription) return;
   
         // Optionally send subscription only if it's newly created
-        await axios.post(
-          "http://localhost:5000/api/push/subscribe",
+        await api.post(
+          "/api/push/subscribe",
           { subscription },
           { headers: { Authorization: `Bearer ${token}` } }
         );
