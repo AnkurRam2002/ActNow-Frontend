@@ -7,11 +7,14 @@ import { UserContext } from "../context/UserContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setToken, setUsername, setUserEmail, setUserRole, setUserId } = useContext(UserContext);
+  const { setToken, setUsername, setUserEmail, setUserRole, setUserId } =
+    useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
 
     // Email format validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -46,6 +49,8 @@ const Login = () => {
       navigate(response.data.userRole === "admin" ? "/admin" : "/home"); // Redirect after login
     } catch (error) {
       alert(error.response?.data.message || "Something went wrong");
+    } finally {
+      setLoading(false); // Stop loading after process
     }
   };
 
@@ -57,7 +62,10 @@ const Login = () => {
           <button className="w-1/2 py-2 text-lg font-semibold bg-[#463E3E] text-white rounded-l-2xl">
             Login
           </button>
-          <Link to="/register" className="w-1/2 text-center py-2 text-lg font-semibold bg-gray-100 hover:bg-gray-200 transition-all text-[#463E3E] rounded-r-2xl">
+          <Link
+            to="/register"
+            className="w-1/2 text-center py-2 text-lg font-semibold bg-gray-100 hover:bg-gray-200 transition-all text-[#463E3E] rounded-r-2xl"
+          >
             Register
           </Link>
         </div>
@@ -89,17 +97,40 @@ const Login = () => {
           </div>
 
           <div className="font-bold text-right text-sm text-[#463E3E]">
-            <a href="/forgot-password" className="hover:underline cursor-pointer">Forgot password?</a>
+            <a
+              href="/forgot-password"
+              className="hover:underline cursor-pointer"
+            >
+              Forgot password?
+            </a>
           </div>
 
-          <button className="w-full bg-[#463E3E] hover:bg-[#2e2929] active:bg-[#463E3E] transition-all text-white font-bold py-2 rounded-xl cursor-pointer">
-            Login
+          <button
+            className={`flex items-center justify-center gap-2 w-full font-bold py-2 rounded-xl transition-all text-white ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#463E3E] hover:bg-[#2e2929] active:bg-[#463E3E] cursor-pointer"
+            }`}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
 
           <div className="text-center text-sm font-bold text-[#463E3E] mt-2">
             <p>
               Don't have an account?{" "}
-              <Link to="/register" className="cursor-pointer text-[#463E3E] underline hover:no-underline">
+              <Link
+                to="/register"
+                className="cursor-pointer text-[#463E3E] underline hover:no-underline"
+              >
                 Register
               </Link>
             </p>
