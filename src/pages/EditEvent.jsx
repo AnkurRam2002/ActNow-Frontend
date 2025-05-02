@@ -19,9 +19,6 @@ const EditEvent = () => {
     volunteersNeeded: "",
   });
 
-  // const token = localStorage.getItem("token");
-  // const loggedInUserId = token ? JSON.parse(atob(token.split(".")[1])).userId : null;
-
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -42,7 +39,7 @@ const EditEvent = () => {
           setEventData({
             name: data.name,
             description: data.description,
-            date: new Date(data.date).toISOString().slice(0, 16),
+            date: new Date(data.date).toLocaleString('sv-SE'),
             location: data.location,
             requiredSkills: data.requiredSkills.join(","),
             volunteersNeeded: data.volunteersNeeded,
@@ -74,6 +71,7 @@ const EditEvent = () => {
     
     const eventPayload = {
       ...eventData,
+      date: new Date(eventData.date).toISOString(), // store date in UTC
       requiredSkills: eventData.requiredSkills.split(","),
       volunteersNeeded: parseInt(eventData.volunteersNeeded, 10),
     };

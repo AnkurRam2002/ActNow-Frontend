@@ -22,7 +22,7 @@ const CreateEvent = () => {
       navigate("/login");
       setTimeout(() => {
         alert("Please log in.");
-      }, 100); 
+      }, 100);
     } else if (userRole !== "ngo") {
       navigate("/home");
       setTimeout(() => {
@@ -46,21 +46,24 @@ const CreateEvent = () => {
 
     const eventPayload = {
       ...eventData,
-      requiredSkills: eventData.requiredSkills.split(",").map(skill => skill.trim()),
+      date: new Date(eventData.date).toISOString(), // store date in UTC
+      requiredSkills: eventData.requiredSkills
+        .split(",")
+        .map((skill) => skill.trim()),
       volunteersNeeded: parseInt(eventData.volunteersNeeded, 10),
     };
-  
+
     try {
       // Make API call
       const response = await api.post("/events/create", eventPayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       // Check response directly, no need to call .json()
       if (response.error) {
         throw new Error(response.message || "Failed to create event.");
       }
-      
+
       const newEventId = response.data.eventId; // extract event ID
       toast.success("Event created successfully!");
       navigate(`/events/${newEventId}`); // redirect to event details
@@ -72,13 +75,11 @@ const CreateEvent = () => {
         requiredSkills: "",
         volunteersNeeded: "",
       });
-  
     } catch (error) {
       console.error("Error creating event:", error);
       alert(error.message || "Failed to create event.");
     }
   };
-
 
   return (
     <>

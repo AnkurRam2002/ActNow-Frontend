@@ -98,7 +98,7 @@ const Profile = () => {
                 </p>
               </div>
             </div>
-            {user.role === 'admin' && (
+            {userRole === 'admin' && (
             <button className="" onClick={() => navigate(`/activity/${id}`)}>
               <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
             </button>
