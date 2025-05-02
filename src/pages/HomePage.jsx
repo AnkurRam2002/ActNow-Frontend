@@ -55,7 +55,7 @@ const HomePage = () => {
   
         // Optionally send subscription only if it's newly created
         await api.post(
-          "/api/push/subscribe",
+          "/push/subscribe",
           { subscription },
           { headers: { Authorization: `Bearer ${token}` } }
         );
