@@ -11,7 +11,7 @@ self.addEventListener('push', function (event) {
   const title = data.title || "ActNow";
   const options = {
     body: data.body || "You have a new update!",
-    icon: data.icon || "/icon.png", // fallback icon
+    icon: "/favicon.png", // fallback icon
     // Optional: You can add actions or a click_url here
   };
 
