@@ -45,6 +45,12 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   // Toggle individual attendance for a participant
   const handleToggleAttendance = async (volunteerId) => {
     try {
+      // Prevent toggling off the checkbox once marked as present
+      if (volunteersPresent.includes(volunteerId)) {
+        toast.error("You cannot unmark attendance once it's marked as present.");
+        return; // Prevent further execution
+      }
+  
       setLoadingParticipants((prev) => ({ ...prev, [volunteerId]: true }));
       const res = await api.post(
         `/events/${eventId}/toggle-attendance`,
