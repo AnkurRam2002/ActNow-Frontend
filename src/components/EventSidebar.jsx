@@ -107,7 +107,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
       {(userId === organizerId || userRole === "admin") && (
       <div className="flex justify-center gap-4 mb-4">
         {/* Edit Event Button */}
-        { status !== 'Completed' && userId === organizerId  && (
+        { status !== 'Completed' && (
         <Link
           to={`/events/${eventId}/edit`}
           className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
