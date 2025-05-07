@@ -146,6 +146,15 @@ const AdminHomePage = () => {
               <LuSquareActivity size={28} className="text-purple-800" />
               Activities
             </button>
+
+             {/* Pending Registrations Button */}
+            <button
+              onClick={() => navigate("/pending-registrations")}
+              className="w-60 h-28 rounded-xl bg-gradient-to-br from-green-100 to-green-300 hover:from-green-200 hover:to-green-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-green-900 font-semibold cursor-pointer"
+            >
+              <AiFillCheckCircle size={28} className="text-green-800" />
+              Pending Registrations
+            </button>
           </div>
         </div>
       </div>

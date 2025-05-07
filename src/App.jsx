@@ -16,6 +16,7 @@ import ActivityTimeline from "./pages/ActivityTimeline";
 import EventsList from "./pages/EventsList";
 import UsersList from "./pages/UsersList";
 import AdminHomePage from "./pages/AdminHomePage";
+import  PendingRegistrationsPage from "./pages/PendingRegistrationsPage";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/users" element={<UsersList />} />
           <Route path="/activity/:id" element={<ActivityTimeline />} />
           <Route path="/admin" element={<AdminHomePage />} />
+          <Route path="/pending-registrations" element={<PendingRegistrationsPage />} />
         </Routes>
       </Router>
     </UserProvider>

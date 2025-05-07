@@ -12,6 +12,7 @@ const Register = () => {
   const [role, setRole] = useState("volunteer");
   const [skills, setSkills] = useState("");
   const [loading, setLoading] = useState(false);
+  const [idPdf, setIdPdf] = useState(null);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -25,16 +26,24 @@ const Register = () => {
     }
 
     try {
-      const response = await api.post("/auth/register", {
-        username,
-        email,
-        password,
-        phone,
-        city,
-        role,
-        skills: skills ? skills.split(',').map(s => s.trim()) : undefined
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phone", phone);
+      formData.append("city", city);
+      formData.append("role", role);
+      if (skills) {
+        formData.append("skills", skills);
+      }
+      formData.append("idPdf", idPdf); // 🆕
+
+      const response = await api.post("/auth/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      toast.success("User registered successfully");
+      toast.success("User registration submitted for approval successfully");
       console.log("Response:", response.data);
       navigate("/login"); // Redirect to login page after successful registration
     } catch (error) {
@@ -169,6 +178,18 @@ const Register = () => {
               onChange={(e) => setSkills(e.target.value)}
               placeholder="e.g., Teaching, First Aid, Public Speaking"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
+            />
+          </div>
+
+           {/* 📄 PDF Upload */}
+           <div>
+            <label className="font-bold block text-[#463E3E]">Upload ID Proof (PDF)</label>
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(e) => setIdPdf(e.target.files[0])}
+              className="w-full px-4 py-2 border rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
+              required
             />
           </div>
 
