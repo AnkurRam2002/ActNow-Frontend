@@ -8,7 +8,7 @@ import { UserContext } from "../context/UserContext";
 const EditEvent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { userId: loggedInUserId, token } = useContext(UserContext); // extract from context
+  const { userId: loggedInUserId, token, userRole } = useContext(UserContext); // extract from context
   const [loading, setLoading] = useState(true); // for blocking render
   const [eventData, setEventData] = useState({
     name: "",
@@ -30,7 +30,7 @@ const EditEvent = () => {
           const data = await response.data;
 
           // Check if current user is the organizer
-          if (data.organizer._id !== loggedInUserId) {
+          if (data.organizer._id !== loggedInUserId && userRole !== 'admin') {
             alert("You are not authorized to edit this event.");
             navigate(`/events/${id}`);
             return;
