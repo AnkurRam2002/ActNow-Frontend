@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     try {
       const payload = inputType === "email" ? { email } : { phone };
       localStorage.clear();
-      const response = await api.post("/forgot-password", payload);
+      const response = await api.post("/pass/forgot-password", payload);
 
       if (inputType === "email") {
         localStorage.setItem("email", email);

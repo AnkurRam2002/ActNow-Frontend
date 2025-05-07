@@ -28,7 +28,7 @@ const Chatbot = () => {
     }
 
     try {
-      const response = await api.post('/chat', {
+      const response = await api.post('/chatbot/chat', {
         message: message,
       }, { 
         headers: { Authorization: `Bearer ${token}` } });

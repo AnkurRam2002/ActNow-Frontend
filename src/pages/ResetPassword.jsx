@@ -24,7 +24,7 @@ const ResetPassword = () => {
 
     try {
       // Send a request to reset password with email, OTP, and new password
-      const response = await api.post('/reset-password', { email, phone, otp, newPassword });
+      const response = await api.post('/pass/reset-password', { email, phone, otp, newPassword });
       localStorage.removeItem('email');
       localStorage.removeItem('phone');      
 
