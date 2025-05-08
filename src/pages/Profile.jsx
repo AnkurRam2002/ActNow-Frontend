@@ -147,7 +147,7 @@ const Profile = () => {
             amount,
             paymentId,
             ngoName: user.username,
-          });
+          }, {headers: { Authorization: `Bearer ${token}` }}); 
 
           if (receiptRes.data.status === "success") {
             // Update the toast after receipt generation is successful

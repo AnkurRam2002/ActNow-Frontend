@@ -1,6 +1,6 @@
 import {
     FaUser,
-    FaClipboardList,
+    FaDonate,
     FaSignInAlt,
     FaSignOutAlt,
     FaEdit,
@@ -30,6 +30,10 @@ import {
     'user-delete': {
       getMessage: (user) => `${user} deleted their account`,
       icon: <FaTrash />
+    },
+    'user-donate': {
+      getMessage: (user, meta) => `${user} donated ${meta?.amount} INR to ${meta?.ngoName}`,
+      icon: <FaDonate />
     },
     'event-create': {
       getMessage: (user, meta) => `${user} created event "${meta?.eventName}"`,
