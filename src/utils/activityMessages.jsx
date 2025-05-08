@@ -20,7 +20,7 @@ import {
       icon: <FaSignOutAlt />
     },
     'user-register': {
-      getMessage: (user) => `${user} registered`,
+      getMessage: (user, meta) => `${user} registration approved by Admin for role ${meta?.role}`,
       icon: <FaUser />
     },
     'user-edit': {
