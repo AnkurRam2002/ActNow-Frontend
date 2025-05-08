@@ -9,6 +9,7 @@ import {
   FaMapMarkerAlt,
   FaTrash,
 } from "react-icons/fa";
+import { BiSolidDonateHeart } from "react-icons/bi";
 import { TbActivity } from "react-icons/tb";
 import ProfileTopbar from "../components/ProfileTopbar";
 import { toast } from "react-toastify";
@@ -20,11 +21,19 @@ const Profile = () => {
   // Extract user ID from URL parameters
   const { id } = useParams();
 
-  const { token, userId: loggedInUserId, userRole } = useContext(UserContext); // 🆕 use context instead of localStorage
+  const {
+    token,
+    userId: loggedInUserId,
+    userRole,
+    username,
+    userEmail,
+  } = useContext(UserContext); // use context instead of localStorage
 
   // State for storing user data and loading status
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [amount, setAmount] = useState(50); // Default to 50
+  const [showInput, setShowInput] = useState(false); // State to toggle input visibility
 
   // Delete profile function
   const handleDelete = async () => {
@@ -78,6 +87,108 @@ const Profile = () => {
     return <div>User not found.</div>;
   }
 
+  // Donate function
+  const handlePayment = async () => {
+    setShowInput(false); // Hide input and button after clicking pay
+
+    const { data } = await api.post("/payment/create-order", { amount });
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: data.amount,
+      currency: data.currency,
+      name: "NGO Donation",
+      description: "Thank you for your support!",
+      order_id: data.orderId,
+
+      handler: async function (response) {
+        // Send response.razorpay_payment_id to backend for verification/log
+        const paymentId = response.razorpay_payment_id;
+        const orderId = response.razorpay_order_id;
+        const signature = response.razorpay_signature;
+
+        let toastId;
+
+        try {
+          const verifyRes = await api.post("/payment/verify", {
+            paymentId,
+            orderId,
+            signature,
+          });
+
+          if (verifyRes.data.status === "success") {
+            console.log("Payment verified by backend!");
+
+            // Show payment success toast with a spinner for receipt generation
+            toastId = toast.success(
+              "Payment successful! Generating receipt...",
+              {
+                icon: (
+                  <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
+                ), // Adds a spinning icon
+                autoClose: false, // Keeps the toast open until we manually close it
+                closeOnClick: false, // Disables closing by clicking
+              }
+            );
+          } else {
+            console.log("Verification failed!");
+            toast.error("Payment failed!");
+          }
+        } catch (err) {
+          alert("Error while verifying payment!");
+          console.error(err);
+        }
+
+        // Generate Receipt
+        try {
+          const receiptRes = await api.post("/payment/generate-receipt", {
+            name: username,
+            email: userEmail,
+            amount,
+            paymentId,
+            ngoName: user.username,
+          });
+
+          if (receiptRes.data.status === "success") {
+            // Update the toast after receipt generation is successful
+            toast.update(toastId, {
+              render: "Receipt generated successfully!",
+              type: "success",
+              icon: null, // Remove the spinner
+              autoClose: 2000, // Auto-close after a few seconds
+            });
+
+            const { receiptName } = receiptRes.data;
+
+            const receiptUrl = `${import.meta.env.VITE_BACKEND_URL.replace(
+              "/api",
+              ""
+            )}/receipts/${receiptName}`;
+            console.log(receiptName, receiptUrl);
+
+            window.open(receiptUrl, "_blank");
+            console.log("✅ Receipt opened:", receiptUrl);
+          } else {
+            alert("❌ Receipt generation failed: " + receiptRes.data.message);
+          }
+        } catch (err) {
+          console.error("❌ Error generating receipt:", err);
+          alert("An error occurred during receipt generation.");
+        }
+      },
+      prefill: {
+        name: username || "", // auto-fill from user context
+        email: userEmail || "",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
   return (
     <div className="bg-gray-100">
       {/* Topbar Component */}
@@ -90,19 +201,56 @@ const Profile = () => {
             <div className="flex items-center gap-4">
               <FaUser className="text-5xl text-gray-800" />
               <div>
-                <h2 className="text-3xl font-bold text-gray-900">
-                  {user.username}
-                </h2>
+              <div className="flex gap-2 items-start">
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {user.username}
+                  </h2>
+                  
+                  {/* Donate button */}
+                  {user?.role === "ngo" && loggedInUserId !== user?._id && (
+                    <div>
+                      <button
+                        onClick={() => {
+                          setShowInput(!showInput);
+                        }}
+                        className="donate-btn"
+                      >
+                        <BiSolidDonateHeart className="text-purple-400 mt-1 cursor-pointer size-7 hover:text-purple-500 hover:active:text-purple-400 transition-all" />
+                      </button>
+
+                      {showInput && (
+                        <div className="absolute flex flex-col gap-1">
+                          <input
+                            type="number"
+                            min="50"
+                            value={amount}
+                            onChange={(e) =>
+                              setAmount(Math.max(50, Number(e.target.value)))
+                            }
+                            placeholder="Enter amount (min ₹50)"
+                            className="border rounded px-2 py-1 w-25 h-8"
+                          />
+                          <button
+                            onClick={handlePayment} // Trigger the handlePayment function
+                            className="p-2 bg-purple-400 text-white rounded h-8 leading-0 hover:bg-purple-500 active:bg-purple-400 cursor-pointer transition-all"
+                          >
+                            Donate ₹{amount}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
                 <p className="text-gray-600">
                   {user.role === "ngo" ? "NGO" : user.role}
                 </p>
               </div>
             </div>
-            {userRole === 'admin' && (
-            <button className="" onClick={() => navigate(`/activity/${id}`)}>
-              <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
-            </button>
-          )}
+            {userRole === "admin" && (
+              <button className="" onClick={() => navigate(`/activity/${id}`)}>
+                <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
+              </button>
+            )}
           </div>
 
           {/* Contact Information */}
