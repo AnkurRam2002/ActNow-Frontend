@@ -47,10 +47,12 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
     try {
       // Prevent toggling off the checkbox once marked as present
       if (volunteersPresent.includes(volunteerId)) {
-        toast.error("You cannot unmark attendance once it's marked as present.");
+        toast.error(
+          "You cannot unmark attendance once it's marked as present."
+        );
         return; // Prevent further execution
       }
-  
+
       setLoadingParticipants((prev) => ({ ...prev, [volunteerId]: true }));
       const res = await api.post(
         `/events/${eventId}/toggle-attendance`,
@@ -77,8 +79,8 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
 
   // Navigate to the participant's profile page
   const goToProfile = (participantId) => {
-    navigate(`/users/${participantId}`); // Redirect to the profile page with userId 
-  }
+    navigate(`/users/${participantId}`); // Redirect to the profile page with userId
+  };
 
   // Delete event (with confirmation)
   const handleDelete = async () => {
@@ -87,13 +89,20 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
         const response = await api.delete(`/events/${eventId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (response.status === 200 || response.status === 204) {  
-          toast.success("Event deleted successfully!");
-          navigate("/home");  
+        if (response.status === 200 || response.status === 204) {
+          if (userRole === "admin") {
+            toast.success("Event deleted successfully!");
+            navigate(-1);
+          } else {
+            toast.success("Event deleted successfully!");
+            navigate("/home");
+          }
         } else {
-          alert("Failed to delete event: " + (response.data?.message || "Unknown error"));
+          alert(
+            "Failed to delete event: " +
+              (response.data?.message || "Unknown error")
+          );
         }
-        
       } catch (error) {
         console.error("Error deleting event:", error);
         alert("Something went wrong.");
@@ -105,28 +114,29 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
     <div className="w-1/3 bg-white p-4 rounded-xl shadow-lg">
       {/* Edit Event Button (Only for Organizer) */}
       {(userId === organizerId || userRole === "admin") && (
-      <div className="flex justify-center gap-4 mb-4">
-        {/* Edit Event Button */}
-        { status !== 'Completed' && (
-        <Link
-          to={`/events/${eventId}/edit`}
-          className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
-        >
-          <FaEdit /> Edit Event
-        </Link>)}
+        <div className="flex justify-center gap-4 mb-4">
+          {/* Edit Event Button */}
+          {status !== "Completed" && (
+            <Link
+              to={`/events/${eventId}/edit`}
+              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
+            >
+              <FaEdit /> Edit Event
+            </Link>
+          )}
 
-        {/* Delete Event Button */}
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 hover:bg-red-600 active:bg-red-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
-        >
-          <FaTrashAlt /> Delete Event
-        </button>
-      </div>
-    )}
+          {/* Delete Event Button */}
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 hover:bg-red-600 active:bg-red-500 transition-all cursor-pointer text-white py-2 px-4 rounded-lg flex items-center gap-2"
+          >
+            <FaTrashAlt /> Delete Event
+          </button>
+        </div>
+      )}
 
-     {/* Horizontal Line */}
-     <hr className="border-t border-gray-300 my-4" />
+      {/* Horizontal Line */}
+      <hr className="border-t border-gray-300 my-4" />
 
       {/* Participants List */}
       <div>
@@ -145,7 +155,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
               return (
                 <li
                   key={participant._id}
-                  onClick={() => goToProfile(participant._id)}  // Pass the participant ID dynamically
+                  onClick={() => goToProfile(participant._id)} // Pass the participant ID dynamically
                   className={`flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 transition-all cursor-pointer
                     ${
                       status === "Completed" && isPresent
@@ -156,7 +166,8 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
                   {participant.username}
 
                   {/* Attendance checkbox (editable only if event is not completed and user is owner) */}
-                  {isNgoOwner && status === "Ongoing" &&
+                  {isNgoOwner &&
+                    status === "Ongoing" &&
                     (loadingParticipants[participant._id] ? (
                       <div className="h-5 w-5 flex items-center justify-center">
                         <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-green-600"></div>
