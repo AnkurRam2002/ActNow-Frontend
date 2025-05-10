@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import aboutBanner from '../assets/aboutBanner.png'
 
-
 function About() {
+  const [showMore,setShowMore]=useState(false);
+
+  const handleReadMore=()=>{
+    setShowMore(!showMore)
+  }
+
   return (    
       
     <div id="about" className='page-container px-[6%]'>
@@ -14,13 +19,23 @@ function About() {
 
         <div className='right-section w-[50%]'>
           <h1 className="text-[3.5vw] font-bold text-[#544B4B]">Making Volunteering Simple & Impactful</h1>
-          <p className="text-[1.3vw] text-[#2A2525] mt-3">We bridge the gap between volunteers and nonprofits, helping you find opportunities that match your skills and passion.</p>
-          <button className="read-more-btn bg-[#463E3E] hover:bg-[#322e2e] active:bg-[#463E3E] transition-all text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer">Read more</button>
-        </div>
+          <p className="text-[1.3vw] text-[#2A2525] mt-3">
+            We bridge the gap between volunteers and nonprofits, helping you find opportunities that match your skills and passion.
+          </p>
 
+          {showMore && (
+            <p className="text-[1.2vw] text-[#2A2525] mt-3">
+              Whether you're an organization planning an event or an individual looking to give back, our platform simplifies the process from sign-up to shift completion. Explore how we make volunteering organized, efficient, and meaningful.
+            </p>
+          )}
+          <button 
+            className="read-more-btn bg-[#463E3E] hover:bg-[#322e2e] active:bg-[#463E3E] transition-all text-white px-8 py-2 mt-[8%] text-[1.4vw] rounded-full cursor-pointer"
+            onClick={handleReadMore}>
+              {showMore ? 'Read less' : 'Read more'}
+          </button>
+        </div>
       </div>
     </div>
-    
   )
 }
 
