@@ -8,6 +8,7 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaTrash,
+  FaFile
 } from "react-icons/fa";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { TbActivity } from "react-icons/tb";
@@ -256,9 +257,14 @@ const Profile = () => {
               </div>
             </div>
             {userRole === "admin" && (
+              <div className="flex items-center">
               <button className="" onClick={() => navigate(`/activity/${id}`)}>
                 <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
               </button>
+              <button className="" onClick={() => window.open(`${import.meta.env.VITE_BACKEND_URL_UPLOADS}/${user.idPdf}`, "_blank")}>
+                <FaFile className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
+              </button>
+            </div>
             )}
           </div>
 
