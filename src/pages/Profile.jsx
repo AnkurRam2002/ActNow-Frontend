@@ -141,13 +141,17 @@ const Profile = () => {
 
         // Generate Receipt
         try {
-          const receiptRes = await api.post("/payment/generate-receipt", {
-            name: username,
-            email: userEmail,
-            amount,
-            paymentId,
-            ngoName: user.username,
-          }, {headers: { Authorization: `Bearer ${token}` }}); 
+          const receiptRes = await api.post(
+            "/payment/generate-receipt",
+            {
+              name: username,
+              email: userEmail,
+              amount,
+              paymentId,
+              ngoName: user.username,
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
 
           if (receiptRes.data.status === "success") {
             // Update the toast after receipt generation is successful
@@ -201,11 +205,11 @@ const Profile = () => {
             <div className="flex items-center gap-4">
               <FaUser className="text-5xl text-gray-800" />
               <div>
-              <div className="flex gap-2 items-start">
+                <div className="flex gap-2 items-start">
                   <h2 className="text-3xl font-bold text-gray-900">
                     {user.username}
                   </h2>
-                  
+
                   {/* Donate button */}
                   {user?.role === "ngo" && loggedInUserId !== user?._id && (
                     <div>
@@ -348,14 +352,12 @@ const Profile = () => {
           {/* Edit Profile Button (Only visible for the logged-in user) */}
           {(loggedInUserId === user._id || userRole === "admin") && (
             <div className="mt-6 flex items-center gap-2">
-              {loggedInUserId === user._id && (
-                <Link
-                  to={`/users/${user._id}/edit`}
-                  className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-full hover:bg-gray-800 active:bg-gray-900 transition-all"
-                >
-                  <FaEdit /> Edit Profile
-                </Link>
-              )}
+              <Link
+                to={`/users/${user._id}/edit`}
+                className="bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-full hover:bg-gray-800 active:bg-gray-900 transition-all"
+              >
+                <FaEdit /> Edit Profile
+              </Link>
               <button
                 className="bg-red-800 text-white font-bold py-2 px-4 rounded-md flex items-center justify-center gap-2 w-full cursor-pointer hover:bg-red-600 active:bg-red-800 transition-all"
                 onClick={handleDelete}

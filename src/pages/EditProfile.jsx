@@ -13,6 +13,7 @@ const EditProfile = () => {
     token,
     userId: loggedInUserId,
     setUsername: updateGlobalUsername,
+    userRole
   } = useContext(UserContext);
 
   const [loading, setLoading] = useState(true); // for blocking render
@@ -27,9 +28,9 @@ const EditProfile = () => {
   useEffect(() => {
 
     // Redirected to home page if the profile does not belong to the logged in user
-    if (loggedInUserId !== id) {
+    if (loggedInUserId !== id && userRole !== 'admin') {
       alert("You are not authorized to edit this profile.");
-      navigate("/home");
+      navigate(-1);
       return;
     }
 

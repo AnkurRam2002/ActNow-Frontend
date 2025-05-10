@@ -29,13 +29,6 @@ export const UserProvider = ({ children }) => {
     localStorage.getItem("userRole") || "role"
   );
 
-  // useEffect(() => {
-  //   if (token) {
-  //     const decoded = JSON.parse(atob(token.split(".")[1]));
-  //     setUserId(decoded.userId);
-  //   }
-  // }, [token]);
-
   const logout = async () => {
     try {
       const response = await api.post("/auth/logout", {}, {headers: { Authorization: `Bearer ${token}` }});
