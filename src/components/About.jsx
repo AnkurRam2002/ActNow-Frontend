@@ -24,7 +24,7 @@ function About() {
           </p>
 
           {showMore && (
-            <p className="text-[1.2vw] text-[#2A2525] mt-3">
+            <p className="text-[1.3vw] text-[#2A2525] mt-3">
               Whether you're an organization planning an event or an individual looking to give back, our platform simplifies the process from sign-up to shift completion. Explore how we make volunteering organized, efficient, and meaningful.
             </p>
           )}
