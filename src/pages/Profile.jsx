@@ -37,14 +37,19 @@ const Profile = () => {
 
   // Delete profile function
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete your profile?")) {
+    if (window.confirm("Are you sure you want to delete this profile?")) {
       try {
-        const response = await api.delete(`/users/${loggedInUserId}`, {
+        const response = await api.delete(`/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 200 || response.status === 204) {
-          toast.success("Your profile deleted successfully!");
-          navigate("/");
+          if (userRole === "admin") {
+            toast.success("Profile deleted successfully!");
+            navigate(-1);
+          } else {
+            toast.success("Your profile deleted successfully!");
+            navigate("/");
+          }
         } else {
           alert(
             "Failed to delete your profile: " +
