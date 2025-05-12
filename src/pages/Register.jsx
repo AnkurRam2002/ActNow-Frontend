@@ -48,7 +48,7 @@ const Register = () => {
       navigate("/login"); // Redirect to login page after successful registration
     } catch (error) {
       console.error("Error response:", error.response);
-      alert(error.response?.data?.error || "Something went wrong");
+      alert(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false); // Stop loading after process
     }
