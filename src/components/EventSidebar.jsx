@@ -92,7 +92,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
         if (response.status === 200 || response.status === 204) {
           if (userRole === "admin") {
             toast.success("Event deleted successfully!");
-            navigate(-1);
+            navigate("/admin");
           } else {
             toast.success("Event deleted successfully!");
             navigate("/home");

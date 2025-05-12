@@ -6,6 +6,7 @@ import api from "../api";
 import {
   AiFillCalendar,
   AiFillCheckCircle,
+  AiFillPlusCircle,
   AiOutlineCalendar,
 } from "react-icons/ai";
 import { FaUsers, FaUserFriends } from "react-icons/fa";
@@ -25,6 +26,7 @@ const AdminHomePage = () => {
   const [eventCount, setEventCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
 
   // If not admin, show nothing and redirect
   if (userRole !== "admin") {
@@ -63,8 +65,20 @@ const AdminHomePage = () => {
       }
     };
 
+    const fetchPendingCount = async () => {
+      try {
+        console.log("Fetching pending count...");
+        const response = await api.get("/admin/pending-registrations");
+        setPendingCount(response.data.length); // get count from array length
+        console.log("Pending count:",response.data.length);
+      } catch (err) {
+        console.error("Error fetching pending registrations:", err);
+      }
+    };
+
     fetchEventCount();
     fetchUserCount();
+    fetchPendingCount();
   }, []);
 
   // Donut Chart Data
@@ -95,8 +109,8 @@ const AdminHomePage = () => {
             icon={AiFillCalendar}
           />
           <StatCard
-            label="Completed Events"
-            count={completedCount}
+            label="Pending Approvals"
+            count={pendingCount}
             icon={AiFillCheckCircle}
           />
           <StatCard label="Users" count={userCount} icon={FaUsers} />
@@ -116,7 +130,7 @@ const AdminHomePage = () => {
         </div>
 
         {/* Navigation Section */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-6">
           <div className="flex flex-col items-center gap-6 font-[Poppins]">
             <div className="flex gap-6">
               {/* Events Button */}
@@ -138,22 +152,33 @@ const AdminHomePage = () => {
               </button>
             </div>
 
+            {/* Pending Registrations Button */}
+            <button
+              onClick={() => navigate("/pending-registrations")}
+              className="w-60 h-28 rounded-xl bg-gradient-to-br from-purple-100 to-purple-300 hover:from-purple-200 hover:to-purple-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-purple-900 font-semibold cursor-pointer"
+            >
+              <AiFillCheckCircle size={28} />
+              Pending Registrations
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-6">
             {/* Activities Button */}
             <button
               onClick={() => navigate("/activity")}
-              className="w-60 h-28 rounded-xl bg-gradient-to-br from-purple-100 to-purple-300 hover:from-purple-200 hover:to-purple-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-purple-900 font-semibold cursor-pointer"
+              className="w-28 h-28 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-300 hover:from-emerald-200 hover:to-emerald-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-emerald-900 font-semibold cursor-pointer"
             >
-              <LuSquareActivity size={28} className="text-purple-800" />
+              <LuSquareActivity size={28} />
               Activities
             </button>
 
-             {/* Pending Registrations Button */}
+            {/* Create Event Button */}
             <button
-              onClick={() => navigate("/pending-registrations")}
-              className="w-60 h-28 rounded-xl bg-gradient-to-br from-green-100 to-green-300 hover:from-green-200 hover:to-green-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-green-900 font-semibold cursor-pointer"
+              className="create-event-btn w-28 h-28 rounded-xl bg-gradient-to-br from-amber-100 to-amber-300 hover:from-amber-200 hover:to-amber-400 shadow-lg hover:shadow-xl flex flex-col items-center justify-center gap-2 text-amber-900 font-semibold cursor-pointer"
+              onClick={() => navigate("/create-event")}
             >
-              <AiFillCheckCircle size={28} className="text-green-800" />
-              Pending Registrations
+              <AiFillPlusCircle size={28} />
+              Create Event
             </button>
           </div>
         </div>

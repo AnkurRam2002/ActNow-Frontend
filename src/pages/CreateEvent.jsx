@@ -23,7 +23,7 @@ const CreateEvent = () => {
       setTimeout(() => {
         alert("Please log in.");
       }, 100);
-    } else if (userRole !== "ngo") {
+    } else if (userRole !== "ngo" && userRole !== 'admin') {
       navigate("/home");
       setTimeout(() => {
         alert("You are not authorized to create events.");
