@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PendingRegistrationsPage = () => {
   const [pendingList, setPendingList] = useState([]);
@@ -24,7 +25,7 @@ const PendingRegistrationsPage = () => {
     try {
       await api.post(`/admin/approve/${id}`);
       fetchPendingRegistrations();
-      alert("Registration Approved");
+      toast.success("Registration Approved");
     } catch (error) {
       console.error("Error approving registration", error);
     }
@@ -34,7 +35,7 @@ const PendingRegistrationsPage = () => {
     try {
       await api.delete(`/admin/reject/${id}`);
       fetchPendingRegistrations();
-      alert("Registration Rejected");
+      toast.success("Registration Rejected");
     } catch (error) {
       console.error("Error rejecting registration", error);
     }
