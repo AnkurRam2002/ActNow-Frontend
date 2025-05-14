@@ -182,16 +182,34 @@ const Register = () => {
           </div>
 
            {/* 📄 PDF Upload */}
-           <div>
-            <label className="font-bold block text-[#463E3E]">Upload ID Proof (PDF)</label>
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={(e) => setIdPdf(e.target.files[0])}
-              className="w-full px-4 py-2 border rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-[#463E3E]"
-              required
-            />
-          </div>
+            <div>
+              <label className="font-bold block text-[#463E3E] mb-2">Upload ID Proof (PDF) [Max 5 MB]</label>
+
+              <div className="flex items-center gap-3">
+                {/* Hidden actual input */}
+                <input
+                  type="file"
+                  id="pdf-upload"
+                  accept=".pdf"
+                  onChange={(e) => setIdPdf(e.target.files[0])}
+                  className="hidden"
+                  required
+                />
+
+                {/* Custom button */}
+                <label
+                  htmlFor="pdf-upload"
+                  className="px-4 py-2 bg-[#463E3E] text-white rounded-md cursor-pointer hover:bg-[#2e2828] transition"
+                >
+                  {idPdf ? "Change File" : "Choose File"}
+                </label>
+
+                {/* Show selected file name */}
+                {idPdf && (
+                  <span className="text-sm text-green-700 font-medium">{idPdf.name}</span>
+                )}
+              </div>
+            </div>
 
           <button
             className={`flex items-center justify-center gap-2 w-full font-bold py-2 rounded-xl transition-all text-white ${
