@@ -155,6 +155,7 @@ const Profile = () => {
               amount,
               paymentId,
               ngoName: user.username,
+              ngoEmail: user.email
             },
             { headers: { Authorization: `Bearer ${token}` } }
           );
