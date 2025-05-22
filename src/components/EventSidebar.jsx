@@ -4,6 +4,8 @@ import api from "../api";
 import { FaEdit, FaUsers, FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const EventSidebar = ({ eventId, organizerId, userId, status }) => {
   const [participants, setParticipants] = useState([]);
@@ -166,7 +168,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
                   {participant.username}
 
                   {/* Attendance checkbox (editable only if event is not completed and user is owner) */}
-                  {isNgoOwner &&
+                  {((isNgoOwner && userRole) || "admin") &&
                     status === "Ongoing" &&
                     (loadingParticipants[participant._id] ? (
                       <div className="h-5 w-5 flex items-center justify-center">
@@ -174,6 +176,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
                       </div>
                     ) : (
                       <input
+                        id="attendance-checkbox"
                         type="checkbox"
                         checked={isPresent}
                         onClick={(e) => e.stopPropagation()}
@@ -181,6 +184,7 @@ const EventSidebar = ({ eventId, organizerId, userId, status }) => {
                         className="form-checkbox h-5 w-5 accent-green-600 cursor-pointer"
                       />
                     ))}
+                    <Tooltip anchorSelect="#attendance-checkbox" content="Mark attendance" place="top" />
                 </li>
               );
             })}

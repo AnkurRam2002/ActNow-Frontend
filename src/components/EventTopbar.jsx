@@ -1,17 +1,18 @@
-import { useState,useEffect, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import profileIcon from '../assets/profileIcon.png';
-import homeIcon from '../assets/homeIcon.png';
-import Logo from '../assets/Logo.png';
-import ProfileMenu from './ProfileMenu'
-import { UserContext } from '../context/UserContext';
+import { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import profileIcon from "../assets/profileIcon.png";
+import homeIcon from "../assets/homeIcon.png";
+import Logo from "../assets/Logo.png";
+import ProfileMenu from "./ProfileMenu";
+import { UserContext } from "../context/UserContext";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const TopBar = () => {
-
-  const menuRef = useRef(null); 
+  const menuRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const {userRole} = useContext(UserContext);
+  const { userRole } = useContext(UserContext);
 
   // Toggle menu visibility
   const toggleMenu = () => {
@@ -31,58 +32,61 @@ const TopBar = () => {
 
   useEffect(() => {
     // Add event listeners for click and scroll
-    document.addEventListener('click', handleClickOutside);
-    window.addEventListener('scroll', handleScroll);
+    document.addEventListener("click", handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
 
     // Cleanup event listeners on component unmount
     return () => {
-      document.removeEventListener('click', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener("click", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-    const goHome = () => {
-      navigate(userRole === "admin" ? '/admin' : '/home'); 
-    }
+  const goHome = () => {
+    navigate(userRole === "admin" ? "/admin" : "/home");
+  };
 
   return (
-    <div className='bg-white shadow-[0px_4px_12px_rgba(0,0,0,0.2)] px-[2.7%] py-[1.5%] flex justify-between items-center h-[10%] w-full'>
-      
+    <div className="bg-white shadow-[0px_4px_12px_rgba(0,0,0,0.2)] px-[2.7%] py-[1.5%] flex justify-between items-center h-[10%] w-full">
       {/* Left section for Logo */}
-      <div className='flex items-center'>
-        <img src={Logo} alt="logo" className='w-[50%]' />
+      <div className="flex items-center">
+        <img src={Logo} alt="logo" className="w-[50%]" />
       </div>
 
       {/* Right section for Home button and Profile */}
-      <div className='flex items-center gap-[10%]'>
+      <div className="flex items-center gap-[10%]">
         {/* Home button */}
         <img
-            src={homeIcon}
-            alt="profile"
-            className='h-[2.5vw] cursor-pointer mx-2 opacity-75 hover:opacity-55 active:opacity-75 transition-all' // Ensuring profile icon has same size as home icon
-            onClick={goHome}
-          />
+          id="home-btn"
+          src={homeIcon}
+          alt="profile"
+          className="h-[2.5vw] cursor-pointer mx-2 opacity-75 hover:opacity-55 active:opacity-75 transition-all" // Ensuring profile icon has same size as home icon
+          onClick={goHome}
+        />
+        <Tooltip anchorSelect="#home-btn" content="home" />
 
         {/* Vertical Line between Home and Profile */}
-        <div className='h-15 w-7.5 bg-[#5f5e5a]'></div>
+        <div className="h-15 w-7.5 bg-[#5f5e5a]"></div>
 
         {/* Profile Label and Icon */}
-          <img
-            ref={menuRef}
-            src={profileIcon}
-            alt="profile"
-            className='h-[2.5vw] cursor-pointer mx-2 hover:opacity-80 active:opacity-100 transition-all' // Ensuring profile icon has same size as home icon
-            onClick={toggleMenu}
-          />
-          
-          {/* Profile menu */}
-          {isMenuOpen && (
-          <div className='profile-menu fixed md:top-[12%] top-[9%] right-[2%] w-[18%]'>
+        <img
+          id="profile-btn"
+          ref={menuRef}
+          src={profileIcon}
+          alt="profile"
+          className="h-[2.5vw] cursor-pointer mx-2 hover:opacity-80 active:opacity-100 transition-all" // Ensuring profile icon has same size as home icon
+          onClick={toggleMenu}
+        />
+        <Tooltip anchorSelect="#profile-btn" content="profile" />
+
+        {/* Profile menu */}
+        {isMenuOpen && (
+          <div className="profile-menu fixed md:top-[12%] top-[9%] right-[2%] w-[18%]">
             <ProfileMenu />
           </div>
         )}
-        </div>
       </div>
+    </div>
   );
 };
 

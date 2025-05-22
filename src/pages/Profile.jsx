@@ -8,13 +8,15 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaTrash,
-  FaFile
+  FaFile,
 } from "react-icons/fa";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { TbActivity } from "react-icons/tb";
 import ProfileTopbar from "../components/ProfileTopbar";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css"; // Required for styling
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -155,7 +157,7 @@ const Profile = () => {
               amount,
               paymentId,
               ngoName: user.username,
-              ngoEmail: user.email
+              ngoEmail: user.email,
             },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -224,10 +226,16 @@ const Profile = () => {
                         onClick={() => {
                           setShowInput(!showInput);
                         }}
-                        className="donate-btn"
+                        id="donate-btn"
                       >
-                        <BiSolidDonateHeart className="text-purple-400 mt-1 cursor-pointer size-7 hover:text-purple-500 hover:active:text-purple-400 transition-all" />
+                        <BiSolidDonateHeart className="text-gray-500 mt-1 cursor-pointer size-7 hover:text-gray-600 hover:active:text-gray-500 transition-all" />
                       </button>
+                      {/* Tooltip linked to the button */}
+                      <Tooltip
+                        anchorSelect="#donate-btn"
+                        content="Donate"
+                        place="top"
+                      />
 
                       {showInput && (
                         <div className="absolute flex flex-col gap-1">
@@ -259,13 +267,32 @@ const Profile = () => {
             </div>
             {userRole === "admin" && (
               <div className="flex items-center">
-              <button className="" onClick={() => navigate(`/activity/${id}`)}>
-                <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
-              </button>
-              <button className="" onClick={() => window.open(`${import.meta.env.VITE_BACKEND_URL_UPLOADS}/${user.idPdf}`, "_blank")}>
-                <FaFile className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
-              </button>
-            </div>
+                <button
+                  id="activity-btn"
+                  onClick={() => navigate(`/activity/${id}`)}
+                >
+                  <TbActivity className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
+                </button>
+                <Tooltip
+                  anchorSelect="#activity-btn"
+                  content="Activity"
+                  place="top"
+                />
+                <button
+                  id="id-btn"
+                  onClick={() =>
+                    window.open(
+                      `${import.meta.env.VITE_BACKEND_URL_UPLOADS}/${
+                        user.idPdf
+                      }`,
+                      "_blank"
+                    )
+                  }
+                >
+                  <FaFile className="w-9 h-9 p-2 text-white bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700 active:bg-gray-800 transition-all mr-3 mt-1" />
+                </button>
+                <Tooltip anchorSelect="#id-btn" content="View id" place="top" />
+              </div>
             )}
           </div>
 
