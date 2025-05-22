@@ -228,7 +228,7 @@ const Profile = () => {
                         }}
                         id="donate-btn"
                       >
-                        <BiSolidDonateHeart className="text-gray-500 mt-1 cursor-pointer size-7 hover:text-gray-600 hover:active:text-gray-500 transition-all" />
+                        <BiSolidDonateHeart className="text-violet-400 mt-1 cursor-pointer size-7 hover:text-violet-500 hover:active:text-violet-400 transition-all" />
                       </button>
                       {/* Tooltip linked to the button */}
                       <Tooltip
@@ -251,7 +251,7 @@ const Profile = () => {
                           />
                           <button
                             onClick={handlePayment} // Trigger the handlePayment function
-                            className="p-2 bg-purple-400 text-white rounded h-8 leading-0 hover:bg-purple-500 active:bg-purple-400 cursor-pointer transition-all"
+                            className="p-2 bg-violet-400 text-white rounded h-8 leading-0 hover:bg-violet-500 active:bg-violet-400 cursor-pointer transition-all"
                           >
                             Donate ₹{amount}
                           </button>
