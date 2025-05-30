@@ -1,6 +1,7 @@
 import { useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Pic from "../assets/landingBanner.png";
+import api from '../api';
 
 const Home = () => {
 
@@ -8,6 +9,15 @@ const Home = () => {
 
   useEffect(() => {
     localStorage.clear();
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/health/check');
+        console.log('Health Check Response:', response.data);
+      } catch (error) {
+        console.error('Error fetching health check:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
