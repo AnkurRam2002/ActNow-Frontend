@@ -87,6 +87,11 @@ const ActivityTimeline = () => {
                       </ul>
                     </div>
                   )}
+                  {activity.metadata?.deletedUser && (
+                    <p className="text-sm text-red-500">
+                      Deleted ID: {activity.metadata.deletedUser}
+                    </p>
+                  )}
                 </VerticalTimelineElement>
               );
             })}
