@@ -28,7 +28,7 @@ import {
       icon: <FaEdit />
     },
     'user-delete': {
-      getMessage: (user) => `${user} profile was deleted`,
+      getMessage: (user) => `${user} deleted a profile`,
       icon: <FaTrash />
     },
     'user-donate': {
