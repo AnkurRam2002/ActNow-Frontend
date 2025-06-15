@@ -53,7 +53,7 @@ const ActivityTimeline = () => {
           </h1>
           <VerticalTimeline>
             {activities.map((activity, index) => {
-              const user = activity.user?.username || 'Unknown';
+              const user = activity.user?.username || 'Deleted User';
               const { getMessage, icon } = activityMap[activity.action] || {};
               const message = getMessage ? getMessage(user, activity.metadata) : `${user} performed ${activity.action}`;
               const activityIcon = icon || <FaClipboardList />;
