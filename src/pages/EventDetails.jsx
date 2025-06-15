@@ -267,7 +267,7 @@ const EventDetails = () => {
                     ? "bg-red-800 hover:bg-red-600 active:bg-red-800 transition-all cursor-pointer text-white"
                     : "bg-gray-900 hover:bg-gray-800 active:bg-gray-900 transition-all cursor-pointer text-white"
                 }`}
-                disabled={event.status === "Completed" || buttonLoading}
+                disabled={event.status === "Completed" || buttonLoading || event.volunteersAssigned.length >= event.volunteersNeeded}
               >
                 {buttonLoading ? (
                   <div className="flex justify-center">
